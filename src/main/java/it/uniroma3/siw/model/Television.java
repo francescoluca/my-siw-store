@@ -27,7 +27,7 @@ public class Television {
 	private Integer screenInches;
 	private String code;
 	@OneToMany(mappedBy = "television")
-	private List<InventoryItem> inventoryItems;
+	private List<Item> inventoryItems;
 	
 	public String getModel() {
 		return model;
@@ -65,10 +65,10 @@ public class Television {
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
-	public List<InventoryItem> getInventoryItems() {
+	public List<Item> getInventoryItems() {
 		return inventoryItems;
 	}
-	public void setInventoryItems(List<InventoryItem> inventoryItems) {
+	public void setInventoryItems(List<Item> inventoryItems) {
 		this.inventoryItems = inventoryItems;
 	}
 	

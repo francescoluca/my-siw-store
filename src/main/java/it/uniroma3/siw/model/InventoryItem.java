@@ -25,9 +25,6 @@ public class InventoryItem extends Item{
 	@NotNull
 	private StockStatus status;
 	
-	@ManyToOne
-	private Television television;
-	
 	public Integer getPrice() {
 		return price;
 	}
@@ -45,11 +42,5 @@ public class InventoryItem extends Item{
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public Television getTelevision() {
-		return television;
-	}
-	public void setTelevision(Television television) {
-		this.television = television;
 	}
 }

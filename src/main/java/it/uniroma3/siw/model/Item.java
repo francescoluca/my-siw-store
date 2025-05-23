@@ -1,9 +1,17 @@
 package it.uniroma3.siw.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 
-
+@Entity
 public abstract class Item {
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
 	public enum Condition {
 	    NEW,
 	    REFURBISHED,	//ricondizionato
@@ -24,6 +32,9 @@ public abstract class Item {
 	private Optional optional;
 	private String description;
 	
+	@ManyToOne
+	private Television television;
+	
 	public Condition getCondition() {
 		return condition;
 	}
@@ -41,5 +52,11 @@ public abstract class Item {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Television getTelevision() {
+		return television;
+	}
+	public void setTelevision(Television television) {
+		this.television = television;
 	}
 }
