@@ -11,9 +11,6 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 public class OrderItem extends Item{
 	//aggiungere costruttore che copia tutti i valori delle variabili dell'InventoryItem acquistato
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
 
 	@NotNull
 	private Integer price;
@@ -33,12 +30,6 @@ public class OrderItem extends Item{
 	}
 	public void setStatus(StockStatus status) {
 		this.status = status;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
 	}
 	public Order getOrder() {
 		return order;

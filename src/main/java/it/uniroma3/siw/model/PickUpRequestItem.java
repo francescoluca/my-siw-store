@@ -10,9 +10,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 @Entity
 public class PickUpRequestItem extends Item{
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
 	@NotNull
 	private LocalDateTime purchaseDate;
 	@NotNull
@@ -32,12 +29,6 @@ public class PickUpRequestItem extends Item{
 	}
 	public void setPurchasePrice(Integer purchasePrice) {
 		this.purchasePrice = purchasePrice;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
 	}
 	public PickUpRequest getPickUpRequest() {
 		return pickUpRequest;

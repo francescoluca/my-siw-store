@@ -9,10 +9,6 @@ import jakarta.persistence.OneToOne;
 
 @Entity
 public class CartItem extends Item{
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-	
 	@ManyToOne
 	private ShoppingCart shoppingCart;
 	

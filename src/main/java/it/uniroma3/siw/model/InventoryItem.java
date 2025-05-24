@@ -2,6 +2,8 @@ package it.uniroma3.siw.model;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -10,9 +12,6 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class InventoryItem extends Item{
 	//aggiungere doppio costruttore che copia tutti i valori delle variabili del pickUpItem prelevato e l'altro no parametri
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
 	
 	public enum StockStatus{
 		AVAILABLE,
@@ -20,9 +19,8 @@ public class InventoryItem extends Item{
 		COMING
 	}
 
-	@NotNull
 	private Integer price;
-	@NotNull
+	@Enumerated(EnumType.STRING)
 	private StockStatus status;
 	
 	public Integer getPrice() {
@@ -36,11 +34,5 @@ public class InventoryItem extends Item{
 	}
 	public void setStatus(StockStatus status) {
 		this.status = status;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
 	}
 }

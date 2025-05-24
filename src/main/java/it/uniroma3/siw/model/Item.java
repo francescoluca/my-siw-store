@@ -1,13 +1,19 @@
 package it.uniroma3.siw.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Item {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -26,9 +32,11 @@ public abstract class Item {
 		WALL_BRACKET,
 		BRACKET
 	}
-	@NotNull
+	@NotBlank
+	private String serialNumber;
+	@Enumerated(EnumType.STRING)
 	private Condition condition;
-	@NotNull
+	@Enumerated(EnumType.STRING)
 	private Optional optional;
 	private String description;
 	
@@ -58,5 +66,17 @@ public abstract class Item {
 	}
 	public void setTelevision(Television television) {
 		this.television = television;
+	}
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 }
