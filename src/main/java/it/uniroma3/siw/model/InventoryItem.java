@@ -13,15 +13,16 @@ import jakarta.persistence.ManyToOne;
 public class InventoryItem extends Item{
 	//aggiungere doppio costruttore che copia tutti i valori delle variabili del pickUpItem prelevato e l'altro no parametri
 	
-	public enum StockStatus{
+/*	public enum StockStatus{
 		AVAILABLE,
 		SOLD,
 		COMING
 	}
-
+*/
+	@NotNull
 	private Integer price;
-	@Enumerated(EnumType.STRING)
-	private StockStatus status;
+//	@Enumerated(EnumType.STRING)
+//	private StockStatus status;
 	
 	public Integer getPrice() {
 		return price;
@@ -29,10 +30,12 @@ public class InventoryItem extends Item{
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
-	public StockStatus getStatus() {
+/*	public StockStatus getStatus() {
 		return status;
 	}
 	public void setStatus(StockStatus status) {
 		this.status = status;
 	}
+*/
+
 }

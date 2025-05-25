@@ -17,7 +17,7 @@ public class ItemValidator implements Validator{
 	@Override
 	public void validate(Object o, Errors errors) {
 		Item item = (Item)o;
-		if (item.getSerialNumber()!=null && itemService.existsBySerialNumber(item.getSerialNumber())) {
+		if (item.getProductCode()!=null && itemService.existsByProductCode(item.getProductCode())) {
 			errors.reject("item.duplicate");
 		}
 	}

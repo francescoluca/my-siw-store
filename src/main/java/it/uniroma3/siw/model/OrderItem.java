@@ -1,6 +1,6 @@
 package it.uniroma3.siw.model;
 
-import it.uniroma3.siw.model.InventoryItem.StockStatus;
+//import it.uniroma3.siw.model.InventoryItem.StockStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,8 +14,8 @@ public class OrderItem extends Item{
 
 	@NotNull
 	private Integer price;
-	@NotNull
-	private StockStatus status;
+//	@NotNull
+//	private StockStatus status;
 	@ManyToOne
 	private Order order;
 	
@@ -25,12 +25,13 @@ public class OrderItem extends Item{
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
-	public StockStatus getStatus() {
+/*	public StockStatus getStatus() {
 		return status;
 	}
 	public void setStatus(StockStatus status) {
 		this.status = status;
 	}
+*/
 	public Order getOrder() {
 		return order;
 	}

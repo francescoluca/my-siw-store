@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Televisore</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${userDetails}">
+			<span th:text="${userDetails.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${user}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+
+    <h1>Dettagli Televisore</h1>
+    <div th:if="${inventoryItem}">
+        <span th:text="'Numero seriale: '+ ${inventoryItem.serialNumber}"></span>
+    </div>
+    <div th:unless="${inventoryItem}">Non esiste</div>
+  </body>
+</html>

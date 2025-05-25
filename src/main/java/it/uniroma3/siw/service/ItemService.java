@@ -13,8 +13,8 @@ public class ItemService {
 	@Autowired
 	private ItemRepository itemRepository;
 
-	public boolean existsBySerialNumber(String serialNumber) {
-		return itemRepository.existsBySerialNumber(serialNumber);
+	public boolean existsByProductCode(String productCode) {
+		return itemRepository.existsByProductCode(productCode);
 	}
 
 	public void save(InventoryItem inventoryItem) {

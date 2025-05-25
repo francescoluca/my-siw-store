@@ -18,7 +18,6 @@
 			<a href="/login">Login</a>
 		</div>
 	</header>
-	<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
 	<h1>Aggiungi un televisore in magazzino</h1>
 	<form th:action="@{/admin/inventoryItem}" method="POST" th:object="${inventoryItem}">
   		<div th:if="${#fields.hasGlobalErrors()}">
@@ -26,11 +25,56 @@
   		</div>
 		
 		<div>
-			<label>Numero seriale:</label> 
-			<span><input type="text" th:field="${inventoryItem.serialNumber}" /></span>
-		    <span th:if="${#fields.hasErrors('serialNumber')}" th:errors="*{serialNumber}">
+			<label>Codice prodotto</label> 
+			<span><input type="text" th:field="${inventoryItem.productCode}" /></span>
+		    <span th:if="${#fields.hasErrors('productCode')}" th:errors="*{productCode}">
 		    </span>
 		</div>
+		<div>
+			<label>Prezzo:</label> 
+			<span><input type="text" th:field="${inventoryItem.price}" /></span>
+		    <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}">
+		    </span>
+		</div>
+		
+		<div>
+		  <label>Condizioni:</label>
+		  <select th:field="*{condition}">
+		    <!-- opzione “nessuna selezione” che diventa null -->
+		    <option th:value="${null}" th:text="'Nessuna selezione'"></option>
+			    <option th:each="cond : ${T(it.uniroma3.siw.model.Item.Condition).values()}"
+			            th:value="${cond}"
+			            th:text="${cond}">OPTION</option>
+			  </select>
+			  <span th:if="${#fields.hasErrors('condition')}"
+			        th:errors="*{condition}"></span>
+			</div>
+		
+		<div>
+		  <label>Optional:</label>
+		  <select th:field="*{optional}">
+		    <!-- opzione “nessuna selezione” che diventa null -->
+		    <option th:value="${null}" th:text="'Nessuna selezione'"></option>
+
+		    <!-- cicliamo le costanti dell’enum -->
+		    <option th:each="opt : ${T(it.uniroma3.siw.model.Item.Optional).values()}"
+		            th:value="${opt}"
+		            th:text="${opt}">OPTION</option>
+		  </select>
+		  <span th:if="${#fields.hasErrors('optional')}"
+		        th:errors="*{optional}"></span>
+		</div>
+
+
+
+		<div>
+			<label>Descrizione:</label> 
+			<span><input type="text" th:field="${inventoryItem.description}" /></span>
+		    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+		    </span>
+		</div>
+
+		
 		<div>
 			<span><button type="submit">Conferma</button></span>
 		</div>

@@ -6,6 +6,6 @@ import it.uniroma3.siw.model.Item;
 
 public interface ItemRepository extends CrudRepository<Item, Long>{
 
-	boolean existsBySerialNumber(String serialNumber);
+	boolean existsByProductCode(String productCode);
 
 }

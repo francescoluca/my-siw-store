@@ -19,27 +19,28 @@ public abstract class Item {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	public enum Condition {
-	    NEW,
-	    REFURBISHED,	//ricondizionato
-	    USED,
-	    FOR_PARTS,		//per pezzi di ricambio
-	    LIKE_NEW,
-	    BROKEN,
-	    WORKING
+	    NUOVO,
+	    RICONDIZIONATO,	//ricondizionato
+	    USATO,
+	    PER_PEZZI_DI_RICAMBIO,		//per pezzi di ricambio
+	    COME_NUOVO,
+	    ROTTO,
+	    FUNZIONANTE
 	}
 	public enum Optional{
-		REMOTE_CONTROL,
-		WALL_BRACKET,
-		BRACKET
+		TELECOMANDO,
+		STAFFA_DA_MURO,
+		STAFFA
 	}
 	@NotBlank
-	private String serialNumber;
+	private String productCode;
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private Condition condition;
 	@Enumerated(EnumType.STRING)
 	private Optional optional;
 	private String description;
-	
+	@NotNull
 	@ManyToOne
 	private Television television;
 	
@@ -67,11 +68,11 @@ public abstract class Item {
 	public void setTelevision(Television television) {
 		this.television = television;
 	}
-	public String getSerialNumber() {
-		return serialNumber;
+	public String getProductCode() {
+		return productCode;
 	}
-	public void setSerialNumber(String serialNumber) {
-		this.serialNumber = serialNumber;
+	public void setProductCode(String serialNumber) {
+		this.productCode = serialNumber;
 	}
 	public Long getId() {
 		return id;

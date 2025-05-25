@@ -16,10 +16,15 @@
 		</div>
 	</header>
 
-    <h1>Dettagli Televisore</h1>
-    <div th:if="${inventoryItem}">
-        <span th:text="'Numero seriale: '+ ${inventoryItem.serialNumber}"></span>
-    </div>
+	<h1>Dettagli Televisore</h1>
+	<div th:if="${inventoryItem}">
+	  <div th:text="'Codice prodotto: ' + ${inventoryItem.productCode}"></div>
+	  <div th:text="'Prezzo: ' + ${inventoryItem.price} + ' euro'"></div>
+	  <div th:text="'Condizione: ' + ${inventoryItem.condition}"></div>
+	  <div th:text="'Optional: ' + ${inventoryItem.optional}"></div>
+	  <div th:text="'Descrizione: ' + ${inventoryItem.description}"></div>
+	</div>
+
     <div th:unless="${inventoryItem}">Non esiste</div>
   </body>
 </html>
