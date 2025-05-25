@@ -19,6 +19,7 @@
 
     <h1>Dettagli Televisore</h1>
     <div th:if="${television}">
+		<div><img th:src="@{'/images/' + ${television.model} + '.png'}" width="20%"/></div>
 		<div th:text="'Modello: ' + ${television.model}"></div>
 		<div th:text="'Brand: ' + ${television.brand}"></div>
 		<div th:text="'Anno: ' + ${television.releaseDate}"></div>
