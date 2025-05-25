@@ -24,7 +24,7 @@ public class ItemController {
 	private ItemValidator itemValidator;
 
 	@GetMapping(value="/admin/formNewInventoryItem")
-	public String formNewArtist(Model model) {
+	public String formNewInventoryItem(Model model) {
 		model.addAttribute("inventoryItem", new InventoryItem());
 		return "admin/formNewInventoryItem.html";
 	}	

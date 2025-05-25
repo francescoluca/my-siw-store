@@ -40,7 +40,6 @@ public abstract class Item {
 	@Enumerated(EnumType.STRING)
 	private Optional optional;
 	private String description;
-	@NotNull
 	@ManyToOne
 	private Television television;
 	

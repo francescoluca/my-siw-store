@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TV</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${userDetails}">
+			<span th:text="${userDetails.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${user}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+
+    <h1>Dettagli Televisore</h1>
+    <div th:if="${television}">
+		<div th:text="'Modello: ' + ${television.model}"></div>
+		<div th:text="'Brand: ' + ${television.brand}"></div>
+		<div th:text="'Anno: ' + ${television.releaseDate}"></div>
+		<div th:text="'Pollici: ' + ${television.screenInches}"></div>
+		<div th:text="'Descrizione: ' + ${television.description}"></div>
+    </div>
+    <div th:unless="${television}">Non esiste</div>
+  </body>
+</html>

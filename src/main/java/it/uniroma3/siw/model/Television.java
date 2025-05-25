@@ -71,6 +71,12 @@ public class Television {
 	public void setInventoryItems(List<Item> inventoryItems) {
 		this.inventoryItems = inventoryItems;
 	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	
 }
