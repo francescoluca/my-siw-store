@@ -1,5 +1,7 @@
 package it.uniroma3.siw.model;
 
+import it.uniroma3.siw.model.Util.Condition;
+import it.uniroma3.siw.model.Util.Optional;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,20 +20,6 @@ public abstract class Item {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	public enum Condition {
-	    NUOVO,
-	    RICONDIZIONATO,	//ricondizionato
-	    USATO,
-	    PER_PEZZI_DI_RICAMBIO,		//per pezzi di ricambio
-	    COME_NUOVO,
-	    ROTTO,
-	    FUNZIONANTE
-	}
-	public enum Optional{
-		TELECOMANDO,
-		STAFFA_DA_MURO,
-		STAFFA
-	}
 	@NotBlank
 	private String productCode;
 	@NotNull

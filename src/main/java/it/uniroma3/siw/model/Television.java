@@ -2,7 +2,10 @@ package it.uniroma3.siw.model;
 
 import java.util.List;
 
+import it.uniroma3.siw.model.Util.Brand;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,8 +21,9 @@ public class Television {
     private Long id;
 	@NotBlank
 	private String model;
-	@NotBlank
-	private String brand;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private Brand brand;
 	private String description;
 	@NotNull
 	private Integer releaseDate;
@@ -59,12 +63,6 @@ public class Television {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public String getBrand() {
-		return brand;
-	}
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
 	public List<Item> getInventoryItems() {
 		return inventoryItems;
 	}
@@ -77,6 +75,10 @@ public class Television {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	
+	public Brand getBrand() {
+		return brand;
+	}
+	public void setBrand(Brand brand) {
+		this.brand = brand;
+	}
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.model.Television;
+import it.uniroma3.siw.model.Util.Brand;
 import it.uniroma3.siw.repository.TelevisionRepository;
 
 @Service
@@ -12,7 +13,7 @@ public class TelevisionService {
 	@Autowired
 	public TelevisionRepository televisionRepository;
 
-	public boolean existsByModelAndBrand(String model, String brand) {
+	public boolean existsByModelAndBrand(String model, Brand brand) {
 		return televisionRepository.existsByModelAndBrand(model,brand);
 	}
 

@@ -21,41 +21,37 @@
 	<div><a href="/"><img src="/images/logo-store.png" width="15%"/></a></div>
 	<h1>Aggiungi un modello di televisore</h1>
 	<form th:action="@{/admin/television}" method="POST" th:object="${television}">
-  		<div th:if="${#fields.hasGlobalErrors()}">
-  			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
-  		</div>
+		<div th:if="${#fields.hasGlobalErrors()}">
+			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
+		</div>
+		<div>
+			<label>Modello:</label> <span><input required type="text" th:field="${television.model}" /></span>
+			<span th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></span>
+		</div>
+
+		<div>
+		  <label>Brand:</label>
+		  <select th:field="*{brand}" required>
+		    <!-- opzione “nessuna selezione” che diventa null -->
+		    <option th:value="${null}" th:text="'Nessuna selezione'"></option>
+			    <option th:each="brand : ${T(it.uniroma3.siw.model.Util.Brand).values()}"
+			            th:value="${brand}"
+			            th:text="${brand}">BRAND</option>
+		  </select>
+		</div>
+
+		<div>
+			<label>Anno:</label> <span><input required type="text" th:field="${television.releaseDate}" /></span>
+			<span th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}"></span>
+		</div>
+		<div>
+			<label>Pollici:</label> <span><input required type="text" th:field="${television.screenInches}" /></span>
+			<span th:if="${#fields.hasErrors('screenInches')}" th:errors="*{screenInches}"></span>
+		</div>
 		
-		<div>
-			<label>Modello</label> 
-			<span><input type="text" th:field="${television.model}" /></span>
-		    <span th:if="${#fields.hasErrors('model')}" th:errors="*{model}">
-		    </span>
-		</div>
-		<div>
-			<label>Brand:</label> 
-			<span><input type="text" th:field="${television.brand}" /></span>
-		    <span th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}">
-		    </span>
-		</div>
-		
-		<div>
-			<label>Descrizione:</label> 
-			<span><input type="text" th:field="${television.description}" /></span>
-		    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
-		    </span>
-		</div>
-		
-		<div>
-			<label>Anno:</label> 
-			<span><input type="text" th:field="${television.releaseDate}" /></span>
-		    <span th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}">
-		    </span>
-		</div>
-		<div>
-			<label>Pollici:</label> 
-			<span><input type="text" th:field="${television.screenInches}" /></span>
-		    <span th:if="${#fields.hasErrors('screenInches')}" th:errors="*{screenInches}">
-		    </span>
+		<div>	
+			<label>Descrizione:</label> <span><input type="text" th:field="${television.description}" /></span>
+			<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
 		</div>
 		
 		<div>
