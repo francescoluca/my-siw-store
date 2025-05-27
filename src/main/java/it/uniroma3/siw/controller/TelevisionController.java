@@ -51,4 +51,17 @@ public class TelevisionController {
 		model.addAttribute("televisions", this.televisionService.findAll());
 		return "televisions.html";
 	}
+	
+	@GetMapping("/admin/manageTelevisions")
+	public String manageTelevisions(Model model) {
+		model.addAttribute("televisions", this.televisionService.findAll());
+		return "admin/manageTelevisions.html";
+	}
+	
+	@GetMapping("/admin/formUpdateTelvision/{id}")
+	public String formUpdateTelvision(@PathVariable("id") Long id,Model model) {
+		model.addAttribute("television", televisionService.findById(id));
+		return "admin/formUpdateTelevision.html";
+	}
+	
 }

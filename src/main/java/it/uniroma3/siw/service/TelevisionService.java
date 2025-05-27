@@ -13,8 +13,8 @@ public class TelevisionService {
 	@Autowired
 	public TelevisionRepository televisionRepository;
 
-	public boolean existsByModelAndBrand(String model, Brand brand) {
-		return televisionRepository.existsByModelAndBrand(model,brand);
+	public boolean existsByCode(String code) {
+		return televisionRepository.existsByCode(code);
 	}
 
 	public void save(Television television) {

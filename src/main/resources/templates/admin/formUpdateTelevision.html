@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		Modifica televisore
+</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${userDetails}">
+			<span th:text="${userDetails.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${user}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo-store.png" width="50%" /></a></div>
+	<h1>Aggiorna televisore</h1>
+	<div th:if="${television}">
+		<div>
+			<span th:text="${television.model}">Up!</span>
+			<span th:text="'(' + ${television.code} + ')'">2000</span>
+		</div>
+		<div th:if="${television.model}">
+			<span>Modello: </span><span th:text="${television.model}">
+				</span>
+			<a th:href="@{'/admin/addTelevion/' + ${television.id}}">Modifica modello</a></span>
+		</div>
+		<div th:unless="${television.model}">
+			<a th:href="@{'/admin/addTelevision/' + ${television.id}}">Aggiungi modello</a>
+		</div>
+		
+		<div th:if="${television.brand}">
+			<span>Brand: </span><span th:text="${television.brand} ">
+				</span>
+			<a th:href="@{'/admin/addTelevision/' + ${television.id}}">Modifica regista</a></span>
+		</div>
+		<div th:unless="${television.brand}">
+			<a th:href="@{'/admin/addTelevision/' + ${television.id}}">Aggiungi regista</a>
+		</div>
+		
+		<div th:if="${television.screenInches}">
+			<span>Pollici: </span><span th:text="${television.screenInches} ">
+				</span>
+			<a th:href="@{'/admin/addTelevision/' + ${television.id}}">Modifica pollici</a></span>
+		</div>
+		<div th:unless="${television.screenInches}">
+			<a th:href="@{'/admin/addTelevison/' + ${television.id}}">Aggiungi pollici</a>
+		</div>
+
+
+		
+		<div th:unless="${television}">Televisore non esistente</div>
+</body>
+
+</html>

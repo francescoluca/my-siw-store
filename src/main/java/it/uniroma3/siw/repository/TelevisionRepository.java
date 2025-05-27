@@ -7,6 +7,6 @@ import it.uniroma3.siw.model.Util.Brand;
 
 public interface TelevisionRepository extends CrudRepository<Television, Long>{
 
-	boolean existsByModelAndBrand(String model, Brand brand);
+	boolean existsByCode(String code);
 
 }

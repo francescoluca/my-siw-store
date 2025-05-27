@@ -19,7 +19,7 @@ public class TelevisionValidator implements Validator{
 		Television television = (Television)o;
 		if (television.getModel()!=null &&
 				television.getBrand()!=null && 
-				televisionService.existsByModelAndBrand(television.getModel(),television.getBrand())) {
+				televisionService.existsByCode(television.getCode())) {
 			errors.reject("television.duplicate");
 		}
 	}

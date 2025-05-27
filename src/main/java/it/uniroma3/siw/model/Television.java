@@ -29,6 +29,7 @@ public class Television {
 	private Integer releaseDate;
 	@NotNull
 	private Integer screenInches;
+	@NotNull
 	private String code;
 	@OneToMany(mappedBy = "television")
 	private List<Item> inventoryItems;
