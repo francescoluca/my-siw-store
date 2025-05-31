@@ -14,7 +14,7 @@
 			<span th:text="${userDetails.username}"></span>
 			<a href="/logout">Logout</a>
 		</div>
-		<div th:unless="${user}">
+		<div th:unless="${userDetails}">
 			<a href="/login">Login</a>
 		</div>
 	</header>
@@ -24,8 +24,8 @@
 		<a href="/admin/formNewInventoryItem">Aggiungi un televisore al magazzino</a>
 	</div>>
 	<div>
-			<a href="/admin/manageTelevisions">Modifica  televisori</a>
-		</div>>
+		<a href="/admin/manageTelevisions">Modifica  televisori</a>
+	</div>>
 	<div>
 		<a href="/admin/formNewTelevision">Aggiungi un modello di televisore</a>
 	</div>>
