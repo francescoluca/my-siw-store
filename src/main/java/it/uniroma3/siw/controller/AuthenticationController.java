@@ -39,6 +39,13 @@ public class AuthenticationController {
 		return "formLogin";
 	}
 
+	@GetMapping(value = "/admin/userModeAdmin") 
+	public String userModeAdmin (Model model) {
+		model.addAttribute("isAdmin",true);	
+		return "index";
+	}
+
+	
 	@GetMapping(value = "/") 
 	public String index(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -54,6 +61,7 @@ public class AuthenticationController {
 		}
         return "index.html";
 	}
+	
 		
     @GetMapping(value = "/success")
     public String defaultAfterLogin(Model model) {
