@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import it.uniroma3.siw.controller.validator.TelevisionValidator;
 import it.uniroma3.siw.model.InventoryItem;
 import it.uniroma3.siw.model.Television;
+import it.uniroma3.siw.model.Util.Brand;
 import it.uniroma3.siw.service.TelevisionService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class TelevisionController {
@@ -61,6 +64,15 @@ public class TelevisionController {
 	@GetMapping("/admin/formUpdateTelvision/{id}")
 	public String formUpdateTelvision(@PathVariable("id") Long id,Model model) {
 		model.addAttribute("television", televisionService.findById(id));
+		return "admin/formUpdateTelevision.html";
+	}
+	
+	@GetMapping("/admin/setTelevisionBrand/{televisionId}/{brand}")
+	public String getMethodName(@PathVariable("televisionId") Long televisionId,@PathVariable("brand") Brand brand,Model model) {
+		Television television = televisionService.findById(televisionId);
+		television.setBrand(brand);
+		televisionService.save(television);
+		model.addAttribute("television",television);
 		return "admin/formUpdateTelevision.html";
 	}
 	
