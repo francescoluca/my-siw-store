@@ -35,5 +35,5 @@ insert into television(id, model, brand, release_date, screen_inches, code) valu
 insert into television(id, model, brand, release_date, screen_inches, code) values(976, 'LX940',             'PANASONIC', 2024, 55, 'PAN-55LX940');
 insert into television(id, model, brand, release_date, screen_inches, code) values(975, 'JZ1500 OLED',       'PANASONIC', 2025, 65, 'PAN-65JZ1500');
 
-insert into users(id, name, surname, email) values(1, 'paolo', 'paolo', 'paolo@gmail.com');
-insert into credentials(id, password, role, username, user_id) values(1, '$2a$10$F605H0XOC06ODyI.oQnCzeMWpWRPNOH2DM2Lmf.ZSAkNrTG6Kqa3q', 'ADMIN', 'paolo',1);
+insert into users(id, name, surname, email) values(999, 'paolo', 'paolo', 'paolo@gmail.com');
+insert into credentials(id, password, role, username, user_id) values(999, '$2a$10$F605H0XOC06ODyI.oQnCzeMWpWRPNOH2DM2Lmf.ZSAkNrTG6Kqa3q', 'ADMIN', 'paolo',999);

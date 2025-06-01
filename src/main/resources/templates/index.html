@@ -10,16 +10,6 @@
 </head>
 
 <body>
-    <header>
-        <div th:if="${userDetails}">
-            <span th:text="${userDetails.username}"></span>
-            <a href="/logout">Logout</a>
-        </div>
-        <div th:unless="${userDetails}">
-            <a href="/login">Login</a>
-        </div>
-    </header>
-
     <div class="container">
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
             <div class="col-md-3 mb-2 mb-md-0">
@@ -41,8 +31,14 @@
             </ul>
 
             <div class="col-md-3 text-end">
-                <button type="button" class="btn btn-outline-primary me-2">Accedi</button>
-                <button type="button" class="btn btn-primary">Registrati</button>
+				<div th:if="${userDetails}">
+		            <a href="/profile"><span th:text="'Ciao '+${userDetails.username}"></span></a>
+		            <a href="/logout" class="btn btn-primary">Logout</a>
+		        </div>
+				<div th:unless="${userDetails}">
+				    <a href="/login" class="btn btn-outline-primary me-2">Accedi</a>
+				    <a href="/register" class="btn btn-primary">Registrati</a>
+				</div>
             </div>
         </header>
     </div>
