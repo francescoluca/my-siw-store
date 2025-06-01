@@ -11,40 +11,45 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.controller.validator.ItemValidator;
 import it.uniroma3.siw.model.InventoryItem;
-import it.uniroma3.siw.repository.ItemRepository;
 import it.uniroma3.siw.service.ItemService;
-
 
 @Controller
 public class ItemController {
-	@Autowired 
+	@Autowired
 	private ItemService itemService;
-	
-	@Autowired 
+
+	@Autowired
 	private ItemValidator itemValidator;
 
-	@GetMapping(value="/admin/formNewInventoryItem")
+	@GetMapping(value = "/admin/formNewInventoryItem")
 	public String formNewInventoryItem(Model model) {
 		model.addAttribute("inventoryItem", new InventoryItem());
 		return "admin/formNewInventoryItem.html";
-	}	
+	}
 
 	@PostMapping("/admin/inventoryItem")
-	public String newInventoryItem(@ModelAttribute("inventoryItem") InventoryItem inventoryItem,BindingResult bindingResult,Model model) {
+	public String newInventoryItem(@ModelAttribute("inventoryItem") InventoryItem inventoryItem,
+			BindingResult bindingResult, Model model) {
 		this.itemValidator.validate(inventoryItem, bindingResult);
-		if(!bindingResult.hasErrors()) {
+		if (!bindingResult.hasErrors()) {
 			this.itemService.save(inventoryItem);
-			model.addAttribute("inventoryItem",inventoryItem);
-			return "redirect:/inventoryItem/"+inventoryItem.getId();
-		}else {
+			model.addAttribute("inventoryItem", inventoryItem);
+			return "redirect:/inventoryItem/" + inventoryItem.getId();
+		} else {
 			return "admin/formNewInventoryItem";
 		}
 	}
-	
+
 	@GetMapping("/inventoryItem/{id}")
 	public String getInventoryItem(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("inventoryItem", this.itemService.findById(id));
 		return "inventoryItem.html";
 	}
-	
+
+	@GetMapping("/inventoryItems")
+	public String getInventoryItems(Model model) {
+		model.addAttribute("inventoryItems", this.itemService.findAll());
+		return "inventoryItems.html";
+	}
+
 }

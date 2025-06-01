@@ -9,7 +9,7 @@ import it.uniroma3.siw.repository.ItemRepository;
 
 @Service
 public class ItemService {
-	
+
 	@Autowired
 	private ItemRepository itemRepository;
 
@@ -23,6 +23,10 @@ public class ItemService {
 
 	public Item findById(Long id) {
 		return itemRepository.findById(id).get();
+	}
+
+	public Iterable<Item> findAll() {
+		return itemRepository.findAll();
 	}
 
 }

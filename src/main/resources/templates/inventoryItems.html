@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>TV</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${userDetails}">
+			<span th:text="${userDetails.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${userDetails}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+	<div><a href="/"><img src="/images/logo-store.png" width="15%"/></a></div>
+	<h1>TV</h1>
+	<div th:if="${inventoryItems==null || inventoryItems.isEmpty()}">Non ci sono TV in magazzino</div>
+	<ul>
+		<li th:each="inventoryItem : ${inventoryItems}">
+			<a th:href="@{'/inventoryItem' + '/' + ${inventoryItem.id}}"
+				th:text="${inventoryItem.model} + ' (' + ${inventoryItem.brand} + ')'">Up! (2000)</a>
+		</li>
+	</ul>
+</body>
+
+</html>
