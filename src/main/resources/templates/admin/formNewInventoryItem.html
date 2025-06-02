@@ -1,60 +1,66 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-	<title>
-		New Inventory Item
-	</title>
-	<link rel="stylesheet" href="/css/stile.css" />
-</head>
+	<head>
+		<title>
+			New Inventory Item
+		</title>
+		<link rel="stylesheet" href="/css/stile.css" />
+	</head>
 
-<body>
-	<header>
-		<div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${userDetails}">
-			<a href="/login">Login</a>
-		</div>
-	</header>
-	<div><a href="/"><img src="/images/logo-store.png" width="15%"/></a></div>
-	<h1>Aggiungi un televisore in magazzino</h1>
-	<form th:action="@{/admin/inventoryItem}" method="POST" th:object="${inventoryItem}">
-		<div th:if="${#fields.hasGlobalErrors()}">
-			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p> 
-		</div>
-		<div>
-			<label>Codice prodotto:</label> <span><input required type="text" th:field="${inventoryItem.productCode}" /></span>
-			<span th:if="${#fields.hasErrors('productCode')}" th:errors="*{productCode}"></span>
-		</div>
+	<body>
+		<header>
+			<div th:if="${userDetails}">
+				<span th:text="${userDetails.username}"></span>
+				<a href="/logout">Logout</a>
+			</div>
+			<div th:unless="${userDetails}">
+				<a href="/login">Login</a>
+			</div>
+		</header>
+		<div><a href="/"><img src="/images/logo-store.png" width="15%" /></a></div>
+		<h1>Aggiungi un televisore in magazzino</h1>
+		<form th:action="@{/admin/inventoryItem}" method="POST" th:object="${inventoryItem}">
+			<div th:if="${#fields.hasGlobalErrors()}">
+				<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+			</div>
+			<div>
+				<label>Codice prodotto:</label> <span><input required type="text"
+						th:field="${inventoryItem.productCode}" /></span>
+				<span th:if="${#fields.hasErrors('productCode')}" th:errors="*{productCode}"></span>
+			</div>
 
-		<div>
-			<label>Prezzo:</label> <span><input required type="text" th:field="${inventoryItem.price}" /></span>
-			<span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
-		</div>
+			<div>
+				<label>Prezzo:</label> <span><input required type="text" th:field="${inventoryItem.price}" /></span>
+				<span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+			</div>
 
-		<div>
-		  <label>Condizioni:</label>
-		  <select th:field="*{condition}" required>
-		    <!-- opzione “nessuna selezione” che diventa null -->
-		    <option th:value="${null}" th:text="'Nessuna selezione'"></option>
-			    <option th:each="cond : ${T(it.uniroma3.siw.model.Util.Condition).values()}"
-			            th:value="${cond}"
-			            th:text="${cond}">OPTION</option>
-		  </select>
-		</div>
+			<div>
+				<label>Condizioni:</label>
+				<select th:field="*{condition}" required>
+					<!-- opzione “nessuna selezione” che diventa null -->
+					<option th:value="${null}" th:text="'Nessuna selezione'"></option>
+					<option th:each="cond : ${T(it.uniroma3.siw.model.Util.Condition).values()}" th:value="${cond}"
+						th:text="${cond}">OPTION</option>
+				</select>
+			</div>
+			<div>
+				<label>Modello televisore:</label>
+				<select th:field="*{television}" required>
+					<option th:value="${null}" th:text="'Seleziona un televisore'"></option>
+					<option th:each="tv : ${televisions}" th:value="${tv.id}" th:text="${tv.model}">TV MODEL</option>
+				</select>
+				<span th:if="${#fields.hasErrors('television')}" th:errors="*{television}"></span>
+			</div>
 
-		<div>	
-			<label>Descrizione:</label> <span><input type="text" th:field="${inventoryItem.description}" /></span>
-			<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-		</div>
-
-		
-		<div>
-			<span><button type="submit">Conferma</button></span>
-		</div>
-	</form>
-</body>
+			<div>
+				<label>Descrizione:</label> <span><input type="text" th:field="${inventoryItem.description}" /></span>
+				<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+			</div>
+			<div>
+				<span><button type="submit">Conferma</button></span>
+			</div>
+		</form>
+	</body>
 
 </html>

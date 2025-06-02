@@ -24,6 +24,7 @@
 	  <div th:text="'Condizione: ' + ${inventoryItem.condition}"></div>
 	  <div th:text="'Optional: ' + ${inventoryItem.optional}"></div>
 	  <div th:text="'Descrizione: ' + ${inventoryItem.description}"></div>
+	  <div th:text="'Modello: ' + ${inventoryItem.television.model}"></div>
 	</div>
 
     <div th:unless="${inventoryItem}">Non esiste</div>

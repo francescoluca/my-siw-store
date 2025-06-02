@@ -22,7 +22,7 @@
 	<ul>
 		<li th:each="inventoryItem : ${inventoryItems}">
 			<a th:href="@{'/inventoryItem' + '/' + ${inventoryItem.id}}"
-				th:text="${inventoryItem.model} + ' (' + ${inventoryItem.brand} + ')'">Up! (2000)</a>
+				th:text="${inventoryItem.productCode} +' '+${inventoryItem.television.model} + ' (' + ${inventoryItem.television.brand} + ')'">Up! (2000)</a>
 		</li>
 	</ul>
 </body>

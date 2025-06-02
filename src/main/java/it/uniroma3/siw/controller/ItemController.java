@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import it.uniroma3.siw.controller.validator.ItemValidator;
 import it.uniroma3.siw.model.InventoryItem;
 import it.uniroma3.siw.service.ItemService;
+import it.uniroma3.siw.service.TelevisionService;
 
 @Controller
 public class ItemController {
@@ -19,11 +20,15 @@ public class ItemController {
 	private ItemService itemService;
 
 	@Autowired
+	private TelevisionService televisionService;
+
+	@Autowired
 	private ItemValidator itemValidator;
 
 	@GetMapping(value = "/admin/formNewInventoryItem")
 	public String formNewInventoryItem(Model model) {
 		model.addAttribute("inventoryItem", new InventoryItem());
+		model.addAttribute("televisions", televisionService.findAll());
 		return "admin/formNewInventoryItem.html";
 	}
 
