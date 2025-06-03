@@ -14,17 +14,25 @@ import it.uniroma3.siw.service.UserService;
 @Controller
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-    
-    @Autowired
-    private CredentialsService credentialsService;
+	@Autowired
+	private UserService userService;
 
-    @GetMapping("/profile")
-    public String getProfilePage(@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails, Model model) {
-    	Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-    	User currentUser = userService.getUser(credentials.getId());      
-    	model.addAttribute("user", currentUser);
-        return "/profile";
-    }
+	@Autowired
+	private CredentialsService credentialsService;
+
+	@GetMapping("/profile")
+	public String getProfilePage(
+			@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails,
+			Model model) {
+		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+		User currentUser = userService.getUser(credentials.getId());
+		model.addAttribute("user", currentUser);
+		return "/profile";
+	}
+
+	@GetMapping("/cart")
+	public String cart(@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails,
+			Model model) {
+		return "/cart";
+	}
 }
