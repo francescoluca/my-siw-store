@@ -48,9 +48,23 @@
 				</div>
 			</header>
 		</div>
-		<div th:if="${user}">
-			<h1 th:text="${user.name} + ' ' + ${user.surname}"></h1>
+		<div >
 		</div>
+		<div class="container" th:if="${user}">
+			<h1 th:text="'Benvenuto ' + ${user.name} + ' ' + ${user.surname}"></h1>
+		 					  <p>Qui puoi visualizzare i tuoi ordini</p>
+		 	  <!-- eventuali form o pulsanti -->
+				 <a th:href="@{'/formNewOrder'}">FAI UN NUOVO ORDINE</a>
+					 <script src="…bootstrap.bundle.min.js"></script>
+					 <h1>ORDINI</h1>
+					 		<div th:if="${userOrders==null || userOrders.isEmpty()}">Non ci sono ordini nel sistema</div>
+					 		<ul>
+					 			<li th:each="userOrder : ${userOrders}">
+					 				<a th:href="@{'/order' + '/' + ${userOrder.id}}"
+					 					th:text="${order.orderDate} + ' (' + ${order.total} + ')'"></a>
+					 			</li>
+					 		</ul>
+							</div>
 	</body>
 
 </html>

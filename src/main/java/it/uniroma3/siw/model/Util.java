@@ -19,4 +19,7 @@ public class Util {
 	public enum Brand{
 	    SAMSUNG, LG, SONY, PANASONIC, PHILIPS, HISENSE, TCL, SHARP, TOSHIBA, VIZIO
 	}
+	public enum PicKUpStatus{
+		REFUSED,APPROVED,PENDING,DRAFT
+	}
 }

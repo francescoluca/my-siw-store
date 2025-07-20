@@ -21,6 +21,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 //public  class WebSecurityConfig {
+//Autenticazione
 public class AuthConfiguration {
 
 	@Autowired
@@ -52,12 +53,12 @@ public class AuthConfiguration {
 				// ai css e alle immagini
 				.requestMatchers(HttpMethod.GET, "/", "/index", "/register", "/televisions", "/television/**",
 						"/inventoryItems", "inventoryItem/**", "/css/**", "/images/**", "favicon.ico")
-				.permitAll()
+				.permitAll() //Pagine accessibili a tutti
 				// chiunque (autenticato o no) può mandare richieste POST al punto di accesso
 				// per login e register
-				.requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
-				.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
-				.requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
+				.requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()  //.POST salvataggio
+				.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE) //.get prendi
+				.requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE) 
 				// tutti gli utenti autenticati possono accere alle pagine rimanenti
 				.anyRequest().authenticated()
 				// LOGIN: qui definiamo il login

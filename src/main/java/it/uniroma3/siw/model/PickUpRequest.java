@@ -1,31 +1,30 @@
 package it.uniroma3.siw.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import io.micrometer.common.lang.NonNull;
+import it.uniroma3.siw.model.Util.PicKUpStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class PickUpRequest {
-	
-	private enum PicKUpStatus{
-		REFUSED,APPROVED,PENDING,DRAFT
-	};
-	
+		
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-	@NonNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	private LocalDateTime requestDate;
+	@NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate requestDate;
 	@NonNull
 	private PicKUpStatus status;
 	private String note;
@@ -37,10 +36,10 @@ public class PickUpRequest {
 	@ManyToOne
 	private User user;
 	
-	public LocalDateTime getRequestDate() {
+	public LocalDate getRequestDate() {
 		return requestDate;
 	}
-	public void setRequestDate(LocalDateTime requestDate) {
+	public void setRequestDate(LocalDate requestDate) {
 		this.requestDate = requestDate;
 	}
 	public PicKUpStatus getStatus() {

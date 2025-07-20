@@ -29,6 +29,13 @@ public class Order {
 	@OneToMany(mappedBy = "order")
 	private List<OrderItem> orderItems;
 
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public LocalDateTime getOrderDate() {
 		return orderDate;
 	}

@@ -28,6 +28,7 @@ public class User {
 	private Address address;
 	@OneToOne
 	private ShoppingCart shoppingCart;
+	
 	@OneToMany(mappedBy = "user")
 	private List<Order> orders;
 	
@@ -87,5 +88,13 @@ public class User {
 
 	public void setPickUpRequests(List<PickUpRequest> pickUpRequests) {
 		this.pickUpRequests = pickUpRequests;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 }
