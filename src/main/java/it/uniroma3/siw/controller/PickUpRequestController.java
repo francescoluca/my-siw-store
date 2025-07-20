@@ -1,5 +1,6 @@
 package it.uniroma3.siw.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.controller.validator.OrderValidator;
 import it.uniroma3.siw.controller.validator.PickUpRequestValidator;
@@ -72,9 +74,14 @@ public class PickUpRequestController {
 	}
 
 	@PostMapping("/newRequest")
-	public String newRequest(@ModelAttribute("request") PickUpRequest pickUpRequest, BindingResult bindingResult, Model model) {
+	public String newRequest(@ModelAttribute("request") PickUpRequest pickUpRequest, BindingResult bindingResult, Model model,  @RequestParam("photoFile") MultipartFile photoFile) throws IOException {
+		this.pickUpRequestValidator.validate(pickUpRequest, bindingResult);
+		if (!bindingResult.hasErrors()) {
 			pickUpRequest.setStatus(PicKUpStatus.PENDING);
-			this.pickUpRequestService.save(pickUpRequest);
+			this.pickUpRequestService.save(pickUpRequest,photoFile);
 			return "/formPickUpRequest";
+		} else {
+			return "/formPickUpRequest";
+		}
 	}
 }

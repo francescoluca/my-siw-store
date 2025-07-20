@@ -13,42 +13,86 @@
 			<header th:replace="~{fragments/header :: siteHeader}"></header>
 
 		</div>
-		<div class="container">
-			<h1>Benvenuto nel Servizio Ritiro</h1>
-			<p>Qui puoi richiedere il ritiro del tuo dispositivo.</p>
-			<!-- eventuali form o pulsanti -->
-			<!-- <a th:href="@{'/formNewOrder'}">FAI UN NUOVO ORDINE</a> -->
-			<script src="…bootstrap.bundle.min.js"></script>
-			<h1>RITIRI</h1>
-			<div th:if="${userRequests==null || userRequests.isEmpty()}">Non ci sono richieste nel sistema</div>
-			<ul>
-				<li th:each="userRequest : ${userRequests}">
-					<a th:href="@{'/request' + '/' + ${userRequest.id}}"
-						th:text="${userRequest.requestDate} + '(' + ${userRequest.status} + ')'"></a>
-				</li>
-			</ul>
-		</div>
-		<!-- header/nav come in homepage, oppure solo il contenuto specifico -->
-		<div class="container">
-			<h1>RICHIEDI UN NUOVO RITIRO</h1>
-			<p>Compila questo modulo</p>
-			<form th:action="@{/newRequest}" method="POST" th:object="${request}">
 
+  <!-- header/nav come in homepage, oppure solo il contenuto specifico -->
+ 			 <div class="container">
+  				  <h1>RICHIEDI SERVIZIO DI RITIRO</h1>
+  					  <p>Compila questo modulo</p>
+					  <form th:action="@{/newRequest}" method="POST" th:object="${request}" enctype="multipart/form-data">
 
-				<div class="form-floating mb-3">
-					<input type="date" required th:field="*{requestDate}" class="form-control"
-						placeholder="Data di nascita" />
-					<label for="dayOfBirth">Data di nascita</label>
-				</div>
+						<div class="form-floating mb-3">
 
-				<!--     <div class="mb-3">
-						                <label for="photo" class="form-label">Foto autore:</label>
-						                <input type="file" id="photoFile" name="photoFile" accept="image/*" class="form-control" />
-						                <div class="text-danger" th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}"></div>
-						            </div> -->
-				<button type="submit" class="btn btn-primary">Salva</button>
-			</form>
+						                <input type="text" required th:field="*{name}" class="form-control" placeholder="Inserisci nome" />
+										<label for="name">Nome</label> 
 
+						        </div>
+								<div class="form-floating mb-3">
+
+								                <input type="text" required th:field="*{surname}" class="form-control" placeholder="Inserisci cognome" />
+												<label for="surname">Cognome</label> 
+
+								        </div>
+										<div class="form-floating mb-3">
+
+										                <input type="text" required th:field="*{address}" class="form-control" placeholder="Inserisci indirizzo" />
+														<label for="address">Indirizzo</label> 
+
+										        </div>
+												<div class="form-floating mb-3">
+
+												    <input 
+												        type="int"
+												        th:field="*{phone}"
+												        id="phoneNumber"
+												        class="form-control"
+												        placeholder="Numero di telefono"
+												        required
+												        min="1000000000" 
+												        max="9999999999" />
+														<label for="phone">Numero di telefono</label>
+
+												</div>
+												
+												<div class="form-floating mb-3">
+
+												                <input type="text" required th:field="*{email}" class="form-control" placeholder="Inserisci email" />
+																<label for="surname">Email</label> 
+
+												        </div>
+						            <div class="form-floating mb-3">
+						                <input type="date" required th:field="*{requestDate}" class="form-control"
+						                    placeholder="Data di ritiro" />
+						                <label for="requestDate">Data preferenza ritiro</label>
+						            </div>
+									<div class="mb-3"> 
+				      <label for="photo" class="form-label">Foto televisore</label>
+																                <input type="file" id="photoFile" name="photoFile" accept="image/*" class="form-control" />
+																                <div class="text-danger" th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}"></div>
+																            </div>
+									
+							<div class="form-floating mb-3">
+							                <input type="text" required th:field="*{note}" class="form-control" placeholder="Inserisci delle note" />
+												<label for="photo" class="form-label">Inserisci ulteriori informazioni (facoltativo)</label>
+
+						            </div>
+
+						       
+						            <button type="submit" class="btn btn-primary">Salva</button>
+						        </form>
+								
+								<div class="container">
+
+												 <script src="…bootstrap.bundle.min.js"></script>
+												 <h1>LE TUE RICHIESTE DI RITIRO</h1>
+												 		<div th:if="${userRequests==null || userRequests.isEmpty()}">Non ci sono richieste nel sistema</div>
+												 		<ul>
+												 			<li th:each="userRequest : ${userRequests}">
+												 				<a th:href="@{'/request' + '/' + ${userRequest.id}}"
+												 					th:text="${userRequest.requestDate} + '(' + ${userRequest.status} + ')'"></a>
+												 			</li>
+												 		</ul>
+														</div>
+	
 		</div>
 
 
