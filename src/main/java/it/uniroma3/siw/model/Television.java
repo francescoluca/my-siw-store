@@ -9,16 +9,17 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Television {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	@NotBlank
 	private String model;
 	@NotNull
@@ -33,53 +34,78 @@ public class Television {
 	private String code;
 	@OneToMany(mappedBy = "television")
 	private List<Item> inventoryItems;
-	
+	@Lob
+	private byte[] photo;
+
 	public String getModel() {
 		return model;
 	}
+
 	public void setModel(String model) {
 		this.model = model;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public Integer getReleaseDate() {
 		return releaseDate;
 	}
+
 	public void setReleaseDate(Integer releaseDate) {
 		this.releaseDate = releaseDate;
 	}
+
 	public Integer getScreenInches() {
 		return screenInches;
 	}
+
 	public void setScreenInches(Integer screenInches) {
 		this.screenInches = screenInches;
 	}
+
 	public String getCode() {
 		return code;
 	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
+
 	public List<Item> getInventoryItems() {
 		return inventoryItems;
 	}
+
 	public void setInventoryItems(List<Item> inventoryItems) {
 		this.inventoryItems = inventoryItems;
 	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public Brand getBrand() {
 		return brand;
 	}
+
 	public void setBrand(Brand brand) {
 		this.brand = brand;
+	}
+
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
 	}
 }

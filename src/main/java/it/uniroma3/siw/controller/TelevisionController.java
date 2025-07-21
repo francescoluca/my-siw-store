@@ -1,6 +1,12 @@
 package it.uniroma3.siw.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,6 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import it.uniroma3.siw.controller.validator.TelevisionValidator;
 import it.uniroma3.siw.model.Television;
@@ -30,10 +39,10 @@ public class TelevisionController {
 
 	@PostMapping("/admin/television")
 	public String newInventoryItem(@ModelAttribute("television") Television television, BindingResult bindingResult,
-			Model model) {
+			@RequestParam("photo") MultipartFile photo, Model model) throws IOException {
 		this.televisionValidator.validate(television, bindingResult);
 		if (!bindingResult.hasErrors()) {
-			this.televisionService.save(television);
+			this.televisionService.save(television, photo);
 			model.addAttribute("television", television);
 			return "redirect:/television/" + television.getId();
 		} else {
@@ -75,4 +84,14 @@ public class TelevisionController {
 		return "admin/formUpdateTelevision.html";
 	}
 
+	@GetMapping("/television/{id}/photo")
+	public ResponseEntity<byte[]> cover(@PathVariable Long id) {
+		byte[] image = televisionService.getPhoto(id);
+		if (image == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_JPEG);
+		return new ResponseEntity<>(image, headers, HttpStatus.OK);
+	}
 }

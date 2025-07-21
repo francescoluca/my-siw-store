@@ -1,15 +1,18 @@
 package it.uniroma3.siw.service;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Television;
-import it.uniroma3.siw.model.Util.Brand;
 import it.uniroma3.siw.repository.TelevisionRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class TelevisionService {
-	
+
 	@Autowired
 	public TelevisionRepository televisionRepository;
 
@@ -27,6 +30,22 @@ public class TelevisionService {
 
 	public Iterable<Television> findAll() {
 		return televisionRepository.findAll();
+	}
+
+	public byte[] getPhoto(Long id) {
+		return this.televisionRepository.findById(id).map(Television::getPhoto).orElse(null);
+	}
+
+	@Transactional
+	public void save(Television television, MultipartFile file) throws IOException {
+		if (file != null && !file.isEmpty()) {
+			System.out.println("Foto ricevuta: " + file.getOriginalFilename() + " (" + file.getSize() + " bytes)");
+			television.setPhoto(file.getBytes());
+		} else {
+			System.out.println("Nessuna foto caricata");
+		}
+
+		this.televisionRepository.save(television);
 	}
 
 }

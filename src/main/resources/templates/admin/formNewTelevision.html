@@ -14,7 +14,7 @@
 			<header th:replace="~{fragments/header :: siteHeader}"></header>
 
 			<h1>Aggiungi un modello di televisore</h1>
-			<form th:action="@{/admin/television}" method="POST" th:object="${television}">
+			<form th:action="@{/admin/television}" method="POST" enctype="multipart/form-data" th:object="${television}">
 				<div th:if="${#fields.hasGlobalErrors()}">
 					<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
 				</div>
@@ -43,10 +43,19 @@
 							th:field="${television.screenInches}" /></span>
 					<span th:if="${#fields.hasErrors('screenInches')}" th:errors="*{screenInches}"></span>
 				</div>
+				<div>
+					<label>Codice identificativo:</label> <span><input required type="text"
+							th:field="${television.code}" /></span>
+					<span th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></span>
+				</div>
 
 				<div>
 					<label>Descrizione:</label> <span><input type="text" th:field="${television.description}" /></span>
 					<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+				</div>
+				<div>
+					<label>Foto:</label>
+					<input type="file" name="photo" accept="image/*" />
 				</div>
 
 				<div>
