@@ -46,6 +46,11 @@ public class UserController {
 		return "/profile";
 	}
 
+	@GetMapping("/about")
+	public String getAboutPage(Model model) {
+		return "/about";
+	}
+
 	@GetMapping("/cart")
 	public String cart(@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails,
 			Model model) {
