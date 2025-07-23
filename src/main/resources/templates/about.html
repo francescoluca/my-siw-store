@@ -361,25 +361,11 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <div style="width: 1.5rem; height: 1.5rem; background: white; border-radius: 2px;"></div>
-                    </div>
-                    <span class="logo-text">SIW Televisori</span>
-                </div>
-                <div class="nav-links">
-                    <a href="/">Home</a>
-                    <a href="/chi-siamo" class="active">Chi Siamo</a>
-                    <a href="#contatti" class="btn">Contattaci</a>
-                </div>
-            </div>
-        </div>
-    </nav>
 
+	<div class="container">
+		<header th:replace="~{fragments/header :: siteHeader}"></header>
+
+	</div>
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
@@ -581,7 +567,7 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <a href="#" class="btn btn-lg" style="background: linear-gradient(135deg, var(--primary-color), #3b82f6);">
+                    <a href="/formPickUpRequest" class="btn btn-lg" style="background: linear-gradient(135deg, var(--primary-color), #3b82f6);">
                         Richiedi una Valutazione Gratuita
                     </a>
                 </div>
