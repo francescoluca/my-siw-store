@@ -11,57 +11,56 @@
 
 	<body>
 		<div class="container">
+
 			<header th:replace="~{fragments/header :: siteHeader}"></header>
 
 			<h1>Aggiungi un modello di televisore</h1>
-			<form th:action="@{/admin/television}" method="POST" enctype="multipart/form-data" th:object="${television}">
-				<div th:if="${#fields.hasGlobalErrors()}">
-					<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+			<form th:action="@{/admin/television}" method="POST" th:object="${television}"
+				enctype="multipart/form-data">
+				<div class="form-floating mb-3">
+					<input type="text" required th:field="*{model}" class="form-control"
+						placeholder="Modello televisore" />
+					<label for="model">Modello</label>
 				</div>
-				<div>
-					<label>Modello:</label> <span><input required type="text" th:field="${television.model}" /></span>
-					<span th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></span>
-				</div>
-
-				<div>
-					<label>Brand:</label>
-					<select th:field="*{brand}" required>
-						<!-- opzione “nessuna selezione” che diventa null -->
+				<div class="form-floating mb-3">
+					<select class="form-select" th:field="*{brand}" id="brand">
 						<option th:value="${null}" th:text="'Nessuna selezione'"></option>
 						<option th:each="brand : ${T(it.uniroma3.siw.model.Util.Brand).values()}" th:value="${brand}"
-							th:text="${brand}">BRAND</option>
+							th:text="${brand}">Brand</option>
 					</select>
+					<label for="brand">Marca</label>
 				</div>
-
-				<div>
-					<label>Anno:</label> <span><input required type="text"
-							th:field="${television.releaseDate}" /></span>
-					<span th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}"></span>
+				<div class="form-floating mb-3">
+					<input type="text" required th:field="*{releaseDate}" class="form-control"
+						placeholder="Anno di uscita" />
+					<label for="releaseDate">Anno di uscita</label>
 				</div>
-				<div>
-					<label>Pollici:</label> <span><input required type="text"
-							th:field="${television.screenInches}" /></span>
-					<span th:if="${#fields.hasErrors('screenInches')}" th:errors="*{screenInches}"></span>
+				<div class="form-floating mb-3">
+					<input type="text" required th:field="*{screenInches}" class="form-control" placeholder="Pollici" />
+					<label for="screenInches">Pollici</label>
 				</div>
-				<div>
-					<label>Codice identificativo:</label> <span><input required type="text"
-							th:field="${television.code}" /></span>
-					<span th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></span>
+				<div class="form-floating mb-3">
+					<input type="text" required th:field="*{code}" class="form-control"
+						placeholder="Codice identificativo" />
+					<label for="code">Codice identificativo</label>
 				</div>
-
-				<div>
-					<label>Descrizione:</label> <span><input type="text" th:field="${television.description}" /></span>
-					<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+				<div class="form-floating mb-3">
+					<input type="text" required th:field="*{description}" class="form-control"
+						placeholder="Descrizione" />
+					<label for="description">Descrizione</label>
 				</div>
-				<div>
-					<label>Foto:</label>
-					<input type="file" name="photo" accept="image/*" />
+				<div class="mb-3">
+					<label for="photo" class="form-label">Foto televisore:</label>
+					<input type="file" id="photo" name="photo" accept="image/*" class="form-control" />
+					<div class="text-danger" th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}"></div>
 				</div>
-
-				<div>
-					<span><button type="submit">Conferma</button></span>
-				</div>
+				<button type="submit" class="btn btn-primary">Salva</button>
 			</form>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+			crossorigin="anonymous"></script>
 	</body>
 
 </html>

@@ -9,17 +9,16 @@ import it.uniroma3.siw.model.Television;
 import it.uniroma3.siw.service.TelevisionService;
 
 @Component
-public class TelevisionValidator implements Validator{
+public class TelevisionValidator implements Validator {
 
 	@Autowired
 	private TelevisionService televisionService;
-	
+
 	@Override
 	public void validate(Object o, Errors errors) {
-		Television television = (Television)o;
-		if (television.getModel()!=null &&
-				television.getBrand()!=null && 
-				televisionService.existsByCode(television.getCode())) {
+		Television television = (Television) o;
+		if (television.getModel() != null && television.getBrand() != null
+				&& televisionService.existsByCode(television.getCode())) {
 			errors.reject("television.duplicate");
 		}
 	}

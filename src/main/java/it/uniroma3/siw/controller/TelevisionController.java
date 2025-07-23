@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +32,11 @@ public class TelevisionController {
 
 	@Autowired
 	private TelevisionValidator televisionValidator;
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.setDisallowedFields("photo");
+	}
 
 	@GetMapping(value = "/admin/formNewTelevision")
 	public String formNewTelevision(Model model) {
@@ -74,6 +81,22 @@ public class TelevisionController {
 		return "admin/formUpdateTelevision.html";
 	}
 
+	@PostMapping("/admin/updateTelevision/{id}")
+	public String updateTelevision(@PathVariable("id") Long id, Model model,
+			@ModelAttribute("television") Television updatedTelevision, @RequestParam("photo") MultipartFile photo)
+			throws IOException {
+		Television television = televisionService.findById(id);
+		television.setModel(updatedTelevision.getModel());
+		television.setBrand(updatedTelevision.getBrand());
+		television.setReleaseDate(updatedTelevision.getReleaseDate());
+		television.setScreenInches(updatedTelevision.getScreenInches());
+		television.setCode(updatedTelevision.getCode());
+		television.setDescription(updatedTelevision.getDescription());
+		television.setPhoto(updatedTelevision.getPhoto());
+		televisionService.save(television, photo);
+		return "redirect:/television/" + id;
+	}
+
 	@GetMapping("/admin/setTelevisionBrand/{televisionId}/{brand}")
 	public String getMethodName(@PathVariable("televisionId") Long televisionId, @PathVariable("brand") Brand brand,
 			Model model) {
@@ -85,7 +108,7 @@ public class TelevisionController {
 	}
 
 	@GetMapping("/television/{id}/photo")
-	public ResponseEntity<byte[]> cover(@PathVariable Long id) {
+	public ResponseEntity<byte[]> photo(@PathVariable Long id) {
 		byte[] image = televisionService.getPhoto(id);
 		if (image == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
