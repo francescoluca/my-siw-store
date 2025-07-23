@@ -45,6 +45,20 @@ public class ItemController {
 		}
 	}
 
+	@GetMapping("/admin/manageInventoryItems")
+	public String manageInventoryItems(Model model) {
+		model.addAttribute("inventoryItems", this.itemService.findAllInventoryItems());
+		model.addAttribute("televisions", this.televisionService.findAll());
+		return "/admin/manageInventoryItems";
+	}
+
+	@GetMapping("/admin/formUpdateInventoryItem/{id}")
+	public String formUpdateInventoryItem(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("televisions", this.televisionService.findAll());
+		model.addAttribute("inventoryItem", this.itemService.findById(id));
+		return "/admin/formUpdateInventoryItem";
+	}
+
 	@GetMapping("/inventoryItem/{id}")
 	public String getInventoryItem(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("inventoryItem", this.itemService.findById(id));

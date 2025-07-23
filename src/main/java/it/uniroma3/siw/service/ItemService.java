@@ -29,4 +29,8 @@ public class ItemService {
 		return itemRepository.findAll();
 	}
 
+	public Iterable<InventoryItem> findAllInventoryItems() {
+		return this.itemRepository.findAllInventoryItems();
+	}
+
 }
