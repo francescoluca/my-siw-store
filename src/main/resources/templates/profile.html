@@ -27,6 +27,14 @@
 						th:text="${order.orderDate} + ' (' + ${order.total} + ')'"></a>
 				</li>
 			</ul>
+			<h1>LE TUE RICHIESTE DI RITIRO</h1>
+			<div th:if="${userRequests==null || userRequests.isEmpty()}">Non ci sono richieste nel sistema</div>
+			<ul>
+				<li th:each="userRequest : ${userRequests}">
+					<a th:href="@{'/request' + '/' + ${userRequest.id}}"
+						th:text="${userRequest.requestDate} + '(' + ${userRequest.status} + ')'"></a>
+				</li>
+			</ul>
 		</div>
 	</body>
 

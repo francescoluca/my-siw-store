@@ -7,7 +7,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import io.micrometer.common.lang.NonNull;
 import it.uniroma3.siw.model.Util.PicKUpStatus;
+import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,6 +31,7 @@ public class PickUpRequest {
 	private PicKUpStatus status;
 	private String note;
 	@Lob
+	@Basic(fetch = FetchType.LAZY)
 	private byte[] photo;
 	@OneToMany(mappedBy = "pickUpRequest")
 	private List<PickUpRequestItem> pickUpRequestItems;
@@ -39,8 +42,7 @@ public class PickUpRequest {
 	@NonNull
 	private String address;
 	@NonNull
-
-	private int phone;
+	private String phone;
 	@NotNull
 	private String email;
 
@@ -127,11 +129,11 @@ public class PickUpRequest {
 		this.address = address;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
