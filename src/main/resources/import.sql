@@ -37,10 +37,13 @@ insert into television(id, model, brand, release_date, screen_inches, code) valu
 
 -- ITEM
 insert into item (id, product_code, condition, optional, description, television_id) values (999, 'TV123456', 'NUOVO', 'TELECOMANDO', ' ', 999);
+insert into item (id, product_code, condition, optional, description, television_id) values (998, 'TV123457', 'USATO', 'STAFFA', ' ', 989);
+insert into item (id, product_code, condition, description, television_id) values (997, 'TV123458', 'RICONDIZIONATO', ' ', 975);
 
 -- INVENTORY ITEM
 insert into inventory_item (id, price) values (999, 699);
-
+insert into inventory_item (id, price) values (998, 899);
+insert into inventory_item (id, price) values (997, 499);
 
 insert into users(id, name, surname, email) values(999, 'paolo', 'paolo', 'paolo@gmail.com');
 insert into credentials(id, password, role, username, user_id) values(999, '$2a$10$F605H0XOC06ODyI.oQnCzeMWpWRPNOH2DM2Lmf.ZSAkNrTG6Kqa3q', 'ADMIN', 'paolo',999);
