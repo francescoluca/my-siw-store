@@ -1,6 +1,12 @@
 package it.uniroma3.siw.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,6 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import it.uniroma3.siw.controller.validator.ItemValidator;
 import it.uniroma3.siw.model.InventoryItem;
@@ -34,15 +43,34 @@ public class ItemController {
 
 	@PostMapping("/admin/inventoryItem")
 	public String newInventoryItem(@ModelAttribute("inventoryItem") InventoryItem inventoryItem,
-			BindingResult bindingResult, Model model) {
+			@RequestParam("photo") MultipartFile photo, BindingResult bindingResult, Model model) throws IOException {
 		this.itemValidator.validate(inventoryItem, bindingResult);
 		if (!bindingResult.hasErrors()) {
-			this.itemService.save(inventoryItem);
+			this.itemService.save(inventoryItem, photo);
 			model.addAttribute("inventoryItem", inventoryItem);
 			return "redirect:/inventoryItem/" + inventoryItem.getId();
 		} else {
 			return "admin/formNewInventoryItem";
 		}
+	}
+
+	@PostMapping("/admin/updateInventoryItem/{id}")
+	public String updateInventoryItem(@PathVariable("id") Long id, Model model,
+			@ModelAttribute("inventoryItem") InventoryItem updatedInventoryItem,
+			@RequestParam(value = "photo", required = false) MultipartFile photo) throws IOException {
+		InventoryItem inventoryItem = (InventoryItem) itemService.findById(id);
+		inventoryItem.setCondition(updatedInventoryItem.getCondition());
+		inventoryItem.setDescription(updatedInventoryItem.getDescription());
+		inventoryItem.setOptional(updatedInventoryItem.getOptional());
+		inventoryItem.setPrice(updatedInventoryItem.getPrice());
+		inventoryItem.setProductCode(updatedInventoryItem.getProductCode());
+
+		if (updatedInventoryItem.getTelevision() != null) {
+			inventoryItem.setTelevision(updatedInventoryItem.getTelevision());
+		}
+
+		itemService.save(inventoryItem, photo);
+		return "redirect:/inventoryItem/" + id;
 	}
 
 	@GetMapping("/admin/manageInventoryItems")
@@ -69,6 +97,17 @@ public class ItemController {
 	public String getInventoryItems(Model model) {
 		model.addAttribute("inventoryItems", this.itemService.findAll());
 		return "inventoryItems.html";
+	}
+
+	@GetMapping("/inventoryItem/{id}/photo")
+	public ResponseEntity<byte[]> photo(@PathVariable Long id) {
+		byte[] image = itemService.getPhoto(id);
+		if (image == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_JPEG);
+		return new ResponseEntity<>(image, headers, HttpStatus.OK);
 	}
 
 }

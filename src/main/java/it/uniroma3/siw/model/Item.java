@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +19,7 @@ import jakarta.validation.constraints.NotNull;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Item {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@NotBlank
 	private String productCode;
@@ -30,41 +31,62 @@ public abstract class Item {
 	private String description;
 	@ManyToOne
 	private Television television;
-	
+	@Lob
+	private byte[] photo;
+
 	public Condition getCondition() {
 		return condition;
 	}
+
 	public void setCondition(Condition condition) {
 		this.condition = condition;
 	}
+
 	public Optional getOptional() {
 		return optional;
 	}
+
 	public void setOptional(Optional optional) {
 		this.optional = optional;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public Television getTelevision() {
 		return television;
 	}
+
 	public void setTelevision(Television television) {
 		this.television = television;
 	}
+
 	public String getProductCode() {
 		return productCode;
 	}
+
 	public void setProductCode(String serialNumber) {
 		this.productCode = serialNumber;
 	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
 	}
 }
