@@ -38,6 +38,8 @@ public class PickUpRequestController {
 		User currentUser = userService.getCurrentUser(userDetails);
 		model.addAttribute("user", currentUser);
 		model.addAttribute("pickUpRequest", new PickUpRequest());
+		model.addAttribute("activePage", "formPickUpRequest");
+
 		return "/formPickUpRequest";
 	}
 

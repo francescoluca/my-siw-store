@@ -3,6 +3,7 @@ package it.uniroma3.siw.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -35,19 +36,42 @@ public class AuthenticationController {
 	public String showRegisterForm(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("credentials", new Credentials());
+		model.addAttribute("activePage", "register");
+
 		return "formRegisterUser";
 	}
 
 	@GetMapping(value = "/login")
 	public String showLoginForm(Model model) {
+		model.addAttribute("activePage", "login");
+
 		return "formLogin";
 	}
 
-	@GetMapping(value = "/admin/userModeAdmin")
-	public String userModeAdmin(Model model) {
+//	@GetMapping(value = "/admin/userModeAdmin")
+//	public String userModeAdmin(Model model) {
+//		model.addAttribute("inventoryItems", itemService.findAllInventoryItems());
+//		model.addAttribute("isAdmin", true);
+//		model.addAttribute("activePage", "admin");
+//
+//		return "index";
+//	}
+	@GetMapping({ "/admin", "/admin/userModeAdmin" })
+
+	public String adminPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+		// 1. Calcolo del flag isAdmin (dipende da come gestisci i ruoli)
+		boolean isAdmin = userDetails.getAuthorities().stream()
+				.anyMatch(granted -> granted.getAuthority().equals("ROLE_ADMIN"));
+		model.addAttribute("isAdmin", isAdmin);
+
+		// 2. Quale "activePage" usare: lo lasciamo sempre "admin",
+		// così link e label (tramite la ternaria) rimangono coerenti
+		model.addAttribute("activePage", "admin");
 		model.addAttribute("inventoryItems", itemService.findAllInventoryItems());
 		model.addAttribute("isAdmin", true);
-		return "index";
+
+		// 3. Ritorno della view (admin.html)
+		return "admin";
 	}
 
 	@GetMapping(value = "/")

@@ -43,17 +43,20 @@ public class UserController {
 		model.addAttribute("user", currentUser);
 		model.addAttribute("userOrders", userOrders);
 		model.addAttribute("userRequests", userRequests);
-		return "/profile";
+		model.addAttribute("activePage", "profile");
+		return "profile";
 	}
 
 	@GetMapping("/about")
 	public String getAboutPage(Model model) {
-		return "/about";
+		model.addAttribute("activePage", "about");
+		return "about";
 	}
 
 	@GetMapping("/cart")
 	public String cart(@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails,
 			Model model) {
-		return "/cart";
+		model.addAttribute("activePage", "cart");
+		return "cart";
 	}
 }
