@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.InventoryItem;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.UserRepository;
 
@@ -45,5 +46,17 @@ public class UserService {
 	public User getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 		return this.getUser(credentials.getId());
+	}
+
+	public List<InventoryItem> getCartItemsByUser(User currentuser) {
+		return this.userRepository.getCartItemsByUserId(currentuser.getId());
+	}
+
+	public Double getCartSubtotalByUser(User currentUser) {
+		return this.userRepository.getCartSubtotalByUserId(currentUser.getId());
+	}
+
+	public boolean isItemAlreadyInCart(User currentUser, InventoryItem item) {
+		return userRepository.isItemInCart(currentUser.getId(), item);
 	}
 }

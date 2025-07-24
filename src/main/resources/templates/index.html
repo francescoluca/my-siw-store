@@ -137,7 +137,7 @@
 					<div class="col-lg-8">
 						<h1 class="display-4 fw-bold mb-4">Recupero e Vendita Televisori Ricondizionati</h1>
 						<p class="lead mb-4">Dai nuova vita al tuo vecchio TV e scopri la nostra selezione di televisori
-							ricondizionati di qualità. Ritiro gratuito a domicilio in tutta Italia.</p>
+							ricondizionati di qualit&agrave;. Ritiro gratuito a domicilio in tutta Italia.</p>
 						<div class="d-flex flex-wrap gap-3">
 							<a href="#ritiro" class="btn btn-primary btn-lg">
 								<i class="fas fa-truck me-2"></i>Richiedi Ritiro Gratuito
@@ -169,7 +169,7 @@
 						<div class="feature-icon">
 							<i class="fas fa-shield-alt fa-2x"></i>
 						</div>
-						<h5 class="text-center">Garanzia Qualità</h5>
+						<h5 class="text-center">Garanzia Qualit&agrave;</h5>
 						<p class="text-center">Tutti i nostri prodotti sono testati e garantiti</p>
 					</div>
 				</div>
@@ -182,64 +182,6 @@
 			<div class="container">
 				<div class="text-center mb-5">
 					<h2 class="h1 fw-bold text-primary">Catalogo Televisori</h2>
-					<p class="lead">Scopri la nostra selezione di televisori ricondizionati di alta qualità</p>
-				</div>
-
-				<!-- Browse by Brand -->
-				<div class="mb-5">
-					<h3 class="text-center mb-4">Sfoglia per Marca</h3>
-					<div class="row justify-content-center">
-						<div class="col-6 col-md-2 text-center mb-3">
-							<div class="card h-100">
-								<div class="card-body">
-									<img src="https://logos-world.net/wp-content/uploads/2020/04/Samsung-Logo.png"
-										alt="Samsung" class="brand-logo mb-2">
-									<h6 class="card-title">Samsung</h6>
-									<small class="text-muted">45 prodotti</small>
-								</div>
-							</div>
-						</div>
-						<div class="col-6 col-md-2 text-center mb-3">
-							<div class="card h-100">
-								<div class="card-body">
-									<img src="https://logos-world.net/wp-content/uploads/2020/04/LG-Logo.png" alt="LG"
-										class="brand-logo mb-2">
-									<h6 class="card-title">LG</h6>
-									<small class="text-muted">38 prodotti</small>
-								</div>
-							</div>
-						</div>
-						<div class="col-6 col-md-2 text-center mb-3">
-							<div class="card h-100">
-								<div class="card-body">
-									<img src="https://logos-world.net/wp-content/uploads/2020/04/Sony-Logo.png"
-										alt="Sony" class="brand-logo mb-2">
-									<h6 class="card-title">Sony</h6>
-									<small class="text-muted">32 prodotti</small>
-								</div>
-							</div>
-						</div>
-						<div class="col-6 col-md-2 text-center mb-3">
-							<div class="card h-100">
-								<div class="card-body">
-									<img src="https://logos-world.net/wp-content/uploads/2020/04/Panasonic-Logo.png"
-										alt="Panasonic" class="brand-logo mb-2">
-									<h6 class="card-title">Panasonic</h6>
-									<small class="text-muted">25 prodotti</small>
-								</div>
-							</div>
-						</div>
-						<div class="col-6 col-md-2 text-center mb-3">
-							<div class="card h-100">
-								<div class="card-body">
-									<img src="https://logos-world.net/wp-content/uploads/2020/04/Philips-Logo.png"
-										alt="Philips" class="brand-logo mb-2">
-									<h6 class="card-title">Philips</h6>
-									<small class="text-muted">29 prodotti</small>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 
 				<!-- Featured Products -->
@@ -267,9 +209,10 @@
 											<span class="h5 text-primary mb-0 me-2"
 												th:text="${inventoryItem.price}+'$'"></span>
 										</div>
-										<button class="btn btn-primary w-100">
-											<i class="fas fa-shopping-cart me-2"></i>Aggiungi al Carrello
-										</button>
+										<a th:href="@{'/addToCart/'+ ${inventoryItem.id}}"> <button
+												class="btn btn-primary w-100">
+												<i class="fas fa-shopping-cart me-2"></i>Aggiungi al Carrello
+											</button></a>
 									</div>
 								</div>
 							</a>

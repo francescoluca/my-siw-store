@@ -91,4 +91,12 @@ public class User {
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
+
+	public List<InventoryItem> getCartItems() {
+		return cartItems;
+	}
+
+	public void setCartItems(List<InventoryItem> cartItems) {
+		this.cartItems = cartItems;
+	}
 }
