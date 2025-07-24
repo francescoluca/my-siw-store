@@ -20,13 +20,12 @@
 		<link
 			href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
 			rel="stylesheet">
-		<link rel="stylesheet" href="/css/style.css" />
-	</head>
+		<link rel="stylesheet" href="/css/styles.css">
+		<meta charset="UTF-8">
 
 	<body>
 		<div class="container">
-			<header th:replace="~{fragments/header :: siteHeader}"></header>
-			<h1>Aggiorna televisore in magazzino</h1>
+			<div th:replace="fragments/header :: siteHeader"></div>			<h1>Aggiorna televisore in magazzino</h1>
 			<form th:action="@{'/admin/updateInventoryItem/' + ${inventoryItem.id}}" th:object="${inventoryItem}"
 				method="post" enctype="multipart/form-data">
 				<div class="form-floating mb-3">

@@ -7,6 +7,8 @@
 		<title>TV Recycle Store - Recupero e Vendita Televisori</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="/css/styles.css">
+
 		<style>
 			:root {
 				--primary-color: #2563eb;
@@ -124,39 +126,9 @@
 
 	<body>
 		<!-- Header -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-			<div class="container">
-				<a class="navbar-brand" href="#">
-					<i class="fas fa-tv me-2"></i>TV Recycle Store
-				</a>
-
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav ms-auto">
-						<li class="nav-item">
-							<a class="nav-link" href="#catalogo">Catalogo</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#ritiro">Ritiro Gratuito</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#contatti">Contatti</a>
-						</li>
-					</ul>
-					<div class="d-flex ms-3">
-						<button class="btn btn-outline-primary me-2">
-							<i class="fas fa-user"></i> Login
-						</button>
-						<button class="btn btn-primary">
-							<i class="fas fa-shopping-cart"></i> Carrello
-						</button>
-					</div>
-				</div>
-			</div>
-		</nav>
+		<div class="container">
+			<div th:replace="fragments/header :: siteHeader"></div>
+		</div>
 
 		<!-- Hero Section -->
 		<section class="hero-section">

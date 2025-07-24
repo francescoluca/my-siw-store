@@ -13,104 +13,59 @@
 
 	<body>
 		<!-- Header globale (frammento Thymeleaf) -->
-		<header
-		  th:fragment="siteHeader"
-		  class="navbar d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-		  
-		  <div class="container nav-content row">
+		<!-- fragments/header.html -->
+		<header th:fragment="siteHeader" class="navbar">
+		  <div class="container d-flex justify-content-between align-items-center">
 
-		    <!-- Logo -->
-		    <a th:href="@{/}"
-		       class="logo d-inline-flex align-items-center text-decoration-none"
-		       th:classappend="${activePage=='home'} ? ' active'">
-		      <div class="logo-icon">
-		        <!-- SVG o immagine qui -->
-		      </div>
-		      <span class="logo-text">SIW Televisori</span>
-		    </a>
+		    <!-- Logo + menu -->
+		    <div class="d-flex align-items-center gap-4">
+		      <a href="/" class="logo d-flex align-items-center">
+		        <div class="logo-icon">
+		          <div class="logo-shape"></div>
+		        </div>
+		        <span class="logo-text">SIW Televisori</span>
+		      </a>
 
-		    <!-- Menu principale -->
-		    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-		      <li>
-		        <a th:href="@{/}"
-		           class="nav-link px-2"
-		           th:classappend="${activePage=='home'} ? ' active'">
-		          HOME
-		        </a>
-		      </li>
-		      <li>
-		        <a th:href="@{/formPickUpRequest}"
-		           class="nav-link px-2"
-		           th:classappend="${activePage=='servizio-ritiro'} ? ' active'">
-		          SERVIZIO RITIRO
-		        </a>
-		      </li>
-		      <li>
-		        <a th:href="@{/about}"
-		           class="nav-link px-2"
-		           th:classappend="${activePage=='about'} ? ' active'">
-		          CHI SIAMO
-		        </a>
-		  <!--    </li>
-		      <li th:if="${isAdmin}">
-		        <a th:href="@{/admin}"
-		           class="nav-link px-2"
-		           th:classappend="${activePage=='admin'} ? ' active'">
-		          MODALITÀ ADMIN
-		        </a>
-		      </li>
-		      <li th:unless="${isAdmin}">
-		        <a th:href="@{/admin/userModeAdmin}"
-		           class="nav-link px-2"
-		           th:classappend="${activePage=='userMode'} ? ' active'">
-		          MODALITÀ USER
-		        </a>
-		      </li> -->
-			  <li>
-			     <a th:href="${isAdmin} 
-			                  ? @{/admin} 
-			                  : @{/admin/userModeAdmin}"
-			        class="nav-link px-2"
-			        th:classappend="${activePage=='admin'} ? ' active'">
-			       <span th:text="${isAdmin} 
-			                       ? 'MODALITÀ ADMIN' 
-			                       : 'MODALITÀ USER'">
-			         MODALITÀ
-			       </span>
-			     </a>
-			   </li>
-		    </ul>
+			  <nav class="main-nav d-flex justify-content-center flex-grow-1 gap-4">
+			    <a th:href="@{/}" th:classappend="${activePage=='home'} ? ' link-active'">Home</a>
+			    <a th:href="@{/formPickUpRequest}" th:classappend="${activePage=='servizio-ritiro'} ? ' link-active'">Servizio ritiro</a>
+			    <a th:href="@{/about}" th:classappend="${activePage=='about'} ? ' link-active'">Chi siamo</a>
+				<a th:href="@{/cart}" class="nav-link active" th:classappend="${activePage=='cart'} ? ' active'">
+				  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" stroke="black" stroke-width="1.5"
+				       stroke-linecap="round" stroke-linejoin="round" class="bi bi-cart" viewBox="0 0 24 24">
+				    <circle cx="9" cy="21" r="1"/>
+				    <circle cx="20" cy="21" r="1"/>
+				    <path d="M1 1h4l2.68 13.39a1 1 0 0 0 .99.81H19a1 1 0 0 0 .97-.76L23 6H6"/>
+				  </svg>
+				</a>
 
-		    <!-- Area utente / carrello -->
-		    <div class="col-md-3 text-end">
-		      <div th:if="${userDetails}">
-		        <a th:href="@{/profile}"
-		           class="nav-link px-2 me-2"
-		           th:classappend="${activePage=='profile'} ? ' active'">
-		        </a>
-		        <a th:href="@{/cart}"
-		           class="nav-link px-2 me-2"
-		           th:classappend="${activePage=='cart'} ? ' active'">
-		          <!-- SVG carrello qui -->
-		        </a>
-		        <a th:href="@{/logout}" class="btn btn-primary">Logout</a>
-		      </div>
-		      <div th:unless="${userDetails}">
-		        <a th:href="@{/login}"
-		           class="btn btn-outline-primary me-2"
-		           th:classappend="${activePage=='login'} ? ' active'">
-		          Accedi
-		        </a>
-		        <a th:href="@{/register}"
-		           class="btn btn-primary"
-		           th:classappend="${activePage=='register'} ? ' active'">
-		          Registrati
-		        </a>
-		      </div>
+			  </nav>
 		    </div>
 
+		    <!-- Carrello + utente -->
+		    <div class="d-flex align-items-center gap-3">
+
+		      <!-- Carrello -->
+
+		      <!-- Area utente -->
+		      <div class="user-area d-flex align-items-center gap-2">
+		        <div th:if="${userDetails}" class="d-flex align-items-center gap-2">
+					<a th:href="@{/profile}"
+					   class="nav-profile"
+					   th:classappend="${activePage=='profile'} ? ' nav-profile-active'">
+					  <span th:text="'Ciao ' + ${userDetails.username}"></span>
+					</a>
+		          <a th:href="@{/logout}" class="btn btn-outline">Logout</a>
+		        </div>
+		        <div th:unless="${userDetails}" class="d-flex align-items-center gap-2">
+		          <a th:href="@{/login}" class="btn-outline" th:classappend="${activePage=='login'} ? ' active'">Accedi</a>
+		          <a th:href="@{/register}" class="btn btn-primary" th:classappend="${activePage=='register'} ? ' active'">Registrati</a>
+		        </div>
+		      </div>
+		    </div>
 		  </div>
 		</header>
+
 
 			
 	</body>
