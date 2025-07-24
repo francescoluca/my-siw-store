@@ -47,8 +47,8 @@
 				<div class="form-floating mb-3">
 					<select class="form-select" th:field="*{condition}" id="condition">
 						<option value="" th:text="'Nessuna selezione'"></option>
-						<option th:each="condition : ${T(it.uniroma3.siw.model.Util.Condition).values()}" th:value="${condition}"
-							th:text="${condition}">
+						<option th:each="condition : ${T(it.uniroma3.siw.model.Util.Condition).values()}"
+							th:value="${condition}" th:text="${condition}">
 						</option>
 					</select>
 
@@ -57,6 +57,24 @@
 				<div class="form-floating mb-3">
 					<input type="int" required th:field="*{price}" class="form-control" placeholder="Prezzo" />
 					<label for="price">Prezzo</label>
+				</div>
+				<div class="mb-3">
+					<div class="position-relative d-inline-block" style="--bs-aspect-ratio: 150%; max-width:200px">
+						<img th:if="${inventoryItem.photo}"
+							th:src="@{'/inventoryItem/' + ${inventoryItem.id} + '/photo'}"
+							class="w-100 h-100 object-fit-contain" alt="Foto televisore" />
+						<img th:unless="${inventoryItem.photo}" src="/images/noTelevisionPhoto.jpg"
+							class="w-100 h-100 object-fit-contain" alt="Foto assente" />
+						<div class="position-absolute" style="top: 5px; right: 5px; opacity: 0.8;">
+							<button type="button" id="btnChangeCover" class="btn btn-light btn-sm me-1">
+								<i class="bi bi-pencil-fill"></i>
+							</button>
+							<button type="button" id="btnDeleteCover" class="btn btn-light btn-sm">
+								<i class="bi bi-trash-fill text-danger"></i>
+							</button>
+						</div>
+						<input type="file" id="photoInput" name="photo" accept="image/*" style="display: none;" />
+					</div>
 				</div>
 				<div class="form-floating mb-3">
 					<input type="text" th:field="*{description}" class="form-control" placeholder="Descrizione" />

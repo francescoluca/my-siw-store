@@ -45,6 +45,11 @@
 					<input type="int" required th:field="*{price}" class="form-control" placeholder="Prezzo" />
 					<label for="price">Prezzo</label>
 				</div>
+				<div class="mb-3">
+					<label for="photo" class="form-label">Foto televisore:</label>
+					<input type="file" id="photo" name="photo" accept="image/*" class="form-control" />
+					<div class="text-danger" th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}"></div>
+				</div>
 				<div class="form-floating mb-3">
 					<input type="text" th:field="*{description}" class="form-control" placeholder="Descrizione" />
 					<label for="description">Descrizione (facoltativo)</label>

@@ -39,7 +39,6 @@ public class TelevisionService {
 	@Transactional
 	public void save(Television television, MultipartFile file) throws IOException {
 		if (file != null && !file.isEmpty()) {
-			System.out.println("Foto ricevuta: " + file.getOriginalFilename() + " (" + file.getSize() + " bytes)");
 			television.setPhoto(file.getBytes());
 		} else {
 			System.out.println("Nessuna foto caricata");
