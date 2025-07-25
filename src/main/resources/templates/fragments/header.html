@@ -1,71 +1,62 @@
 <!DOCTYPE html>
+
+<head>
 <html lang="it" xmlns:th="http://www.thymeleaf.org">
+	<link rel="stylesheet" href="/css/styles.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <!-- Questi link saranno nelle pagine che includono l'header -->
+</head>
 
+<body>
+    <!-- Header Fragment -->
+    <nav th:fragment="siteHeader" class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="fas fa-tv me-2"></i>TV Recycle Store
+            </a>
 
-	<head>
-		<title>Homepage</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-			integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-			 <meta charset="UTF-8">
-			  <!-- Tuo CSS -->
-			  <link rel="stylesheet" href="/css/styles.css">
-			</head>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-	<body>
-		<!-- Header globale (frammento Thymeleaf) -->
-		<!-- fragments/header.html -->
-		<header th:fragment="siteHeader" class="navbar">
-		  <div class="container d-flex justify-content-between align-items-center">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}" th:classappend="${activePage=='home'} ? ' active'">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/formPickUpRequest}" th:classappend="${activePage=='servizio-ritiro'} ? ' active'">Servizio di ritiro</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/about}" th:classappend="${activePage=='about'} ? ' active'">Chi siamo</a>
+                    </li>
+                    <li class="nav-item" th:if="${userDetails}">
+                        <a class="nav-link" th:href="@{/profile}" th:classappend="${activePage=='profile'} ? ' active'">Profilo</a>
+                    </li>
+                </ul>
+                <div class="d-flex ms-3">
+                    <!-- Gestione Login/Logout -->
+                    <div th:if="${userDetails}">
+                        <button class="btn btn-outline-primary me-2" th:onclick="'window.location.href=\'/logout\''">
+                            <i class="fas fa-user"></i> Logout
+                        </button>
+                    </div>
+                    
+                    <div th:unless="${userDetails}">
+                        <button class="btn btn-outline-primary me-2" th:onclick="'window.location.href=\'/login\''">
+                            <i class="fas fa-user"></i> Login
+                        </button>
+                    </div>
+                    
+                    <button class="btn btn-primary" th:onclick="'window.location.href=\'/cart\''">
+                        <i class="fas fa-shopping-cart"></i> Carrello
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</body>
 
-		    <!-- Logo + menu -->
-		    <div class="d-flex align-items-center gap-4">
-		      <a href="/" class="logo d-flex align-items-center">
-		        <div class="logo-icon">
-		          <div class="logo-shape"></div>
-		        </div>
-		        <span class="logo-text">SIW Televisori</span>
-		      </a>
-
-			  <nav class="main-nav d-flex justify-content-center flex-grow-1 gap-4">
-			    <a th:href="@{/}" th:classappend="${activePage=='home'} ? ' link-active'">Home</a>
-			    <a th:href="@{/formPickUpRequest}" th:classappend="${activePage=='servizio-ritiro'} ? ' link-active'">Servizio ritiro</a>
-			    <a th:href="@{/about}" th:classappend="${activePage=='about'} ? ' link-active'">Chi siamo</a>
-				<a th:href="@{/cart}" class="nav-link active" th:classappend="${activePage=='cart'} ? ' active'">
-				  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" stroke="black" stroke-width="1.5"
-				       stroke-linecap="round" stroke-linejoin="round" class="bi bi-cart" viewBox="0 0 24 24">
-				    <circle cx="9" cy="21" r="1"/>
-				    <circle cx="20" cy="21" r="1"/>
-				    <path d="M1 1h4l2.68 13.39a1 1 0 0 0 .99.81H19a1 1 0 0 0 .97-.76L23 6H6"/>
-				  </svg>
-				</a>
-
-			  </nav>
-		    </div>
-
-		    <!-- Carrello + utente -->
-		    <div class="d-flex align-items-center gap-3">
-
-		      <!-- Carrello -->
-
-		      <!-- Area utente -->
-		      <div class="user-area d-flex align-items-center gap-2">
-		        <div th:if="${userDetails}" class="d-flex align-items-center gap-2">
-					<a th:href="@{/profile}"
-					   class="nav-profile"
-					   th:classappend="${activePage=='profile'} ? ' nav-profile-active'">
-					  <span th:text="'Ciao ' + ${userDetails.username}"></span>
-					</a>
-		          <a th:href="@{/logout}" class="btn btn-outline">Logout</a>
-		        </div>
-		        <div th:unless="${userDetails}" class="d-flex align-items-center gap-2">
-		          <a th:href="@{/login}" class="btn-outline" th:classappend="${activePage=='login'} ? ' active'">Accedi</a>
-		          <a th:href="@{/register}" class="btn btn-primary" th:classappend="${activePage=='register'} ? ' active'">Registrati</a>
-		        </div>
-		      </div>
-		    </div>
-		  </div>
-		</header>
-
-
-			
-	</body>
+</html>
