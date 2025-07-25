@@ -184,9 +184,44 @@
 					<h2 class="h1 fw-bold text-primary">Catalogo Televisori</h2>
 				</div>
 
+				
+				
 				<!-- Featured Products -->
 				<h3 class="text-center mb-4">Prodotti in Evidenza</h3>
-				<div class="row">
+				<div class="col-md-6">
+														<form th:action="@{/books}" method="get" class="d-flex justify-content-end">
+															<div class="input-group" style="width: 250px;">
+																<label class="input-group-text" for="sort_select">
+																	<i class="fas fa-sort me-1"></i>Ordina per
+																</label>
+																<select id="sort_select" name="sortField" class="form-select"
+																	th:value="${sortField}" onchange="this.form.submit()"
+																	aria-label="Ordina i risultati">
+
+																	<option value="title" th:selected="${sortField=='title'}">
+																		Titolo
+																	</option>
+																	<option value="year" th:selected="${sortField=='year'}">
+																		Anno
+																	</option>
+
+																	<option value="pages" th:selected="${sortField=='pages'}">
+																		Numero pagine
+																	</option>
+																</select>
+																<input type="hidden" name="keyword" th:value="${keyword}" />
+																<input type="hidden" name="sortDir" th:value="${sortDir}" />
+															</div>
+															<button type="button" class="btn btn-outline-secondary ms-2" th:onclick="'window.location.href=\'' 
+														            + @{/books(keyword=${keyword},sortField=${sortField}, sortDir=${reverseSortDir})} 
+														            + '\';'">
+																<i class="bi"
+																	th:classappend="${sortDir=='asc'} ? ' bi-caret-up-fill' : ' bi-caret-down-fill'"></i>
+															</button>
+														</form>
+
+													</div>
+				<div class="container">
 					<ul class="list-unstyled">
 						<li th:each="inventoryItem : ${inventoryItems}">
 							<a th:href="@{'/inventoryItem/' + ${inventoryItem.id}}"
@@ -221,11 +256,6 @@
 					</ul>
 				</div>
 
-				<div class="text-center mt-4">
-					<a href="/inventoryItems"><button class="btn btn-outline-primary btn-lg">
-							<i class="fas fa-th-large me-2"></i>Vedi Tutto il Catalogo
-						</button></a>
-				</div>
 			</div>
 		</section>
 
