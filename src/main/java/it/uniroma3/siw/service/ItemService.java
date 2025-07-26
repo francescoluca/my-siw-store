@@ -33,10 +33,6 @@ public class ItemService {
 		return itemRepository.findAll();
 	}
 
-	public Iterable<InventoryItem> findAllInventoryItems() {
-		return this.itemRepository.findAllInventoryItems();
-	}
-
 	public byte[] getPhoto(Long id) {
 		return this.itemRepository.findById(id).map(Item::getPhoto).orElse(null);
 	}

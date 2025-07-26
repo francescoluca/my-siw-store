@@ -3,7 +3,6 @@ package it.uniroma3.siw.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -18,6 +17,7 @@ import it.uniroma3.siw.controller.validator.UserValidator;
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.CredentialsService;
+import it.uniroma3.siw.service.InventoryItemService;
 import it.uniroma3.siw.service.ItemService;
 import it.uniroma3.siw.service.UserService;
 import jakarta.validation.Valid;
@@ -33,6 +33,8 @@ public class AuthenticationController {
 
 	@Autowired
 	private ItemService itemService;
+	@Autowired
+	private InventoryItemService inventoryItemService;
 	@Autowired
 	private UserValidator userValidator;
 
@@ -63,28 +65,11 @@ public class AuthenticationController {
 //
 //		return "index";
 //	}
-	@GetMapping({ "/admin", "/admin/userModeAdmin" })
-
-	public String adminPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-		// 1. Calcolo del flag isAdmin (dipende da come gestisci i ruoli)
-		boolean isAdmin = userDetails.getAuthorities().stream()
-				.anyMatch(granted -> granted.getAuthority().equals("ROLE_ADMIN"));
-		model.addAttribute("isAdmin", isAdmin);
-
-		// 2. Quale "activePage" usare: lo lasciamo sempre "admin",
-		// così link e label (tramite la ternaria) rimangono coerenti
-		model.addAttribute("activePage", "admin");
-		model.addAttribute("inventoryItems", itemService.findAllInventoryItems());
-		model.addAttribute("isAdmin", true);
-
-		// 3. Ritorno della view (admin.html)
-		return "admin";
-	}
 
 	@GetMapping(value = "/")
 	public String index(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		model.addAttribute("inventoryItems", itemService.findAllInventoryItems());
+		model.addAttribute("inventoryItems", inventoryItemService.findAll());
 		if (authentication instanceof AnonymousAuthenticationToken) {
 			return "index.html";
 		} else {
@@ -103,7 +88,7 @@ public class AuthenticationController {
 
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-		model.addAttribute("inventoryItems", itemService.findAllInventoryItems());
+		model.addAttribute("inventoryItems", inventoryItemService.findAll());
 		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			return "admin/indexAdmin.html";
 		}

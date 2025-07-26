@@ -3,10 +3,15 @@ package it.uniroma3.siw.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import it.uniroma3.siw.controller.validator.ItemValidator;
 import it.uniroma3.siw.model.InventoryItem;
+import it.uniroma3.siw.service.InventoryItemService;
 import it.uniroma3.siw.service.ItemService;
 import it.uniroma3.siw.service.TelevisionService;
 
@@ -30,6 +36,9 @@ public class ItemController {
 
 	@Autowired
 	private TelevisionService televisionService;
+
+	@Autowired
+	private InventoryItemService inventoryItemService;
 
 	@Autowired
 	private ItemValidator itemValidator;
@@ -75,7 +84,7 @@ public class ItemController {
 
 	@GetMapping("/admin/manageInventoryItems")
 	public String manageInventoryItems(Model model) {
-		model.addAttribute("inventoryItems", this.itemService.findAllInventoryItems());
+		model.addAttribute("inventoryItems", this.inventoryItemService.findAll());
 		model.addAttribute("televisions", this.televisionService.findAll());
 		return "/admin/manageInventoryItems";
 	}
@@ -94,8 +103,33 @@ public class ItemController {
 	}
 
 	@GetMapping("/inventoryItems")
-	public String getInventoryItems(Model model) {
-		model.addAttribute("inventoryItems", this.itemService.findAll());
+	public String listTelevisions(@RequestParam(required = false) String keyword,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size,
+			@RequestParam(value = "sortField", defaultValue = "price") String sortField,
+			@RequestParam(value = "sortDir", defaultValue = "asc") String sortDir, Model model,
+			@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails) {
+
+		Sort.Direction direction = sortDir.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+		Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortField));
+		Page<InventoryItem> inventoryItemPage;
+
+		if (keyword != null && !keyword.trim().isEmpty()) {
+			inventoryItemPage = inventoryItemService.searchWithSort(keyword, sortField, pageable);
+			model.addAttribute("keyword", keyword);
+		} else {
+			inventoryItemPage = inventoryItemService.findAll(pageable);
+		}
+		model.addAttribute("inventoryItemsCount", inventoryItemPage.getTotalElements());
+		model.addAttribute("inventoryItems", inventoryItemPage.getContent());
+		model.addAttribute("inventoryItemPage", inventoryItemPage);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages",
+				inventoryItemPage.getTotalPages() == 0 ? 1 : inventoryItemPage.getTotalPages());
+		model.addAttribute("pageSize", size);
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 		return "inventoryItems.html";
 	}
 
