@@ -59,4 +59,8 @@ public class UserService {
 	public boolean isItemAlreadyInCart(User currentUser, InventoryItem item) {
 		return userRepository.isItemInCart(currentUser.getId(), item);
 	}
+
+	public boolean existsByEmail(String email) {
+		return userRepository.existsByEmail(email);
+	}
 }

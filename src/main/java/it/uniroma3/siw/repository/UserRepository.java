@@ -20,4 +20,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	@Query("SELECT CASE WHEN :item MEMBER OF u.cartItems THEN true ELSE false END FROM User u WHERE u.id = :userId")
 	boolean isItemInCart(@Param("userId") Long userId, @Param("item") InventoryItem item);
 
+	boolean existsByEmail(String email);
+
 }
