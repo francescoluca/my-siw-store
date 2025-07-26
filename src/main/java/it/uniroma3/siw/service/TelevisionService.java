@@ -3,6 +3,8 @@ package it.uniroma3.siw.service;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,6 +47,14 @@ public class TelevisionService {
 		}
 
 		this.televisionRepository.save(television);
+	}
+
+	public Page<Television> searchTelevisionsByKeyword(String keyword, Pageable pageable) {
+		return this.televisionRepository.searchTelevisionsByKeyword(keyword, pageable);
+	}
+
+	public Page<Television> findAll(Pageable pageable) {
+		return televisionRepository.findAll(pageable);
 	}
 
 }

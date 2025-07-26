@@ -3,10 +3,15 @@ package it.uniroma3.siw.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -64,8 +69,32 @@ public class TelevisionController {
 	}
 
 	@GetMapping("/televisions")
-	public String getTelevisions(Model model) {
-		model.addAttribute("televisions", this.televisionService.findAll());
+	public String listTelevisions(@RequestParam(required = false) String keyword,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size,
+			@RequestParam(value = "sortField", defaultValue = "screenInches") String sortField,
+			@RequestParam(value = "sortDir", defaultValue = "asc") String sortDir, Model model,
+			@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails) {
+
+		Sort.Direction direction = sortDir.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+		Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortField));
+		Page<Television> televisionPage;
+
+		if (keyword != null && !keyword.trim().isEmpty()) {
+			televisionPage = televisionService.searchTelevisionsByKeyword(keyword, pageable);
+			model.addAttribute("keyword", keyword);
+		} else {
+			televisionPage = televisionService.findAll(pageable);
+		}
+		model.addAttribute("televisionsCount", televisionPage.getTotalElements());
+		model.addAttribute("televisions", televisionPage.getContent());
+		model.addAttribute("televisionPage", televisionPage);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", televisionPage.getTotalPages() == 0 ? 1 : televisionPage.getTotalPages());
+		model.addAttribute("pageSize", size);
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 		return "televisions.html";
 	}
 
