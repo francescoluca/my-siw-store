@@ -39,7 +39,7 @@
 					<select class="form-select" th:field="*{condition}" id="condition">
 						<option value="" th:text="'Nessuna selezione'"></option>
 						<option th:each="condition : ${T(it.uniroma3.siw.model.Util.Condition).values()}"
-							th:value="${condition}" th:text="${condition}">
+							th:value="${condition}" th:text="${condition.label}">
 						</option>
 					</select>
 

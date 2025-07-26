@@ -3,11 +3,33 @@ package it.uniroma3.siw.model;
 public class Util {
 
 	public enum Condition {
-		NUOVO, RICONDIZIONATO, USATO, PER_PEZZI_DI_RICAMBIO, COME_NUOVO, ROTTO, FUNZIONANTE
+		NUOVO("NUOVO"), RICONDIZIONATO("RICONDIZIONATO"), USATO("USATO"),
+		PER_PEZZI_DI_RICAMBIO("PER PEZZI DI RICAMBIO"), COME_NUOVO("COME NUOVO"), ROTTO("ROTTO"),
+		FUNZIONANTE("FUNZIONANTE");
+
+		private final String label;
+
+		Condition(String label) {
+			this.label = label;
+		}
+
+		public String getLabel() {
+			return label;
+		}
 	}
 
 	public enum Optional {
-		TELECOMANDO, STAFFA_DA_MURO, STAFFA
+		TELECOMANDO("TELECOMANDO"), STAFFA_DA_MURO("STAFFA DA MURO"), STAFFA("STAFFA");
+
+		private final String label;
+
+		Optional(String label) {
+			this.label = label;
+		}
+
+		public String getLabel() {
+			return label;
+		}
 	}
 
 	public enum Brand {
