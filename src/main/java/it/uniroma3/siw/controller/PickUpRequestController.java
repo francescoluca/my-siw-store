@@ -72,4 +72,10 @@ public class PickUpRequestController {
 
 		return "redirect:/profile";
 	}
+
+	@GetMapping("/admin/managePickUpRequests")
+	public String managePickUpRequests(Model model) {
+		model.addAttribute("pickUpRequests", pickUpRequestService.findAll());
+		return "admin/managePickUpRequests";
+	}
 }
