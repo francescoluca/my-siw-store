@@ -75,6 +75,7 @@
 			.text-primary {
 				color: var(--primary-color) !important;
 			}
+
 			ul.list-unstyled {
 				display: flex;
 				flex-wrap: wrap;
@@ -106,7 +107,7 @@
 						<p class="lead mb-4">Dai nuova vita al tuo vecchio TV e scopri la nostra selezione di televisori
 							ricondizionati di qualit&agrave;. Ritiro gratuito a domicilio in tutta Italia.</p>
 						<div class="d-flex flex-wrap gap-3">
-							<a href="#ritiro" class="btn btn-primary btn-lg">
+							<a href="/formPickUpRequest" class="btn btn-primary btn-lg">
 								<i class="fas fa-truck me-2"></i>Richiedi Ritiro Gratuito
 							</a>
 							<a href="#catalogo" class="btn btn-outline-light btn-lg">
@@ -115,8 +116,6 @@
 						</div>
 					</div>
 				</div>
-
-				<!-- Features -->
 				<div class="row mt-5">
 					<div class="col-md-4">
 						<div class="feature-icon">
@@ -142,84 +141,49 @@
 				</div>
 			</div>
 		</section>
-
-
-		<!-- TV Catalog Section -->
 		<section id="catalogo" class="py-5">
 			<div class="container">
 				<div class="text-center mb-5">
 					<h2 class="h1 fw-bold text-primary">Catalogo Televisori</h2>
 				</div>
-
-
-
-				<!-- Featured Products -->
 				<h3 class="text-center mb-4">Prodotti in Evidenza</h3>
-				<div class="col-md-6">
-					<form th:action="@{/books}" method="get" class="d-flex justify-content-end">
-						<div class="input-group" style="width: 250px;">
-							<label class="input-group-text" for="sort_select">
-								<i class="fas fa-sort me-1"></i>Ordina per
-							</label>
-							<select id="sort_select" name="sortField" class="form-select" th:value="${sortField}"
-								onchange="this.form.submit()" aria-label="Ordina i risultati">
-
-								<option value="title" th:selected="${sortField=='title'}">
-									Titolo
-								</option>
-								<option value="year" th:selected="${sortField=='year'}">
-									Anno
-								</option>
-
-								<option value="pages" th:selected="${sortField=='pages'}">
-									Numero pagine
-								</option>
-							</select>
-							<input type="hidden" name="keyword" th:value="${keyword}" />
-							<input type="hidden" name="sortDir" th:value="${sortDir}" />
-						</div>
-						<button type="button" class="btn btn-outline-secondary ms-2" th:onclick="'window.location.href=\'' 
-														            + @{/books(keyword=${keyword},sortField=${sortField}, sortDir=${reverseSortDir})} 
-														            + '\';'">
-							<i class="bi"
-								th:classappend="${sortDir=='asc'} ? ' bi-caret-up-fill' : ' bi-caret-down-fill'"></i>
-						</button>
-					</form>
-
-				</div>
-				<div class="container">
-					<ul class="list-unstyled">
-						<li th:each="inventoryItem : ${inventoryItems}">
-							<a th:href="@{'/inventoryItem/' + ${inventoryItem.id}}"
-								class="text-decoration-none text-dark">
-								<div class="card tv-card h-100">
-									<img src="https://images.unsplash.com/photo-1593784991095-a205069470b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-										class="card-img-top" alt="Samsung TV">
-									<div class="card-body">
-										<div class="d-flex justify-content-between align-items-start mb-2">
-											<h6 class="text-muted mb-0" th:text="${inventoryItem.television.model}">
-											</h6>
-											<span class="badge badge-condition"
-												th:text="${inventoryItem.condition}"></span>
-										</div>
-										<h5 class="card-title"
-											th:text="${inventoryItem.productCode} + ' ' + ${inventoryItem.television.screenInches} + '&quot;'">
-										</h5>
-
-										<div class="d-flex align-items-center mb-2">
-											<span class="h5 text-primary mb-0 me-2"
-												th:text="${inventoryItem.price}+'$'"></span>
-										</div>
-										<a th:href="@{'/addToCart/'+ ${inventoryItem.id}}"> <button
-												class="btn btn-primary w-100">
-												<i class="fas fa-shopping-cart me-2"></i>Aggiungi al Carrello
-											</button></a>
+			</div>
+			<div class="container">
+				<ul class="list-unstyled">
+					<li th:each="inventoryItem : ${inventoryItems}">
+						<a th:href="@{'/inventoryItem/' + ${inventoryItem.id}}" class="text-decoration-none text-dark">
+							<div class="card tv-card h-100">
+								<img src="https://images.unsplash.com/photo-1593784991095-a205069470b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+									class="card-img-top" alt="Samsung TV">
+								<div class="card-body">
+									<div class="d-flex justify-content-between align-items-start mb-2">
+										<h6 class="text-muted mb-0" th:text="${inventoryItem.television.model}">
+										</h6>
+										<span class="badge badge-condition" th:text="${inventoryItem.condition}"></span>
 									</div>
+									<h5 class="card-title"
+										th:text="${inventoryItem.productCode} + ' ' + ${inventoryItem.television.screenInches} + '&quot;'">
+									</h5>
+
+									<div class="d-flex align-items-center mb-2">
+										<span class="h5 text-primary mb-0 me-2"
+											th:text="${inventoryItem.price}+'$'"></span>
+									</div>
+									<a th:href="@{'/addToCart/'+ ${inventoryItem.id}}"> <button
+											class="btn btn-primary w-100">
+											<i class="fas fa-shopping-cart me-2"></i>Aggiungi al Carrello
+										</button></a>
 								</div>
-							</a>
-						</li>
-					</ul>
+							</div>
+						</a>
+					</li>
+				</ul>
+				<div class="text-center mt-4">
+					<a href="/inventoryItems"><button class="btn btn-outline-primary btn-lg">
+							<i class="fas fa-th-large me-2"></i>Vedi Tutto il Catalogo
+						</button></a>
 				</div>
+			</div>
 			</div>
 		</section>
 		<footer th:replace="~{fragments/footer :: siteFooter}"></footer>

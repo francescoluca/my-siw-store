@@ -130,3 +130,13 @@ footer {
 .footer-link:hover {
 	color: white;
 }
+.tv-image-wrapper {
+	max-width: 400px;
+}
+
+.tv-image-wrapper img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	border-radius: 0.5rem;
+}

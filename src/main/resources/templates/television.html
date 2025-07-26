@@ -16,12 +16,14 @@
 		</div>
 		<h1>Dettagli Televisore</h1>
 		<div th:if="${television}">
-			<div class="ratio" style="--bs-aspect-ratio: 150%; max-width: 200px;">
-				<div th:if="${television.photo}"><img th:src="@{'/television/' + ${television.id} + '/photo'}"
-						class="w-110 h-68 object-fit-contain" alt="Foto televisore" />
+			<div class="ratio ratio-16x9 tv-image-wrapper">
+				<div th:if="${television.photo}">
+					<img th:src="@{'/television/' + ${television.id} + '/photo'}"
+						class="img-fluid object-fit-contain" alt="Foto televisore" />
 				</div>
-				<div th:unless="${television.photo}"><img src="/images/noTelevisionPhoto.jpg"
-						class="w-110 h-68 object-fit-contain" alt="Foto televisore" />
+				<div th:unless="${television.photo}">
+					<img src="/images/noTelevisionPhoto.jpg" class="img-fluid object-fit-contain"
+						alt="Foto televisore" />
 				</div>
 			</div>
 			<div th:text="'Modello: ' + ${television.model}"></div>
