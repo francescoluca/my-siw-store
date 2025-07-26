@@ -1,219 +1,320 @@
 <!DOCTYPE html>
-<html lang="it" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi Siamo - SIW Televisori Roma</title>
-    <meta name="description" content="SIW Televisori - Il punto di riferimento a Roma per comprare e vendere televisori. Servizio di ritiro a domicilio e valutazione.">
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-    <!-- Header -->
-	<div class="container">
-		<div th:replace="fragments/header :: siteHeader"></div>
-	</div>
+<html lang="it">
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="base-container"> <!-- old: .container -->
-            <span class="badge">La tua fiducia dal 2010</span>
-            <h1>Chi Siamo</h1>
-            <p>
-                SIW Televisori è il punto di riferimento a Roma per l'acquisto e la vendita di televisori.
-                Offriamo un servizio completo che combina convenienza, affidabilità e sostenibilità.
-            </p>
-        </div>
-    </section>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Chi Siamo - SIW Televisori Roma</title>
+		<meta name="description"
+			content="SIW Televisori - Il punto di riferimento a Roma per comprare e vendere televisori. Servizio di ritiro a domicilio e valutazione gratuita.">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Main Content -->
-    <div class="base-container content"> <!-- old: .container content -->
-        <!-- Storia Section -->
-        <section class="section">
-            <div class="grid grid-2">
-                <div>
-                    <h2 class="text-3xl">La Nostra Storia</h2>
-                    <p class="mb-4" style="color: var(--muted); line-height: 1.7;">
-                        Fondata nel cuore di Roma, SIW Televisori nasce dalla passione per la tecnologia e
-                        dall'impegno verso un consumo più sostenibile. La nostra missione è semplice:
-                        rendere accessibile a tutti la tecnologia di qualità.
-                    </p>
-                    <p class="mb-6" style="color: var(--muted); line-height: 1.7;">
-                        Nel corso degli anni abbiamo sviluppato un sistema innovativo che permette ai nostri
-                        clienti di vendere facilmente i propri televisori usati e di acquistarne di nuovi
-                        a prezzi vantaggiosi, il tutto con la massima comodità.
-                    </p>
-                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                        <span class="badge" style="background: transparent; border: 1px solid var(--border); color: var(--foreground);">Oltre 1000 clienti soddisfatti</span>
-                        <span class="badge" style="background: transparent; border: 1px solid var(--border); color: var(--foreground);">Servizio a domicilio</span>
-                        <span class="badge" style="background: transparent; border: 1px solid var(--border); color: var(--foreground);">Valutazione gratuita</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-icon">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="8" r="7"/>
-                                    <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88"/>
-                                </svg>
-                            </div>
-                            <div class="stat-number">13+</div>
-                            <div class="stat-label">Anni di esperienza</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-icon">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                    <circle cx="9" cy="7" r="4"/>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                                </svg>
-                            </div>
-                            <div class="stat-number">1000+</div>
-                            <div class="stat-label">Clienti serviti</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-icon">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M7 8h10"/>
-                                    <path d="M7 12h4l1 2h4"/>
-                                    <path d="M7 16h6"/>
-                                    <rect x="4" y="4" width="16" height="16" rx="2"/>
-                                </svg>
-                            </div>
-                            <div class="stat-number">500+</div>
-                            <div class="stat-label">TV riciclati</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-icon">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                                </svg>
-                            </div>
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Affidabilità</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+		<style>
+			:root {
+				--primary-color: #2563eb;
+				--secondary-color: #64748b;
+				--accent-color: #059669;
+				--dark-bg: #1e293b;
+				--light-bg: #f8fafc;
+			}
 
-        <!-- Services Section -->
-        <section class="section">
-            <h2 class="text-3xl text-center mb-12">I Nostri Servizi</h2>
-            <div class="grid grid-2">
-                <div class="card">
-                    <div class="feature-highlight">
-                        <i>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M7 8h10"/>
-                                <path d="M7 12h4l1 2h4"/>
-                                <path d="M7 16h6"/>
-                                <rect x="4" y="4" width="16" height="16" rx="2"/>
-                            </svg>
-                        </i>
-                    </div>
-                    <h3 class="text-3xl mb-3">Vendi il Tuo Televisore</h3>
-                    <p class="mb-4" style="color: var(--muted);">
-                        Processo semplice e veloce per vendere il tuo televisore usato
-                    </p>
-                    <ul class="service-list">
-                        <li><div class="service-dot"></div>Compilazione form online gratuita</li>
-                        <li><div class="service-dot"></div>Valutazione professionale immediata</li>
-                        <li><div class="service-dot"></div>Servizio di ritiro a domicilio gratuito</li>
-                        <li><div class="service-dot"></div>Pagamento sicuro e immediato</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <div class="feature-highlight">
-                        <i>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="8" r="7"/>
-                                <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88"/>
-                            </svg>
-                        </i>
-                    </div>
-                    <h3 class="text-3xl mb-3">Acquista Televisori di Qualità</h3>
-                    <p class="mb-4" style="color: var(--muted);">
-                        Trova il televisore perfetto tra la nostra selezione curata
-                    </p>
-                    <ul class="service-list">
-                        <li><div class="service-dot-primary"></div>Televisori testati e garantiti</li>
-                        <li><div class="service-dot-primary"></div>Prezzi competitivi e trasparenti</li>
-                        <li><div class="service-dot-primary"></div>Consegna e installazione gratuita</li>
-                        <li><div class="service-dot-primary"></div>Garanzia estesa disponibile</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+			body {
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			}
 
-        <!-- Contact Section -->
-        <section class="section" id="contatti">
-            <div class="card">
-                <h2 class="text-3xl text-center mb-12">Contattaci</h2>
-                <div class="contact-grid">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                        </div>
-                        <h3 class="contact-title">Sede</h3>
-                        <p class="contact-info">Roma, Italia</p>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                            </svg>
-                        </div>
-                        <h3 class="contact-title">Telefono</h3>
-                        <p class="contact-info">+39 06 123 4567</p>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                <polyline points="22,6 12,13 2,6"/>
-                            </svg>
-                        </div>
-                        <h3 class="contact-title">Email</h3>
-                        <p class="contact-info">info@siwtelevisori.it</p>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <polyline points="12,6 12,12 16,14"/>
-                            </svg>
-                        </div>
-                        <h3 class="contact-title">Orari</h3>
-                        <p class="contact-info">Lun-Ven 9:00-18:00</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <a href="#" class="btn-base btn-base-lg" style="background: linear-gradient(135deg, var(--primary-color), #3b82f6);"> <!-- old: .btn .btn-lg -->
-                        Richiedi una Valutazione Gratuita
-                    </a>
-                </div>
-            </div>
-        </section>
-    </div>
+			.hero-section {
+				background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1593784991095-a205069470b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+				background-size: cover;
+				background-position: center;
+				min-height: 600px;
+				color: white;
+				display: flex;
+				align-items: center;
+			}
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="base-container"> <!-- old: .container -->
-            <div class="footer-logo">
-                <div class="footer-logo-icon">
-                    <div style="width: 1.5rem; height: 1.5rem; background: white; border-radius: 2px;"></div>
-                </div>
-                <span style="font-size: 1.25rem; font-weight: bold;">SIW Televisori</span>
-            </div>
-            <p>
-                © 2024 SIW Televisori. Tutti i diritti riservati. | Il tuo partner di fiducia per televisori a Roma.
-            </p>
-        </div>
-    </footer>
-</body>
+			.brand-logo {
+				width: 60px;
+				height: 60px;
+				object-fit: contain;
+				background: white;
+				border-radius: 8px;
+				padding: 10px;
+			}
+
+			.tv-card {
+				transition: transform 0.3s ease;
+				border: none;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			}
+
+			.tv-card:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+			}
+
+			.badge-condition {
+				background-color: var(--accent-color);
+			}
+
+			.pickup-section {
+				background-color: var(--light-bg);
+			}
+
+			.feature-icon {
+				width: 60px;
+				height: 60px;
+				background-color: var(--primary-color);
+				color: white;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin: 0 auto 1rem;
+			}
+
+			.navbar-brand {
+				font-weight: bold;
+				color: var(--primary-color) !important;
+			}
+
+			.btn-primary {
+				background-color: var(--primary-color);
+				border-color: var(--primary-color);
+			}
+
+			.btn-outline-primary {
+				color: var(--primary-color);
+				border-color: var(--primary-color);
+			}
+
+			.text-primary {
+				color: var(--primary-color) !important;
+			}
+			.stats-card {
+				background: white;
+				border-radius: 10px;
+				padding: 2rem;
+				text-align: center;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+				transition: transform 0.3s ease;
+			}
+
+			.stats-card:hover {
+				transform: translateY(-5px);
+			}
+
+			.service-item {
+				background: white;
+				border-radius: 10px;
+				padding: 2rem;
+				margin-bottom: 2rem;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+				transition: transform 0.3s ease;
+			}
+
+			.service-item:hover {
+				transform: translateY(-5px);
+			}
+
+			.contact-card {
+				background: white;
+				border-radius: 10px;
+				padding: 2rem;
+				text-align: center;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+				transition: transform 0.3s ease;
+			}
+
+			.contact-card:hover {
+				transform: translateY(-5px);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container-fluid px-0" th:replace="fragments/header :: siteHeader"></div>
+		<!-- Storia Section -->
+		<section class="py-5">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-6">
+						<h2 class="h1 mb-4">La Nostra Storia</h2>
+						<p class="text-muted mb-4">
+							Fondata nel cuore di Roma, SIW Televisori nasce dalla passione per la tecnologia e
+							dall'impegno verso un consumo più sostenibile. La nostra missione è semplice:
+							rendere accessibile a tutti la tecnologia di qualità.
+						</p>
+						<p class="text-muted mb-4">
+							Nel corso degli anni abbiamo sviluppato un sistema innovativo che permette ai nostri
+							clienti di vendere facilmente i propri televisori usati e di acquistarne di nuovi
+							a prezzi vantaggiosi, il tutto con la massima comodità.
+						</p>
+						<div class="d-flex flex-wrap gap-2">
+							<span class="badge bg-light text-dark border">Oltre 1000 clienti soddisfatti</span>
+							<span class="badge bg-light text-dark border">Servizio a domicilio</span>
+							<span class="badge bg-light text-dark border">Valutazione gratuita</span>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="row g-3">
+							<div class="col-md-6">
+								<div class="stats-card">
+									<div class="feature-icon">
+										<i class="fas fa-medal"></i>
+									</div>
+									<h3 class="h4 text-primary">13+</h3>
+									<p class="text-muted mb-0">Anni di esperienza</p>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="stats-card">
+									<div class="feature-icon">
+										<i class="fas fa-users"></i>
+									</div>
+									<h3 class="h4 text-primary">1000+</h3>
+									<p class="text-muted mb-0">Clienti serviti</p>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="stats-card">
+									<div class="feature-icon">
+										<i class="fas fa-tv"></i>
+									</div>
+									<h3 class="h4 text-primary">500+</h3>
+									<p class="text-muted mb-0">TV riciclati</p>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="stats-card">
+									<div class="feature-icon">
+										<i class="fas fa-shield-alt"></i>
+									</div>
+									<h3 class="h4 text-primary">100%</h3>
+									<p class="text-muted mb-0">Affidabilità</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Services Section -->
+		<section class="pickup-section py-5">
+			<div class="container">
+				<h2 class="text-center mb-5 display-5">I Nostri Servizi</h2>
+				<div class="row">
+					<div class="col-lg-6 mb-4">
+						<div class="service-item">
+							<div class="feature-icon mb-3">
+								<i class="fas fa-hand-holding-usd"></i>
+							</div>
+							<h3 class="h4 mb-3">Vendi il Tuo Televisore</h3>
+							<p class="text-muted mb-4">
+								Processo semplice e veloce per vendere il tuo televisore usato
+							</p>
+							<ul class="list-unstyled">
+								<li class="mb-2">
+									<i class="fas fa-check text-success me-2"></i>
+									Compilazione form online gratuita
+								</li>
+								<li class="mb-2">
+									<i class="fas fa-check text-success me-2"></i>
+									Valutazione professionale immediata
+								</li>
+								<li class="mb-2">
+									<i class="fas fa-check text-success me-2"></i>
+									Servizio di ritiro a domicilio gratuito
+								</li>
+								<li class="mb-2">
+									<i class="fas fa-check text-success me-2"></i>
+									Pagamento sicuro e immediato
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-6 mb-4">
+						<div class="service-item">
+							<div class="feature-icon mb-3">
+								<i class="fas fa-shopping-cart"></i>
+							</div>
+							<h3 class="h4 mb-3">Acquista Televisori di Qualità</h3>
+							<p class="text-muted mb-4">
+								Ampia selezione di televisori controllati e garantiti
+							</p>
+							<ul class="list-unstyled">
+								<li class="mb-2">
+									<i class="fas fa-check text-primary me-2"></i>
+									Televisori testati e ricondizionati
+								</li>
+								<li class="mb-2">
+									<i class="fas fa-check text-primary me-2"></i>
+									Garanzia su tutti i prodotti
+								</li>
+								<li class="mb-2">
+									<i class="fas fa-check text-primary me-2"></i>
+									Consegna e installazione inclusa
+								</li>
+								<li class="mb-2">
+									<i class="fas fa-check text-primary me-2"></i>
+									Prezzi competitivi e trasparenti
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Contact Section -->
+		<section class="py-5" id="contatti">
+			<div class="container">
+				<h2 class="text-center mb-5 display-5">Contattaci</h2>
+				<div class="row g-4 mb-5">
+					<div class="col-md-6 col-lg-3">
+						<div class="contact-card">
+							<div class="feature-icon mb-3">
+								<i class="fas fa-map-marker-alt"></i>
+							</div>
+							<h5>Ubicazione</h5>
+							<p class="text-muted mb-0">Via Roma, 123<br>00100 Roma, Italia</p>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-3">
+						<div class="contact-card">
+							<div class="feature-icon mb-3">
+								<i class="fas fa-phone"></i>
+							</div>
+							<h5>Telefono</h5>
+							<p class="text-muted mb-0">+39 06 1234567<br>Lun-Ven 9:00-18:00</p>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-3">
+						<div class="contact-card">
+							<div class="feature-icon mb-3">
+								<i class="fas fa-envelope"></i>
+							</div>
+							<h5>Email</h5>
+							<p class="text-muted mb-0">info@siwtelevisori.it<br>Risposta in 24h</p>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-3">
+						<div class="contact-card">
+							<div class="feature-icon mb-3">
+								<i class="fas fa-clock"></i>
+							</div>
+							<h5>Orari</h5>
+							<p class="text-muted mb-0">Lun-Ven: 9:00-18:00<br>Sab: 9:00-13:00</p>
+						</div>
+					</div>
+				</div>
+				<div class="text-center">
+					<a href="#" class="btn btn-primary btn-lg">Richiedi Valutazione Gratuita</a>
+				</div>
+			</div>
+		</section>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+
 </html>

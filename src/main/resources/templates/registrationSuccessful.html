@@ -1,37 +1,42 @@
 <!DOCTYPE html>
-<html lang="it"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8" />
-    <title>Registrazione conclusa</title>
-    <link rel="stylesheet" href="/css/stile.css" />
-</head>
-<body>
-    <header>
-        <div sec:authorize="isAuthenticated()">
-            <span sec:authentication="name"></span>
-            <a th:href="@{/logout}">Logout</a>
-        </div>
-        <div sec:authorize="!isAuthenticated()">
-            <a th:href="@{/login}">Login</a>
-        </div>
-    </header>
-	<div><a href="/"><img src="/images/logo-store.png" width="15%"/></a></div>
+<html lang="it" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <h1>Congratulazioni, ti sei registrato!</h1>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Registrazione conclusa</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+			integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+		<link rel="stylesheet" href="/css/styles.css">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+	</head>
 
-    <div>
-        <strong>Nome:</strong>
-        <span th:text="${user.name}"></span>
-    </div>
-    <div>
-        <strong>Cognome:</strong>
-        <span th:text="${user.surname}"></span>
-    </div>
-    <div>
-        <strong>Email:</strong>
-        <span th:text="${user.email}"></span>
-    </div>
-</body>
+	<body>
+		<header>
+			<div sec:authorize="isAuthenticated()">
+				<span sec:authentication="name"></span>
+				<a th:href="@{/logout}">Logout</a>
+			</div>
+			<div sec:authorize="!isAuthenticated()">
+				<a th:href="@{/login}">Login</a>
+			</div>
+		</header>
+		<div><a href="/"><img src="/images/logo-store.png" width="15%" /></a></div>
+
+		<h1>Congratulazioni, ti sei registrato!</h1>
+
+		<div>
+			<strong>Nome:</strong>
+			<span th:text="${user.name}"></span>
+		</div>
+		<div>
+			<strong>Cognome:</strong>
+			<span th:text="${user.surname}"></span>
+		</div>
+		<div>
+			<strong>Email:</strong>
+			<span th:text="${user.email}"></span>
+		</div>
+	</body>
+
 </html>
