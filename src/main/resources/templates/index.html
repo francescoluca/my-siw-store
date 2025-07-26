@@ -76,7 +76,7 @@
 				color: var(--primary-color) !important;
 			}
 
-			ul.list-unstyled {
+			ul.listTelevision-unstyled {
 				display: flex;
 				flex-wrap: wrap;
 				gap: 1rem;
@@ -86,10 +86,9 @@
 				margin: 0;
 			}
 
-			ul.list-unstyled>li {
+			ul.listTelevision-unstyled>li {
 				list-style: none;
 				flex: 1 1 calc(33.333% - 1rem);
-				/* 3 elementi per riga con gap */
 				box-sizing: border-box;
 			}
 		</style>
@@ -149,7 +148,7 @@
 				<h3 class="text-center mb-4">Prodotti in Evidenza</h3>
 			</div>
 			<div class="container">
-				<ul class="list-unstyled">
+				<ul class="listTelevision-unstyled">
 					<li th:each="inventoryItem : ${inventoryItems}">
 						<a th:href="@{'/inventoryItem/' + ${inventoryItem.id}}" class="text-decoration-none text-dark">
 							<div class="card tv-card h-100">
@@ -159,7 +158,8 @@
 									<div class="d-flex justify-content-between align-items-start mb-2">
 										<h6 class="text-muted mb-0" th:text="${inventoryItem.television.model}">
 										</h6>
-										<span class="badge badge-condition" th:text="${inventoryItem.condition.label}"></span>
+										<span class="badge badge-condition"
+											th:text="${inventoryItem.condition.label}"></span>
 									</div>
 									<h5 class="card-title"
 										th:text="${inventoryItem.productCode} + ' ' + ${inventoryItem.television.screenInches} + '&quot;'">
@@ -183,7 +183,6 @@
 							<i class="fas fa-th-large me-2"></i>Vedi Tutto il Catalogo
 						</button></a>
 				</div>
-			</div>
 			</div>
 		</section>
 		<footer th:replace="~{fragments/footer :: siteFooter}"></footer>
