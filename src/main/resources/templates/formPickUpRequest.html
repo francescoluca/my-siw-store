@@ -13,11 +13,8 @@
 	</head>
 
 	<body>
-		<div class="container">
-			<div th:replace="fragments/header :: siteHeader"></div>
+		<div class="container-fluid px-0" th:replace="fragments/header :: siteHeader">
 		</div>
-
-		<!-- header/nav come in homepage, oppure solo il contenuto specifico -->
 		<div class="container">
 			<h1>RICHIEDI SERVIZIO DI RITIRO</h1>
 			<p>Compila questo modulo</p>
@@ -69,5 +66,4 @@
 			</form>
 		</div>
 	</body>
-
 </html>

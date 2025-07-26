@@ -34,6 +34,8 @@
 			<div th:unless="${television.description}">nessuna descrizione</div>
 		</div>
 		<div th:unless="${television}">Non esiste</div>
+		<footer th:replace="~{fragments/footer :: siteFooter}"></footer>
+
 	</body>
 
 </html>
