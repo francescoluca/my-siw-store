@@ -252,27 +252,25 @@
 				margin-bottom: 1rem;
 			}
 
-			/* Responsive Design */
-			@media (max-width: 768px) {
-				.nav-menu {
-					gap: 1rem;
-				}
+			.tv-image-wrapper {
+				aspect-ratio: 16 / 9;
+				width: 160px;
+				/* o un'altra dimensione coerente con il layout */
+				background-color: #f3f4f6;
+				border-radius: 0.5rem;
+				overflow: hidden;
+				flex-shrink: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
 
-				.page-title {
-					font-size: 2rem;
-				}
-
-				.cart-item {
-					flex-direction: column;
-					text-align: center;
-				}
-
-				.item-actions {
-					align-items: center;
-					flex-direction: row;
-					justify-content: space-between;
-					width: 100%;
-				}
+			.tv-image-wrapper img {
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+				border-radius: 0.5rem;
+				background-color: #fff;
 			}
 		</style>
 	</head>
@@ -291,13 +289,13 @@
 					<div class="cart-items">
 						<ul class="list-unstyled">
 							<li class="cart-item" th:each="cartItem : ${cartItems}">
-								<div class="item-image" th:if="${cartItem.photo}">
-									<img th:src="@{'/inventoryItem/' + ${inventoryItem.id} + '/photo'}"
-										alt="Foto televisore" />
+								<div class="tv-image-wrapper">
+									<img th:unless="${cartItem.photo}" src="/images/noTelevisionPhoto.jpg"
+										alt="Foto televisore" class="card-img-top">
+									<img th:if="${cartItem.photo}"
+										th:src="@{'/inventoryItem/' + ${cartItem.id} + '/photo'}" alt="Foto televisore"
+										class="card-img-top">
 
-								</div>
-								<div class="item-image" th:unless="${cartItem.photo}"><img
-										src="/images/noTelevisionPhoto.jpg" alt="Foto televisore" />
 								</div>
 								<div class="item-details">
 									<h3 class="item-name"

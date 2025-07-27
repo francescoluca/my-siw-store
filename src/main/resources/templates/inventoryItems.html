@@ -248,8 +248,11 @@
 								<div class="row g-4 align-items-start">
 									<div class="col-md-4">
 										<div class="tv-image-wrapper">
-											<img src="https://images.unsplash.com/photo-1593784991095-a205069470b6?w=300&h=200&fit=crop"
-												alt="Samsung TV" class="img-fluid rounded">
+											<img th:unless="${inventoryItem.photo}" src="/images/noTelevisionPhoto.jpg"
+												alt="Foto televisore" class="card-img-top">
+											<img th:if="${inventoryItem.photo}"
+												th:src="@{'/inventoryItem/' + ${inventoryItem.id} + '/photo'}"
+												alt="Foto televisore" class="card-img-top">
 										</div>
 									</div>
 									<div class="col-md-8">
