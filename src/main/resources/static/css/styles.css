@@ -340,6 +340,151 @@ footer {
     line-height: 1.6;
 }
 
+/* Request Form Page Styles */
+.request-hero {
+    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+    color: white;
+}
+
+.request-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.form-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+.form-card-header {
+    background: linear-gradient(135deg, var(--light-bg), #ffffff);
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.form-card-title {
+    color: var(--foreground);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.form-card-subtitle {
+    color: var(--muted);
+    margin-bottom: 0;
+}
+
+.form-card-body {
+    padding: 2rem;
+}
+
+.form-floating label {
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.form-control {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: #ffffff;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.1);
+    background: #ffffff;
+}
+
+.upload-label {
+    display: block;
+    font-weight: 600;
+    color: var(--foreground);
+    margin-bottom: 0.5rem;
+}
+
+.upload-input {
+    border: 2px dashed var(--border);
+    padding: 0.75rem;
+    background: var(--light-bg);
+    transition: all 0.3s ease;
+}
+
+.upload-input:hover {
+    border-color: var(--primary-color);
+    background: #ffffff;
+}
+
+.note-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.submit-btn {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+    background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
+}
+
+.info-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+    height: 100%;
+}
+
+.info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-color);
+}
+
+.info-card-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--accent-color), #34d399);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.1rem;
+    color: white;
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+}
+
+.info-card h5 {
+    color: var(--foreground);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
 /* Stats Cards - existing styles enhanced */
 .stats-card {
     background: white;
@@ -408,5 +553,29 @@ footer {
     
     .admin-card:hover, .public-card:hover {
         transform: translateY(-2px);
+    }
+    
+    .request-hero {
+        padding: 3rem 0;
+    }
+    
+    .request-hero .display-4 {
+        font-size: 2rem;
+    }
+    
+    .form-card-header {
+        padding: 1.5rem;
+    }
+    
+    .form-card-body {
+        padding: 1.5rem;
+    }
+    
+    .info-card:hover {
+        transform: translateY(-2px);
+    }
+    
+    .submit-btn:hover {
+        transform: none;
     }
 }
