@@ -16,7 +16,7 @@ import it.uniroma3.siw.model.Order;
 import it.uniroma3.siw.model.PickUpRequest;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.CredentialsService;
-import it.uniroma3.siw.service.ItemService;
+import it.uniroma3.siw.service.InventoryItemService;
 import it.uniroma3.siw.service.OrderService;
 import it.uniroma3.siw.service.PickUpRequestService;
 import it.uniroma3.siw.service.UserService;
@@ -36,7 +36,7 @@ public class UserController {
 	@Autowired
 	private OrderService orderService;
 	@Autowired
-	private ItemService itemService;
+	private InventoryItemService inventoryItemService;
 
 	@GetMapping("/profile")
 	public String getProfilePage(
@@ -64,7 +64,7 @@ public class UserController {
 			@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails,
 			@PathVariable("inventoryItemId") Long inventoryItemId,
 			@RequestHeader(value = "referer", required = false) String referer, Model model) {
-		InventoryItem inventoryItem = (InventoryItem) itemService.findById(inventoryItemId);
+		InventoryItem inventoryItem = inventoryItemService.findById(inventoryItemId);
 		User currentUser = userService.getCurrentUser(userDetails);
 		if (!this.userService.isItemAlreadyInCart(currentUser, inventoryItem)) {
 			currentUser.getCartItems().add(inventoryItem);
@@ -80,7 +80,7 @@ public class UserController {
 			@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails,
 			@PathVariable("cartItemId") Long cartItemId,
 			@RequestHeader(value = "referer", required = false) String referer, Model model) {
-		InventoryItem cartItem = (InventoryItem) itemService.findById(cartItemId);
+		InventoryItem cartItem = inventoryItemService.findById(cartItemId);
 		User currentUser = userService.getCurrentUser(userDetails);
 		currentUser.getCartItems().remove(cartItem);
 		this.userService.saveUser(currentUser);

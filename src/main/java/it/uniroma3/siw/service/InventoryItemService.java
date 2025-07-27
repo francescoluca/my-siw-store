@@ -1,14 +1,17 @@
 package it.uniroma3.siw.service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.InventoryItem;
 import it.uniroma3.siw.repository.InventoryItemRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class InventoryItemService {
@@ -28,6 +31,25 @@ public class InventoryItemService {
 			BigDecimal maxPrice, Integer minInches, Integer maxInches, Pageable pageable) {
 		return this.inventoryItemRepository.searchWithSort(keyword, sortField, minPrice, maxPrice, minInches, maxInches,
 				pageable);
+	}
+
+	public byte[] getPhoto(Long id) {
+		return this.inventoryItemRepository.findById(id).map(InventoryItem::getPhoto).orElse(null);
+	}
+
+	@Transactional
+	public void save(InventoryItem inventoryItem, MultipartFile file) throws IOException {
+		if (file != null && !file.isEmpty()) {
+			inventoryItem.setPhoto(file.getBytes());
+		} else {
+			System.out.println("Nessuna foto caricata");
+		}
+
+		this.inventoryItemRepository.save(inventoryItem);
+	}
+
+	public InventoryItem findById(Long id) {
+		return inventoryItemRepository.findById(id).get();
 	}
 
 }

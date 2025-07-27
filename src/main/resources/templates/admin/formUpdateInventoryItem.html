@@ -20,6 +20,7 @@
 			<h1>Aggiorna televisore in magazzino</h1>
 			<form th:action="@{'/admin/updateInventoryItem/' + ${inventoryItem.id}}" th:object="${inventoryItem}"
 				method="post" enctype="multipart/form-data">
+				<input type="hidden" th:field="*{id}" />
 				<div class="form-floating mb-3">
 					<input type="text" required th:field="*{productCode}" class="form-control"
 						placeholder="Codice prodotto" />
@@ -46,7 +47,7 @@
 					<label for="condition">Condizione</label>
 				</div>
 				<div class="form-floating mb-3">
-					<input type="int" required th:field="*{price}" class="form-control" placeholder="Prezzo" />
+					<input type="numeber" required th:field="*{price}" class="form-control" placeholder="Prezzo" />
 					<label for="price">Prezzo</label>
 				</div>
 				<div class="mb-3">

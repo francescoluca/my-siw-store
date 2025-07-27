@@ -16,7 +16,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,13 +29,10 @@ import org.springframework.web.server.ResponseStatusException;
 import it.uniroma3.siw.controller.validator.ItemValidator;
 import it.uniroma3.siw.model.InventoryItem;
 import it.uniroma3.siw.service.InventoryItemService;
-import it.uniroma3.siw.service.ItemService;
 import it.uniroma3.siw.service.TelevisionService;
 
 @Controller
 public class ItemController {
-	@Autowired
-	private ItemService itemService;
 
 	@Autowired
 	private TelevisionService televisionService;
@@ -44,19 +43,23 @@ public class ItemController {
 	@Autowired
 	private ItemValidator itemValidator;
 
-	@GetMapping(value = "/admin/formNewInventoryItem")
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.setDisallowedFields("photo");
+	}
+
+	@GetMapping("/admin/formNewInventoryItem")
 	public String formNewInventoryItem(Model model) {
 		model.addAttribute("inventoryItem", new InventoryItem());
 		model.addAttribute("televisions", televisionService.findAll());
-		return "admin/formNewInventoryItem.html";
+		return "/admin/formNewInventoryItem";
 	}
 
 	@PostMapping("/admin/inventoryItem")
 	public String newInventoryItem(@ModelAttribute("inventoryItem") InventoryItem inventoryItem,
 			@RequestParam("photo") MultipartFile photo, BindingResult bindingResult, Model model) throws IOException {
-		this.itemValidator.validate(inventoryItem, bindingResult);
 		if (!bindingResult.hasErrors()) {
-			this.itemService.save(inventoryItem, photo);
+			this.inventoryItemService.save(inventoryItem, photo);
 			model.addAttribute("inventoryItem", inventoryItem);
 			return "redirect:/inventoryItem/" + inventoryItem.getId();
 		} else {
@@ -68,7 +71,7 @@ public class ItemController {
 	public String updateInventoryItem(@PathVariable("id") Long id, Model model,
 			@ModelAttribute("inventoryItem") InventoryItem updatedInventoryItem,
 			@RequestParam(value = "photo", required = false) MultipartFile photo) throws IOException {
-		InventoryItem inventoryItem = (InventoryItem) itemService.findById(id);
+		InventoryItem inventoryItem = inventoryItemService.findById(id);
 		inventoryItem.setCondition(updatedInventoryItem.getCondition());
 		inventoryItem.setDescription(updatedInventoryItem.getDescription());
 		inventoryItem.setOptional(updatedInventoryItem.getOptional());
@@ -79,7 +82,7 @@ public class ItemController {
 			inventoryItem.setTelevision(updatedInventoryItem.getTelevision());
 		}
 
-		itemService.save(inventoryItem, photo);
+		inventoryItemService.save(inventoryItem, photo);
 		return "redirect:/inventoryItem/" + id;
 	}
 
@@ -93,13 +96,13 @@ public class ItemController {
 	@GetMapping("/admin/formUpdateInventoryItem/{id}")
 	public String formUpdateInventoryItem(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("televisions", this.televisionService.findAll());
-		model.addAttribute("inventoryItem", this.itemService.findById(id));
+		model.addAttribute("inventoryItem", this.inventoryItemService.findById(id));
 		return "/admin/formUpdateInventoryItem";
 	}
 
 	@GetMapping("/inventoryItem/{id}")
 	public String getInventoryItem(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("inventoryItem", this.itemService.findById(id));
+		model.addAttribute("inventoryItem", this.inventoryItemService.findById(id));
 		return "inventoryItem.html";
 	}
 
@@ -142,7 +145,7 @@ public class ItemController {
 
 	@GetMapping("/inventoryItem/{id}/photo")
 	public ResponseEntity<byte[]> photo(@PathVariable Long id) {
-		byte[] image = itemService.getPhoto(id);
+		byte[] image = inventoryItemService.getPhoto(id);
 		if (image == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}

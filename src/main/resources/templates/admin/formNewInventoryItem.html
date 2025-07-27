@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<title>
 			Nuovo televisore in magazzino - SIW TV
@@ -15,11 +14,11 @@
 
 	<body>
 		<div class="container-fluid px-0" th:replace="fragments/header :: siteHeader"></div>
-
 		<div class="container">
 			<h1>Aggiungi un televisore in magazzino</h1>
-			<form th:action="@{'/admin/updateInventoryItem/' + ${inventoryItem.id}}" th:object="${inventoryItem}"
-				method="post" enctype="multipart/form-data">
+			<form th:action="@{/admin/inventoryItem}" method="post" enctype="multipart/form-data"
+				th:object="${inventoryItem}">
+				<input type="hidden" th:field="*{id}" />
 				<div class="form-floating mb-3">
 					<input type="text" required th:field="*{productCode}" class="form-control"
 						placeholder="Codice prodotto" />
