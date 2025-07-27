@@ -104,7 +104,7 @@ public class ItemController {
 	}
 
 	@GetMapping("/inventoryItems")
-	public String listInventoryItems(@RequestParam(required = false) String keyword,
+	public String listInventoryItems(@RequestParam(required = false, defaultValue = "") String keyword,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "size", defaultValue = "10") int size,
 			@RequestParam(value = "sortField", defaultValue = "price") String sortField,

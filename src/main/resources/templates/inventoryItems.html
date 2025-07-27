@@ -28,13 +28,15 @@
 			.tv-card {
 				transition: transform 0.3s ease;
 				border: none;
-				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-				margin-bottom: 1.5rem;
+				box-shadow: var(--shadow);
+				border-radius: 12px;
+				overflow: hidden;
+				height: 100%;
 			}
 
 			.tv-card:hover {
 				transform: translateY(-5px);
-				box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+				box-shadow: var(--shadow-lg);
 			}
 
 			.tv-image {
@@ -184,13 +186,13 @@
 					</div>
 				</div>
 			</div>
-			<form class="row g-3" method="get" th:action="@{/inventoryItems}">
-				<input type="hidden" name="keyword" th:value="${keyword}" />
-				<input type="hidden" name="sortField" th:value="${sortField}" />
-				<input type="hidden" name="sortDir" th:value="${sortDir}" />
-				<input type="hidden" name="page" th:value="${currentPage}" />
-				<input type="hidden" name="size" th:value="${pageSize}" />
-				<div class="col-lg-3">
+			<div class="row g-3">
+				<form class="col-lg-3" method="get" th:action="@{/inventoryItems}">
+					<input type="hidden" name="keyword" th:value="${keyword}" />
+					<input type="hidden" name="sortField" th:value="${sortField}" />
+					<input type="hidden" name="sortDir" th:value="${sortDir}" />
+					<input type="hidden" name="page" th:value="${currentPage}" />
+					<input type="hidden" name="size" th:value="${pageSize}" />
 					<div class="filter-section">
 						<h5 class="mb-3">Filtri</h5>
 						<div class="mb-4">
@@ -227,50 +229,111 @@
 							</button>
 						</div>
 					</div>
-				</div>
-				<div class="col-lg-3">
+				</form>
 
-					<div th:if="${inventoryItems==null || inventoryItems.isEmpty()}">Non ci sono TV in magazzino
+				<div class="col-lg-9 col-md-4">
+					<div th:if="${inventoryItems==null || inventoryItems.isEmpty()}" class="row">
+						<div class="col-12">
+							<div class="no-inventoryItems-message">
+								<h3 class="text-muted">Non ci sono televisori nel sistema</h3>
+								<p class="text-muted">Prova a cercare con termini diversi o consulta il catalogo
+									completo
+								</p>
+							</div>
+						</div>
 					</div>
 					<ul class="list-unstyled">
 						<li th:each="inventoryItem : ${inventoryItems}">
-							<a th:href="@{'/inventoryItem' + '/' + ${inventoryItem.id}}"
-								th:text="${inventoryItem.productCode} +' '+${inventoryItem.television.model} + ' (' + ${inventoryItem.television.brand} + ')'+ ' '+${inventoryItem.price}"></a>
+							<div class="card tv-card p-3">
+								<div class="row g-4 align-items-start">
+									<div class="col-md-4">
+										<div class="tv-image-wrapper">
+											<img src="https://images.unsplash.com/photo-1593784991095-a205069470b6?w=300&h=200&fit=crop"
+												alt="Samsung TV" class="img-fluid rounded">
+										</div>
+									</div>
+									<div class="col-md-8">
+										<h5 class="card-title"
+											th:text="${inventoryItem.television.brand +' '+inventoryItem.television.model + ' '+ inventoryItem.television.screenInches+'&quot;'}">
+										</h5>
+										<dl class="row small mb-3">
+											<dt class="col-6">Anno di produzione:</dt>
+											<dd class="col-6" th:text="${inventoryItem.television.releaseDate}"></dd>
+											<dt class="col-6">Diagonale schermo:</dt>
+											<dd class="col-6"
+												th:text="${inventoryItem.television.screenInches*2.54+' cm / ' + inventoryItem.television.screenInches+'&quot;'}">
+											</dd>
+										</dl>
+
+										<div class="price-section mb-3">
+											<div class="price-current h5"
+												th:text="${inventoryItem.price + ',99'+ ' euro'}">
+											</div>
+											<small class="text-muted d-block">
+												<strong>20</strong> rate da <strong
+													th:text="${inventoryItem.price/20+' euro'}">18,95€</strong> - TAN
+												0,00%
+												<strong>TAEG
+													0,00%</strong><br>
+												CONSEGNA GRATIS | IVA ed Eco-contributo RAEE incluse
+											</small>
+										</div>
+
+										<div class="delivery-info mb-2">
+											<i class="fas fa-truck text-success me-1"></i>
+											<small class="text-success">Spedizione disponibile</small><br>
+											<small class="text-muted">Consegna stimata 29/07/2025 - 31/07/2025</small>
+										</div>
+
+										<div class="pickup-info mb-3">
+											<i class="fas fa-store me-1"></i>
+											<small>Ritiro GRATUITO in negozio</small>
+										</div>
+									</div>
+								</div>
+								<div class="mt-4">
+									<a th:href="@{'/addToCart/'+ ${inventoryItem.id}}"> <button
+											class="btn btn-primary w-100">
+											<i class="fas fa-shopping-cart me-2"></i>Aggiungi al Carrello
+										</button></a>
+								</div>
+							</div>
 						</li>
 					</ul>
 				</div>
+			</div>
+			<nav aria-label="Paginazione risultati" class="mt-4">
+				<ul class="pagination justify-content-center">
+					<div th:if="${currentPage > 0}">
+						<li class="page-item">
+							<a class="page-link"
+								th:href="@{/inventoryItems(keyword=${keyword}, page=${currentPage - 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Precedente</a>
+						</li>
+					</div>
+					<div th:if="${currentPage==0}">
+						<li class="page-item disabled">
+							<span class="page-link">Precedente</span>
+						</li>
+					</div>
+					<li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+						<a class="page-link"
+							th:href="@{/inventoryItems(keyword=${keyword},page=${i}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}"
+							th:text="${i + 1}" th:classappend="${i == currentPage} ? 'active' : ''"></a>
+					</li>
+					<div th:if="${currentPage < totalPages - 1}">
+						<li class="page-item">
+							<a class="page-link"
+								th:href="@{/inventoryItems(keyword=${keyword},page=${currentPage + 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Successivo</a>
+						</li>
+					</div>
+					<div th:if="${currentPage == totalPages -1}">
+						<li class="page-item disabled">
+							<span class="page-link">Successivo</span>
+						</li>
+					</div>
+				</ul>
+			</nav>
 		</div>
-		<nav aria-label="Paginazione risultati" class="mt-4">
-			<ul class="pagination justify-content-center">
-				<div th:if="${currentPage > 0}">
-					<li class="page-item">
-						<a class="page-link"
-							th:href="@{/inventoryItems(keyword=${keyword}, page=${currentPage - 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Precedente</a>
-					</li>
-				</div>
-				<div th:if="${currentPage==0}">
-					<li class="page-item disabled">
-						<span class="page-link">Precedente</span>
-					</li>
-				</div>
-				<li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-					<a class="page-link"
-						th:href="@{/inventoryItems(keyword=${keyword},page=${i}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}"
-						th:text="${i + 1}" th:classappend="${i == currentPage} ? 'active' : ''"></a>
-				</li>
-				<div th:if="${currentPage < totalPages - 1}">
-					<li class="page-item">
-						<a class="page-link"
-							th:href="@{/inventoryItems(keyword=${keyword},page=${currentPage + 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Successivo</a>
-					</li>
-				</div>
-				<div th:if="${currentPage == totalPages -1}">
-					<li class="page-item disabled">
-						<span class="page-link">Successivo</span>
-					</li>
-				</div>
-			</ul>
-		</nav>
 		</div>
 		<footer th:replace="~{fragments/footer :: siteFooter}"></footer>
 
