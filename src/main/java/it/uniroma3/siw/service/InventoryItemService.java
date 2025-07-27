@@ -2,9 +2,11 @@ package it.uniroma3.siw.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +16,7 @@ import it.uniroma3.siw.repository.InventoryItemRepository;
 import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class InventoryItemService {
 
 	@Autowired
@@ -54,6 +57,11 @@ public class InventoryItemService {
 
 	public boolean existsByProductCode(String productCode) {
 		return inventoryItemRepository.existsByProductCode(productCode);
+	}
+
+	public List<InventoryItem> findTop3ByReleaseDate() {
+		Pageable topThree = PageRequest.of(0, 3);
+		return inventoryItemRepository.findTop3ByReleaseDate(topThree);
 	}
 
 }

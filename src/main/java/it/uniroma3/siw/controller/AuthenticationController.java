@@ -69,7 +69,7 @@ public class AuthenticationController {
 	@GetMapping(value = "/")
 	public String index(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		model.addAttribute("inventoryItems", inventoryItemService.findAll());
+		model.addAttribute("inventoryItems", inventoryItemService.findTop3ByReleaseDate());
 		if (authentication instanceof AnonymousAuthenticationToken) {
 			return "index.html";
 		} else {

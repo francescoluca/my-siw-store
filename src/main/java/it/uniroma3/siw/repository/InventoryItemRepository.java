@@ -1,6 +1,7 @@
 package it.uniroma3.siw.repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,5 +27,8 @@ public interface InventoryItemRepository extends JpaRepository<InventoryItem, Lo
 			@Param("minInches") Integer minInches, @Param("maxInches") Integer maxInches, Pageable pageable);
 
 	boolean existsByProductCode(String productCode);
+
+	@Query("SELECT inv FROM InventoryItem inv ORDER BY inv.television.releaseDate DESC")
+	List<InventoryItem> findTop3ByReleaseDate(Pageable topThree);
 
 }
