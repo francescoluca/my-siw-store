@@ -1,29 +1,292 @@
 <!DOCTYPE html>
-<html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 
-	<head>
-		<title> - SIW TV</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-			integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-		<link rel="stylesheet" href="/css/styles.css">
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-		<meta charset="UTF-8">
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pannello Amministratore - Gestione Richieste Ritiro | SIW TV</title>
+    <meta name="description" content="Pannello amministratore per la gestione e approvazione delle richieste di ritiro televisori">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
 
-	<body>
-		<div class="container-fluid px-0" th:replace="fragments/header :: siteHeader"></div>
-		<div th:if="${pickUpRequests==null || pickUpRequests.isEmpty()}">Non ci sono richieste di ritiro nel database</div>
-		<ul>
-			<li th:each="pickUpRequest : ${pickUpRequests}">
-				<div
-					th:text="${pickUpRequest.name} +' '+${pickUpRequest.surname} + ' (' + ${pickUpRequest.status} + ')'">
-				</div>
-			</li>
-		</ul>
+<body>
+    <div class="container-fluid px-0" th:replace="fragments/header :: siteHeader"></div>
+    
+    <!-- Admin Management Hero Section -->
+    <section class="management-hero py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="management-icon mb-4">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <h1 class="display-4 mb-3">Pannello Amministratore</h1>
+                    <p class="lead text-white-50">Gestione e Approvazione Richieste di Ritiro Televisori</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-		<footer th:replace="~{fragments/footer :: siteFooter}"></footer>
+    <!-- Admin Controls Section -->
+    <section class="py-4 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="admin-controls-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1">
+                                    <i class="fas fa-tasks me-2 text-primary"></i>
+                                    Controllo Richieste Clienti
+                                </h5>
+                                <small class="text-muted">Approva, rifiuta o modifica lo stato delle richieste</small>
+                            </div>
+                            <div class="admin-stats">
+                                <span class="badge bg-info me-2" th:text="'Totale: ' + ${totalRequests ?: 0}">Totale: 0</span>
+                                <span class="badge bg-warning me-2" th:text="'In Attesa: ' + ${pendingRequests ?: 0}">In Attesa: 0</span>
+                                <span class="badge bg-success me-2" th:text="'Approvate: ' + ${approvedRequests ?: 0}">Approvate: 0</span>
+                                <span class="badge bg-danger" th:text="'Rifiutate: ' + ${rejectedRequests ?: 0}">Rifiutate: 0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-	</body>
+    <!-- Requests Management Section -->
+    <section class="py-5">
+        <div class="container">
+            <!-- Success/Error Messages -->
+            <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i>
+                <span th:text="${success}">Operazione completata con successo</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <span th:text="${error}">Si è verificato un errore</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <!-- Requests List -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="requests-header mb-4">
+                        <h2 class="section-title">
+                            <i class="fas fa-clipboard-list me-3"></i>
+                            Richieste di Ritiro Clienti
+                        </h2>
+                        <p class="text-muted">Gestisci lo stato delle richieste utilizzando il menu a tendina</p>
+                    </div>
+                    
+                    <div th:if="${pickUpRequests != null and !pickUpRequests.isEmpty()}" class="requests-grid">
+                        <div th:each="request : ${pickUpRequests}" class="request-card">
+                            <div class="request-card-header">
+                                <div class="request-id">
+                                    <i class="fas fa-hashtag me-2"></i>
+                                    <span th:text="'Richiesta ID: ' + ${request.id}">Richiesta ID: 001</span>
+                                </div>
+                                <div class="request-date">
+                                    <i class="fas fa-calendar-alt me-2"></i>
+                                    <span th:text="${#temporals.format(request.requestDate, 'dd/MM/yyyy HH:mm')}">25/01/2025 14:30</span>
+                                </div>
+                            </div>
+                            
+                            <div class="request-card-body">
+                                <div class="customer-info">
+                                    <h4 class="customer-name">
+                                        <i class="fas fa-user-circle me-2"></i>
+                                        <span th:text="${request.name + ' ' + request.surname}">Mario Rossi</span>
+                                    </h4>
+                                    <div class="customer-details">
+                                        <div class="detail-item">
+                                            <i class="fas fa-envelope me-2"></i>
+                                            <span th:text="${request.email}">mario.rossi@email.com</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <i class="fas fa-phone me-2"></i>
+                                            <span th:text="${request.phone}">+39 123 456 7890</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <i class="fas fa-map-marker-alt me-2"></i>
+                                            <span th:text="${request.address}">Via Roma 123, Roma</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div th:if="${request.note != null and !request.note.empty}" class="request-notes">
+                                    <h5 class="notes-title">
+                                        <i class="fas fa-comment-alt me-2"></i>Note del Cliente:
+                                    </h5>
+                                    <p class="notes-content" th:text="${request.note}">Note del cliente</p>
+                                </div>
+                                
+                                <div th:if="${request.photo != null}" class="request-photo">
+                                    <h5 class="photo-title">
+                                        <i class="fas fa-image me-2"></i>Foto Allegata:
+                                    </h5>
+                                    <div class="photo-preview">
+                                        <img th:src="@{'/admin/pickup-request/' + ${request.id} + '/photo'}" 
+                                             alt="Foto televisore cliente" 
+                                             class="img-thumbnail photo-thumb"
+                                             data-bs-toggle="modal" 
+                                             th:data-bs-target="'#photoModal' + ${request.id}">
+                                        <small class="text-muted d-block mt-1">Clicca per ingrandire</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="request-card-footer">
+                                <div class="status-section">
+                                    <label class="status-label">
+                                        <i class="fas fa-tasks me-2"></i>Gestione Stato Richiesta:
+                                    </label>
+                                    <form th:action="@{/admin/updatePickupStatus}" method="post" class="status-form">
+                                        <input type="hidden" name="requestId" th:value="${request.id}">
+                                        <div class="status-controls">
+                                            <select name="status" class="form-select status-select" 
+                                                    th:attr="data-current=${request.status}"
+                                                    onchange="updateStatus(this)">
+                                                <option value="PENDING" 
+                                                        th:selected="${request.status.toString() == 'PENDING'}">
+                                                    🟡 In Attesa di Valutazione
+                                                </option>
+                                                <option value="APPROVATO" 
+                                                        th:selected="${request.status.toString() == 'APPROVATO'}">
+                                                    ✅ Approvato per Ritiro
+                                                </option>
+                                                <option value="RIFIUTATO" 
+                                                        th:selected="${request.status.toString() == 'RIFIUTATO'}">
+                                                    ❌ Rifiutato
+                                                </option>
+                                                <option value="DRAFT" 
+                                                        th:selected="${request.status.toString() == 'DRAFT'}">
+                                                    📝 Bozza (Non Completata)
+                                                </option>
+                                            </select>
+                                            <button type="submit" class="btn btn-sm btn-primary update-btn">
+                                                <i class="fas fa-save me-1"></i>Aggiorna Stato
+                                            </button>
+                                        </div>
+                                        <small class="text-muted mt-2 d-block">
+                                            Stato Attuale: 
+                                            <span class="current-status" th:classappend="${request.status.toString() == 'APPROVATO'} ? 'text-success' : (${request.status.toString() == 'RIFIUTATO'} ? 'text-danger' : (${request.status.toString() == 'PENDING'} ? 'text-warning' : 'text-info'))"
+                                                  th:text="${request.status.toString() == 'APPROVATO'} ? 'Approvato' : (${request.status.toString() == 'RIFIUTATO'} ? 'Rifiutato' : (${request.status.toString() == 'PENDING'} ? 'In Attesa' : 'Bozza'))">
+                                                In Attesa
+                                            </span>
+                                        </small>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <!-- Photo Modal -->
+                            <div th:if="${request.photo != null}" 
+                                 class="modal fade" 
+                                 th:id="'photoModal' + ${request.id}" 
+                                 tabindex="-1">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">
+                                                <i class="fas fa-image me-2"></i>
+                                                Foto Televisore - <span th:text="${request.name + ' ' + request.surname}">Cliente</span>
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <img th:src="@{'/admin/pickup-request/' + ${request.id} + '/photo'}" 
+                                                 alt="Foto televisore cliente" 
+                                                 class="img-fluid modal-photo">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                <i class="fas fa-times me-1"></i>Chiudi
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Empty State -->
+                    <div th:if="${pickUpRequests == null or pickUpRequests.isEmpty()}" class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-clipboard"></i>
+                        </div>
+                        <h3 class="empty-title">Nessuna Richiesta Presente</h3>
+                        <p class="empty-description">Al momento non ci sono richieste di ritiro da gestire nel sistema</p>
+                        <a href="/admin" class="btn btn-primary mt-3">
+                            <i class="fas fa-arrow-left me-2"></i>Torna al Pannello Admin
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer th:replace="~{fragments/footer :: siteFooter}"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Funzione per gestire l'aggiornamento dello status
+        function updateStatus(selectElement) {
+            const form = selectElement.closest('form');
+            const updateBtn = form.querySelector('.update-btn');
+            const originalText = updateBtn.innerHTML;
+            
+            // Feedback visivo durante il salvataggio
+            selectElement.style.opacity = '0.6';
+            updateBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Salvando...';
+            updateBtn.disabled = true;
+            
+            // Conferma prima dell'aggiornamento per azioni critiche
+            const newStatus = selectElement.value;
+            if (newStatus === 'RIFIUTATO') {
+                if (!confirm('Sei sicuro di voler RIFIUTARE questa richiesta?')) {
+                    // Ripristina il valore precedente
+                    selectElement.value = selectElement.getAttribute('data-current');
+                    selectElement.style.opacity = '1';
+                    updateBtn.innerHTML = originalText;
+                    updateBtn.disabled = false;
+                    return;
+                }
+            }
+            
+            // Invia il form
+            form.submit();
+        }
+
+        // Ripristina lo stato visivo se c'è un errore
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                if (alert.classList.contains('alert-danger')) {
+                    // Se c'è un errore, ripristina tutti i controlli
+                    document.querySelectorAll('.status-select').forEach(select => {
+                        select.style.opacity = '1';
+                    });
+                    document.querySelectorAll('.update-btn').forEach(btn => {
+                        btn.innerHTML = '<i class="fas fa-save me-1"></i>Aggiorna Stato';
+                        btn.disabled = false;
+                    });
+                }
+            });
+        });
+
+        // Auto-hide alerts dopo 5 secondi
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000);
+    </script>
+</body>
 
 </html>

@@ -37,6 +37,6 @@ public class Util {
 	}
 
 	public enum PicKUpStatus {
-		RIFUITATO, APPROVATO, PENDING, DRAFT
+		RIFIUTATO, APPROVATO, PENDING, DRAFT
 	}
 }

@@ -47,4 +47,8 @@ public class PickUpRequestService {
 	public List<PickUpRequest> findByUser(User currentUser) {
 		return this.pickUpRequestRepository.findByUser(currentUser);
 	}
+
+	public byte[] getPhoto(Long id) {
+		return this.pickUpRequestRepository.findById(id).map(PickUpRequest::getPhoto).orElse(null);
+	}
 }
