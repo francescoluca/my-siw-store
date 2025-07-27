@@ -147,8 +147,8 @@ footer {
 	object-fit: contain;
 	width: 100%;
 }
-/* Profile Page Styles - Add these to your existing styles.css */
 
+/* Profile Page Styles */
 .profile-hero {
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     color: white;
@@ -207,9 +207,177 @@ footer {
     font-size: 1.25rem;
 }
 
-/* Empty state styling */
 .text-muted {
     color: var(--muted) !important;
+}
+
+/* Admin Page Styles */
+.admin-hero {
+    background: linear-gradient(135deg, var(--dark-bg), var(--primary-color));
+    color: white;
+}
+
+.admin-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.section-title {
+    color: var(--foreground);
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.admin-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+    height: 100%;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.admin-card-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.5rem;
+    color: white;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.admin-card-title {
+    color: var(--foreground);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.admin-card-description {
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.public-section {
+    background: var(--light-bg);
+}
+
+.public-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+    height: 100%;
+}
+
+.public-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-color);
+}
+
+.public-card-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--accent-color), #34d399);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.25rem;
+    color: white;
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+}
+
+.public-card-title {
+    color: var(--foreground);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.public-card-description {
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+/* Stats Cards - existing styles enhanced */
+.stats-card {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-item {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.service-item:hover {
+    transform: translateY(-5px);
+}
+
+.contact-card {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
 }
 
 /* Responsive improvements */
@@ -224,5 +392,21 @@ footer {
     
     .order-link:hover, .request-link:hover {
         transform: none;
+    }
+    
+    .admin-hero {
+        padding: 3rem 0;
+    }
+    
+    .admin-hero .display-4 {
+        font-size: 2rem;
+    }
+    
+    .admin-card, .public-card {
+        margin-bottom: 1.5rem;
+    }
+    
+    .admin-card:hover, .public-card:hover {
+        transform: translateY(-2px);
     }
 }
