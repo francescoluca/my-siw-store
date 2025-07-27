@@ -87,46 +87,7 @@ public class PickUpRequestController {
 
 //	// Metodo per visualizzare la pagina di gestione richieste con statistiche
 //	@GetMapping("/admin/managePickUpRequests")
-//	public String showManagePickUpRequests(Model model) {
-//		try {
-//			// Recupera tutte le richieste di ritiro
-//			Iterable<PickUpRequest> pickUpRequests = pickUpRequestService.findAll();
-//
-//			// Calcola le statistiche per stato
-//			long totalRequests = pickUpRequests.size();
-//			long pendingRequests = pickUpRequests.stream()
-//					.filter(request -> request.getStatus() == PicKUpStatus.PENDING).count();
-//			long approvedRequests = pickUpRequests.stream()
-//					.filter(request -> request.getStatus() == PicKUpStatus.APPROVATO).count();
-//			long rejectedRequests = pickUpRequests.stream()
-//					.filter(request -> request.getStatus() == PicKUpStatus.RIFIUTATO).count();
-//			long draftRequests = pickUpRequests.stream().filter(request -> request.getStatus() == PicKUpStatus.DRAFT)
-//					.count();
-//
-//			// Ordina le richieste per data (più recenti prima)
-//			pickUpRequests.sort((r1, r2) -> r2.getRequestDate().compareTo(r1.getRequestDate()));
-//
-//			// Passa i dati al template
-//			model.addAttribute("pickUpRequests", pickUpRequests);
-//			model.addAttribute("totalRequests", totalRequests);
-//			model.addAttribute("pendingRequests", pendingRequests);
-//			model.addAttribute("approvedRequests", approvedRequests);
-//			model.addAttribute("rejectedRequests", rejectedRequests);
-//			model.addAttribute("draftRequests", draftRequests);
-//
-//			return "admin/managePickUpRequests"; // nome del template
-//
-//		} catch (Exception e) {
-//			model.addAttribute("error", "Errore nel caricamento delle richieste: " + e.getMessage());
-//			model.addAttribute("pickUpRequests", new ArrayList<>());
-//			model.addAttribute("totalRequests", 0);
-//			model.addAttribute("pendingRequests", 0);
-//			model.addAttribute("approvedRequests", 0);
-//			model.addAttribute("rejectedRequests", 0);
-//			model.addAttribute("draftRequests", 0);
-//
-//			return "admin/managePickUpRequests";
-//		}
+
 //	}
 
 	// Metodo corretto per aggiornare lo status delle richieste di ritiro
