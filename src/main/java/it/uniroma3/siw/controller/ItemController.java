@@ -1,6 +1,7 @@
 package it.uniroma3.siw.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -103,23 +104,25 @@ public class ItemController {
 	}
 
 	@GetMapping("/inventoryItems")
-	public String listTelevisions(@RequestParam(required = false) String keyword,
+	public String listInventoryItems(@RequestParam(required = false) String keyword,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "size", defaultValue = "10") int size,
 			@RequestParam(value = "sortField", defaultValue = "price") String sortField,
-			@RequestParam(value = "sortDir", defaultValue = "asc") String sortDir, Model model,
+			@RequestParam(value = "sortDir", defaultValue = "asc") String sortDir,
+			@RequestParam(required = false, defaultValue = "0") BigDecimal minPrice,
+			@RequestParam(required = false, defaultValue = "5000") BigDecimal maxPrice,
+			@RequestParam(required = false, defaultValue = "0") Integer minInches,
+			@RequestParam(required = false, defaultValue = "100") Integer maxInches, Model model,
 			@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails) {
 
 		Sort.Direction direction = sortDir.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
 		Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortField));
 		Page<InventoryItem> inventoryItemPage;
 
-		if (keyword != null && !keyword.trim().isEmpty()) {
-			inventoryItemPage = inventoryItemService.searchWithSort(keyword, sortField, pageable);
-			model.addAttribute("keyword", keyword);
-		} else {
-			inventoryItemPage = inventoryItemService.findAll(pageable);
-		}
+		inventoryItemPage = inventoryItemService.searchWithSort(keyword, sortField, minPrice, maxPrice, minInches,
+				maxInches, pageable);
+
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("inventoryItemsCount", inventoryItemPage.getTotalElements());
 		model.addAttribute("inventoryItems", inventoryItemPage.getContent());
 		model.addAttribute("inventoryItemPage", inventoryItemPage);
@@ -130,6 +133,10 @@ public class ItemController {
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+		model.addAttribute("minPrice", minPrice);
+		model.addAttribute("maxPrice", maxPrice);
+		model.addAttribute("minInches", minInches);
+		model.addAttribute("maxInches", maxInches);
 		return "inventoryItems.html";
 	}
 

@@ -1,5 +1,7 @@
 package it.uniroma3.siw.service;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,8 +24,10 @@ public class InventoryItemService {
 		return inventoryItemRepository.findAll(pageable);
 	}
 
-	public Page<InventoryItem> searchWithSort(String keyword, String sortField, Pageable pageable) {
-		return this.inventoryItemRepository.searchWithSort(keyword, sortField, pageable);
+	public Page<InventoryItem> searchWithSort(String keyword, String sortField, BigDecimal minPrice,
+			BigDecimal maxPrice, Integer minInches, Integer maxInches, Pageable pageable) {
+		return this.inventoryItemRepository.searchWithSort(keyword, sortField, minPrice, maxPrice, minInches, maxInches,
+				pageable);
 	}
 
 }
