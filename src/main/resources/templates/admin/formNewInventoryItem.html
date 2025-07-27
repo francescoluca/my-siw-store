@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<title>
 			Nuovo televisore in magazzino - SIW TV
@@ -45,8 +46,8 @@
 					<label for="condition">Condizione</label>
 				</div>
 				<div class="form-floating mb-3">
-					<input type="int" required th:field="*{price}" class="form-control" placeholder="Prezzo" />
 					<label for="price">Prezzo</label>
+					<input type="number" th:field="*{price}" class="form-control" />
 				</div>
 				<div class="mb-3">
 					<label for="photo" class="form-label">Foto televisore:</label>

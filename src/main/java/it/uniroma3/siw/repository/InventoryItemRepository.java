@@ -25,4 +25,6 @@ public interface InventoryItemRepository extends JpaRepository<InventoryItem, Lo
 			@Param("minPrice") BigDecimal minPrice, @Param("maxPrice") BigDecimal maxPrice,
 			@Param("minInches") Integer minInches, @Param("maxInches") Integer maxInches, Pageable pageable);
 
+	boolean existsByProductCode(String productCode);
+
 }

@@ -52,4 +52,8 @@ public class InventoryItemService {
 		return inventoryItemRepository.findById(id).get();
 	}
 
+	public boolean existsByProductCode(String productCode) {
+		return inventoryItemRepository.existsByProductCode(productCode);
+	}
+
 }

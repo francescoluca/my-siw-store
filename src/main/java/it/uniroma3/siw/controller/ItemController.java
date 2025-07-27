@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import it.uniroma3.siw.controller.validator.ItemValidator;
+import it.uniroma3.siw.controller.validator.InventoryItemValidator;
 import it.uniroma3.siw.model.InventoryItem;
 import it.uniroma3.siw.service.InventoryItemService;
 import it.uniroma3.siw.service.TelevisionService;
@@ -41,7 +41,7 @@ public class ItemController {
 	private InventoryItemService inventoryItemService;
 
 	@Autowired
-	private ItemValidator itemValidator;
+	private InventoryItemValidator inventoryItemValidator;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -58,6 +58,7 @@ public class ItemController {
 	@PostMapping("/admin/inventoryItem")
 	public String newInventoryItem(@ModelAttribute("inventoryItem") InventoryItem inventoryItem,
 			@RequestParam("photo") MultipartFile photo, BindingResult bindingResult, Model model) throws IOException {
+		inventoryItemValidator.validate(inventoryItem, bindingResult);
 		if (!bindingResult.hasErrors()) {
 			this.inventoryItemService.save(inventoryItem, photo);
 			model.addAttribute("inventoryItem", inventoryItem);
