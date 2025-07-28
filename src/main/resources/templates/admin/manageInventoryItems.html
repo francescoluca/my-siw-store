@@ -106,7 +106,7 @@
 				<div class="col-12">
 					<div class="card shadow-sm">
 						<div class="card-body">
-							<form class="row g-3 align-items-center" method="get" th:action="@{/inventoryItems}">
+							<form class="row g-3 align-items-center" method="get" th:action="@{/admin/manageInventoryItems}">
 								<input type="hidden" name="sortField" th:value="${sortField}" />
 								<input type="hidden" name="sortDir" th:value="${sortDir}" />
 								<input type="hidden" name="page" th:value="${currentPage}" />
@@ -174,7 +174,7 @@
 											<input type="hidden" name="sortDir" th:value="${sortDir}" />
 										</div>
 										<button type="button" class="btn btn-outline-secondary ms-2" th:onclick="'window.location.href=\'' 
-										        + @{/inventoryItems(
+										        + @{/admin/manageInventoryItems(
 										            keyword=${keyword},
 										            minPrice=${minPrice},
 										            maxPrice=${maxPrice},
@@ -199,7 +199,7 @@
 				</div>
 			</div>
 			<div class="row g-3">
-				<form class="col-lg-3" method="get" th:action="@{/inventoryItems}">
+				<form class="col-lg-3" method="get" th:action="@{/admin/manageInventoryItems}">
 					<input type="hidden" name="keyword" th:value="${keyword}" />
 					<input type="hidden" name="sortField" th:value="${sortField}" />
 					<input type="hidden" name="sortDir" th:value="${sortDir}" />
@@ -326,7 +326,7 @@
 					<div th:if="${currentPage > 0}">
 						<li class="page-item">
 							<a class="page-link"
-								th:href="@{/inventoryItems(keyword=${keyword}, page=${currentPage - 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Precedente</a>
+								th:href="@{/admin/manageInventoryItems(keyword=${keyword}, page=${currentPage - 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Precedente</a>
 						</li>
 					</div>
 					<div th:if="${currentPage==0}">
@@ -336,13 +336,13 @@
 					</div>
 					<li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
 						<a class="page-link"
-							th:href="@{/inventoryItems(keyword=${keyword},page=${i}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}"
+							th:href="@{/admin/manageInventoryItems(keyword=${keyword},page=${i}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}"
 							th:text="${i + 1}" th:classappend="${i == currentPage} ? 'active' : ''"></a>
 					</li>
 					<div th:if="${currentPage < totalPages - 1}">
 						<li class="page-item">
 							<a class="page-link"
-								th:href="@{/inventoryItems(keyword=${keyword},page=${currentPage + 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Successivo</a>
+								th:href="@{/admin/manageInventoryItems(keyword=${keyword},page=${currentPage + 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Successivo</a>
 						</li>
 					</div>
 					<div th:if="${currentPage == totalPages -1}">

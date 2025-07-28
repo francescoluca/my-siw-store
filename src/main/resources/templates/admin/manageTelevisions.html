@@ -109,7 +109,7 @@
 					<div class="col-12">
 						<div class="card shadow-sm">
 							<div class="card-body">
-								<form class="row g-3 align-items-center" method="get" th:action="@{/televisions}">
+								<form class="row g-3 align-items-center" method="get" th:action="@{/admin/manageTelevisions}">
 									<div class="col-md-10">
 										<div class="input-group">
 											<span class="input-group-text">
@@ -143,7 +143,7 @@
 										</h5>
 									</div>
 									<div class="col-md-6">
-										<form th:action="@{/televisions}" method="get"
+										<form th:action="@{/admin/manageTelevisions}" method="get"
 											class="d-flex justify-content-end">
 											<div class="input-group" style="width: 250px;">
 												<label class="input-group-text" for="sort_select">
@@ -166,7 +166,7 @@
 												<input type="hidden" name="sortDir" th:value="${sortDir}" />
 											</div>
 											<button type="button" class="btn btn-outline-secondary ms-2" th:onclick="'window.location.href=\'' 
-													            + @{/televisions(keyword=${keyword},sortField=${sortField}, sortDir=${reverseSortDir})} 
+													            + @{/admin/manageTelevisions(keyword=${keyword},sortField=${sortField}, sortDir=${reverseSortDir})} 
 													            + '\';'">
 												<i class="bi"
 													th:classappend="${sortDir=='asc'} ? ' bi-caret-up-fill' : ' bi-caret-down-fill'"></i>
@@ -232,7 +232,7 @@
 						<div th:if="${currentPage > 0}">
 							<li class="page-item">
 								<a class="page-link"
-									th:href="@{/televisions(keyword=${keyword}, page=${currentPage - 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Precedente</a>
+									th:href="@{/admin/manageTelevisions(keyword=${keyword}, page=${currentPage - 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Precedente</a>
 							</li>
 						</div>
 						<div th:if="${currentPage==0}">
@@ -242,13 +242,13 @@
 						</div>
 						<li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
 							<a class="page-link"
-								th:href="@{/televisions(keyword=${keyword},page=${i}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}"
+								th:href="@{/admin/manageTelevisions(keyword=${keyword},page=${i}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}"
 								th:text="${i + 1}" th:classappend="${i == currentPage} ? 'active' : ''"></a>
 						</li>
 						<div th:if="${currentPage < totalPages - 1}">
 							<li class="page-item">
 								<a class="page-link"
-									th:href="@{/televisions(keyword=${keyword},page=${currentPage + 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Successivo</a>
+									th:href="@{/admin/manageTelevisions(keyword=${keyword},page=${currentPage + 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Successivo</a>
 							</li>
 						</div>
 						<div th:if="${currentPage == totalPages -1}">
