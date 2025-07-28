@@ -64,4 +64,8 @@ public class InventoryItemService {
 		return inventoryItemRepository.findTop3ByReleaseDate(topThree);
 	}
 
+	public void save(InventoryItem newInventoryItem) {
+		inventoryItemRepository.save(newInventoryItem);
+	}
+
 }

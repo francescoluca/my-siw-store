@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -57,7 +58,8 @@ public class ItemController {
 
 	@PostMapping("/admin/inventoryItem")
 	public String newInventoryItem(@ModelAttribute("inventoryItem") InventoryItem inventoryItem,
-			@RequestParam("photo") MultipartFile photo, BindingResult bindingResult, Model model) throws IOException {
+			@RequestParam("photo") MultipartFile photo, BindingResult bindingResult,
+			@RequestHeader(value = "referer", required = false) String referer, Model model) throws IOException {
 		inventoryItemValidator.validate(inventoryItem, bindingResult);
 		if (!bindingResult.hasErrors()) {
 			this.inventoryItemService.save(inventoryItem, photo);

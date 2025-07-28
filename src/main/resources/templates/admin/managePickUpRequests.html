@@ -148,7 +148,12 @@
 								</div>
 
 								<div class="request-card-footer">
-									<div class="status-section">
+									<div th:if="${request.status.toString() == 'COMPLETATA'}" class="status-section">
+										<label class="status-label">
+											<i class="fas fa-tasks me-2"></i>Richiesta completata
+										</label>
+									</div>
+									<div th:unless="${request.status.toString() == 'COMPLETATA'}" class="status-section">
 										<label class="status-label">
 											<i class="fas fa-tasks me-2"></i>Gestione Stato Richiesta:
 										</label>
@@ -158,17 +163,21 @@
 											<div class="status-controls">
 												<select name="status" class="form-select status-select"
 													th:attr="data-current=${request.status}" id="statusSelect">
-													<option value="PENDING"
-														th:selected="${request.status.toString() == 'PENDING'}">
+													<option value="IN_ATTESA"
+														th:selected="${request.status.toString() == 'IN_ATTESA'}">
 														&#128993; In Attesa di Valutazione
 													</option>
-													<option value="APPROVED"
-														th:selected="${request.status.toString() == 'APPROVATO'}">
+													<option value="APPROVATA"
+														th:selected="${request.status.toString() == 'APPROVATA'}">
 														&#9989; Approvato per Ritiro
 													</option>
-													<option value="REFUSED"
-														th:selected="${request.status.toString() == 'RIFIUTATO'}">
+													<option value="RIFIUTATA"
+														th:selected="${request.status.toString() == 'RIFIUTATA'}">
 														&#10060; Rifiutato
+													</option>
+													<option value="COMPLETATA"
+														th:selected="${request.status.toString() == 'COMPLETATA'}">
+														&#127937; Completato
 													</option>
 												</select>
 												<button type="button" class="btn btn-sm btn-primary update-btn"
@@ -178,12 +187,21 @@
 											</div>
 											<small class="text-muted mt-2 d-block">
 												Stato Attuale:
-												<span class="current-status"
-													th:classappend="${request.status.toString() == 'APPROVED'} ? 'text-success' : (${request.status.toString() == 'REFUSED'} ? 'text-danger' : (${request.status.toString() == 'PENDING'} ? 'text-warning' : 'text-info'))"
-													th:text="${request.status.toString() == 'APPROVED'} ? 'Approvato' : (${request.status.toString() == 'REFUSED'} ? 'Rifiutato' : (${request.status.toString() == 'PENDING'} ? 'In Attesa' : 'Bozza'))">
+												<span class="current-status" th:classappend="
+														${request.status.toString() == 'COMPLETATA'} ? 'text-success' :
+														(${request.status.toString() == 'APPROVATA'} ? 'text-success' :
+														(${request.status.toString() == 'RIFIUTATA'} ? 'text-danger' :
+														(${request.status.toString() == 'IN_ATTESA'} ? 'text-warning' : 'text-info')))
+													" th:text="
+														${request.status.toString() == 'COMPLETATA'} ? 'Completato' :
+														(${request.status.toString() == 'APPROVATA'} ? 'Approvato' :
+														(${request.status.toString() == 'RIFIUTATA'} ? 'Rifiutato' :
+														(${request.status.toString() == 'IN_ATTESA'} ? 'In Attesa' : 'Bozza')))
+													">
 													In Attesa
 												</span>
 											</small>
+
 										</form>
 									</div>
 								</div>
@@ -211,11 +229,11 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 		<script>
 			function submitStatusForm() {
-					const requestId = document.getElementById("requestId").value;
-					const status = document.getElementById("statusSelect").value;
-					const url = `/admin/formUpdatePickupStatus/${requestId}/${status}`;
-					window.location.href = url;
-				}
+				const requestId = document.getElementById("requestId").value;
+				const status = document.getElementById("statusSelect").value;
+				const url = `/admin/formUpdatePickupStatus/${requestId}/${status}`;
+				window.location.href = url;
+			}
 			// Ripristina lo stato visivo se c'è un errore
 			document.addEventListener('DOMContentLoaded', function () {
 				const alerts = document.querySelectorAll('.alert');

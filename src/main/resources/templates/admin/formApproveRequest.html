@@ -75,7 +75,24 @@
 				</div>
 			</div>
 		</section>
-
+		<section class="py-5">
+			<div class="container">
+				<form th:action="@{'/admin/approvePickUpRequest/' + ${request.id}}" th:object="${request}" method="post"
+					enctype="multipart/form-data">
+					<input type="hidden" th:field="*{id}" />
+					<div class="col-md-6">
+						<div class="form-floating mb-3">
+							<input type="date" required th:field="*{requestDate}" class="form-control"
+								placeholder="Data di ritiro" />
+							<label for="requestDate">
+								<i class="fas fa-calendar-alt me-2"></i>Modifica data di ritiro
+							</label>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary">Approva richiesta di ritiro</button>
+				</form>
+			</div>
+		</section>
 		<footer th:replace="~{fragments/footer :: siteFooter}"></footer>
 
 	</body>

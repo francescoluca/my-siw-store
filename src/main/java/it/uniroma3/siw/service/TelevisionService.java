@@ -13,6 +13,7 @@ import it.uniroma3.siw.repository.TelevisionRepository;
 import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class TelevisionService {
 
 	@Autowired

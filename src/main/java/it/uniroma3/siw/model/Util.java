@@ -37,7 +37,7 @@ public class Util {
 	}
 
 	public enum PicKUpStatus {
-		REFUSED("RIFIUTATA"), APPROVED("APPROVATA"), PENDING("IN ATTESA");
+		RIFIUTATA("RIFIUTATA"), APPROVATA("APPROVATA"), IN_ATTESA("IN ATTESA"), COMPLETATA("COMPLETATA");
 
 		private final String label;
 

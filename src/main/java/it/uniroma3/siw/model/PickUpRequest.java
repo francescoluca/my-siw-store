@@ -10,6 +10,8 @@ import it.uniroma3.siw.model.Util.PicKUpStatus;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,6 +32,7 @@ public class PickUpRequest {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate requestDate;
 	@NonNull
+	@Enumerated(EnumType.STRING)
 	private PicKUpStatus status;
 	@Column(columnDefinition = "TEXT")
 	@Size(max = 2000)

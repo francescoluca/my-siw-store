@@ -2,6 +2,7 @@ package it.uniroma3.siw.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,21 +25,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import it.uniroma3.siw.controller.validator.InventoryItemValidator;
 import it.uniroma3.siw.controller.validator.PickUpRequestValidator;
+import it.uniroma3.siw.model.InventoryItem;
 import it.uniroma3.siw.model.PickUpRequest;
+import it.uniroma3.siw.model.PickUpRequestItem;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.model.Util.PicKUpStatus;
+import it.uniroma3.siw.service.InventoryItemService;
 import it.uniroma3.siw.service.PickUpRequestService;
+import it.uniroma3.siw.service.TelevisionService;
 import it.uniroma3.siw.service.UserService;
 
 @Controller
 public class PickUpRequestController {
 	@Autowired
 	private PickUpRequestValidator pickUpRequestValidator;
+
 	@Autowired
 	private PickUpRequestService pickUpRequestService;
+
+	@Autowired
+	private InventoryItemService inventoryItemService;
+
+	@Autowired
+	private InventoryItemValidator inventoryItemValidator;
+
+	@Autowired
+	private TelevisionService televisionService;
+
 	@Autowired
 	private UserService userService;
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.setDisallowedFields("photo");
+	}
 
 	@GetMapping("/formPickUpRequest")
 	public String getFormPickUpRequest(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -66,7 +90,7 @@ public class PickUpRequestController {
 			@RequestParam("photo") MultipartFile photo) throws IOException {
 
 		User currentUser = userService.getCurrentUser(userDetails);
-		pickUpRequest.setStatus(PicKUpStatus.PENDING);
+		pickUpRequest.setStatus(PicKUpStatus.IN_ATTESA);
 		pickUpRequest.setRequestDate(LocalDate.now());
 		pickUpRequest.setUser(currentUser);
 
@@ -87,16 +111,25 @@ public class PickUpRequestController {
 	@GetMapping("/admin/formUpdatePickupStatus/{requestId}/{status}")
 	public String updatePickupStatus(@PathVariable("requestId") Long requestId, @PathVariable("status") String status,
 			Model model) {
-		if (status.equals(PicKUpStatus.APPROVED.toString())) {
-			model.addAttribute("request", this.pickUpRequestService.findById(requestId));
+		PickUpRequest pickUpRequest = this.pickUpRequestService.findById(requestId);
+		if (status.equals(PicKUpStatus.APPROVATA.toString())) {
+			model.addAttribute("request", pickUpRequest);
 			return "admin/formApproveRequest";
 		}
-		if (status.equals(PicKUpStatus.REFUSED.toString())) {
-			model.addAttribute("request", this.pickUpRequestService.findById(requestId));
+		if (status.equals(PicKUpStatus.RIFIUTATA.toString())) {
+			model.addAttribute("request", pickUpRequest);
 			return "admin/formRefuseRequest";
 		}
-		PickUpRequest pickUpRequest = pickUpRequestService.findById(requestId);
-		pickUpRequest.setStatus(PicKUpStatus.PENDING);
+		if (status.equals(PicKUpStatus.COMPLETATA.toString())) {
+			PickUpRequestItem pickUpRequestItem = new PickUpRequestItem();
+			pickUpRequestItem.setPickUpRequest(pickUpRequest);
+			pickUpRequestItem.setPurchaseDate(LocalDateTime.now());
+			model.addAttribute("televisions", televisionService.findAll());
+			model.addAttribute("request", pickUpRequest);
+			model.addAttribute("pickUpRequestItem", pickUpRequestItem);
+			return "admin/formCompleteRequest";
+		}
+		pickUpRequest.setStatus(PicKUpStatus.IN_ATTESA);
 		pickUpRequest.setAdminNote(null);
 		pickUpRequestService.save(pickUpRequest);
 		model.addAttribute("pickUpRequests", pickUpRequestService.findAll());
@@ -107,11 +140,40 @@ public class PickUpRequestController {
 	public String refusePickUpRequest(@PathVariable("id") Long id, Model model,
 			@ModelAttribute("pickUpRequest") PickUpRequest updatedPickUpRequest) throws IOException {
 		PickUpRequest pickUpRequest = pickUpRequestService.findById(id);
-		pickUpRequest.setStatus(PicKUpStatus.REFUSED);
+		pickUpRequest.setStatus(PicKUpStatus.RIFIUTATA);
 		pickUpRequest.setAdminNote(updatedPickUpRequest.getAdminNote());
+		pickUpRequest.setAdminNote(null);
 		pickUpRequestService.save(pickUpRequest);
 		model.addAttribute("pickUpRequests", pickUpRequestService.findAll());
 		return "admin/managePickUpRequests";
+	}
+
+	@PostMapping("/admin/approvePickUpRequest/{id}")
+	public String approvePickUpRequest(@PathVariable("id") Long id, Model model,
+			@ModelAttribute("pickUpRequest") PickUpRequest updatedPickUpRequest) throws IOException {
+		PickUpRequest pickUpRequest = pickUpRequestService.findById(id);
+		pickUpRequest.setStatus(PicKUpStatus.APPROVATA);
+		pickUpRequest.setRequestDate(updatedPickUpRequest.getRequestDate());
+		pickUpRequestService.save(pickUpRequest);
+		model.addAttribute("pickUpRequests", pickUpRequestService.findAll());
+		return "admin/managePickUpRequests";
+	}
+
+	@PostMapping("/admin/completePickUpRequest/{id}")
+	public String completePickUpRequest(@PathVariable("id") Long id, Model model,
+			@ModelAttribute("inventoryItem") InventoryItem inventoryItem, @RequestParam("photo") MultipartFile photo,
+			BindingResult bindingResult) throws IOException {
+		PickUpRequest pickUpRequest = pickUpRequestService.findById(id);
+		pickUpRequest.setStatus(PicKUpStatus.COMPLETATA);
+		pickUpRequestService.save(pickUpRequest);
+		inventoryItemValidator.validate(inventoryItem, bindingResult);
+		if (!bindingResult.hasErrors()) {
+			this.inventoryItemService.save(inventoryItem, photo);
+			model.addAttribute("inventoryItem", inventoryItem);
+			return "redirect:/inventoryItem/" + inventoryItem.getId();
+		} else {
+			return "admin/formCompleteRequest";
+		}
 	}
 
 	@PostMapping("/admin/updatePickUpRequest/{id}")
