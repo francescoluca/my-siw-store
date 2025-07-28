@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.siw.controller.validator.PickUpRequestValidator;
 import it.uniroma3.siw.model.PickUpRequest;
@@ -89,79 +88,6 @@ public class PickUpRequestController {
 //	@GetMapping("/admin/managePickUpRequests")
 
 //	}
-
-	// Metodo corretto per aggiornare lo status delle richieste di ritiro
-	@PostMapping("/admin/updatePickupStatus")
-	public String updatePickupRequestStatus(@RequestParam("requestId") Long requestId,
-			@RequestParam("status") String status, RedirectAttributes redirectAttributes) {
-		try {
-			// Trova la richiesta di ritiro per ID
-			PickUpRequest request = pickUpRequestService.findById(requestId);
-
-			// Verifica che la richiesta esista
-			if (request == null) {
-				redirectAttributes.addFlashAttribute("error",
-						"Richiesta con ID " + requestId + " non trovata nel sistema");
-				return "redirect:/admin/managePickUpRequests";
-			}
-
-			// Converte la stringa in enum PicKUpStatus
-			PicKUpStatus newStatus;
-			try {
-				newStatus = PicKUpStatus.valueOf(status);
-			} catch (IllegalArgumentException e) {
-				redirectAttributes.addFlashAttribute("error",
-						"Stato '" + status + "' non valido. Stati permessi: PENDING, APPROVATO, RIFIUTATO, DRAFT");
-				return "redirect:/admin/managePickUpRequests";
-			}
-
-			// Salva lo stato precedente per logging/audit
-			PicKUpStatus oldStatus = request.getStatus();
-
-			// Aggiorna SOLO lo status della richiesta
-			request.setStatus(newStatus);
-
-			// Salva la richiesta aggiornata
-			pickUpRequestService.save(request);
-
-			// Messaggio di successo personalizzato
-			String customerName = request.getName() + " " + request.getSurname();
-			String statusMessage = getStatusDisplayName(newStatus);
-
-			redirectAttributes.addFlashAttribute("success",
-					"Stato della richiesta di " + customerName + " aggiornato con successo a: " + statusMessage);
-
-			// Log dell'operazione (opzionale, per audit)
-			System.out.println("Status aggiornato per richiesta ID " + requestId + ": " + oldStatus + " -> " + newStatus
-					+ " (Cliente: " + customerName + ")");
-
-		} catch (Exception e) {
-			// Gestione errori generici
-			redirectAttributes.addFlashAttribute("error",
-					"Errore durante l'aggiornamento dello stato: " + e.getMessage());
-
-			// Log dell'errore per debugging
-			e.printStackTrace();
-		}
-
-		return "redirect:/admin/managePickUpRequests";
-	}
-
-	// Metodo ausiliario per convertire l'enum in nome leggibile
-	private String getStatusDisplayName(PicKUpStatus status) {
-		switch (status) {
-		case APPROVATO:
-			return "Approvato per Ritiro";
-		case RIFIUTATO:
-			return "Rifiutato";
-		case PENDING:
-			return "In Attesa di Valutazione";
-		case DRAFT:
-			return "Bozza (Non Completata)";
-		default:
-			return status.toString();
-		}
-	}
 
 	@GetMapping("/pickUpRequest/{id}/photo")
 	public ResponseEntity<byte[]> photo(@PathVariable Long id) {

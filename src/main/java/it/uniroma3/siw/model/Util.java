@@ -37,6 +37,16 @@ public class Util {
 	}
 
 	public enum PicKUpStatus {
-		RIFIUTATO, APPROVATO, PENDING, DRAFT
+		REFUSED("RIFIUTATA"), APPROVED("APPROVATA"), PENDING("IN ATTESA");
+
+		private final String label;
+
+		PicKUpStatus(String label) {
+			this.label = label;
+		}
+
+		public String getLabel() {
+			return label;
+		}
 	}
 }
