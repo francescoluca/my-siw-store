@@ -91,7 +91,6 @@
 				flex: 1 1 calc(33.333% - 1rem);
 				box-sizing: border-box;
 			}
-
 		</style>
 	</head>
 
@@ -151,35 +150,33 @@
 			<div class="container">
 				<ul class="listTelevision-unstyled">
 					<li th:each="inventoryItem : ${inventoryItems}">
-						<a th:href="@{'/inventoryItem/' + ${inventoryItem.id}}" class="text-decoration-none text-dark">
-							<div class="card tv-card h-100">
-								<img th:unless="${inventoryItem.photo}" src="/images/noTelevisionPhoto.jpg"
-									alt="Foto televisore" class="card-img-top">
-								<img th:if="${inventoryItem.photo}"
-									th:src="@{'/inventoryItem/' + ${inventoryItem.id} + '/photo'}" alt="Foto televisore"
-									class="card-img-top">
-								<div class="card-body">
-									<div class="d-flex justify-content-between align-items-start mb-2">
-										<h6 class="text-muted mb-0" th:text="${inventoryItem.television.model}">
-										</h6>
-										<span class="badge badge-condition"
-											th:text="${inventoryItem.condition.label}"></span>
-									</div>
-									<h5 class="card-title"
-										th:text="${inventoryItem.productCode} + ' ' + ${inventoryItem.television.screenInches} + '&quot;'">
-									</h5>
-
-									<div class="d-flex align-items-center mb-2">
-										<span class="h5 text-primary mb-0 me-2"
-											th:text="${inventoryItem.price}+',99 euro'"></span>
-									</div>
-									<a th:href="@{'/addToCart/'+ ${inventoryItem.id}}"> <button
-											class="btn btn-primary w-100">
-											<i class="fas fa-shopping-cart me-2"></i>Aggiungi al Carrello
-										</button></a>
+						<div class="card tv-card h-100">
+							<img th:unless="${inventoryItem.photo}" src="/images/noTelevisionPhoto.jpg"
+								alt="Foto televisore" class="card-img-top">
+							<img th:if="${inventoryItem.photo}"
+								th:src="@{'/inventoryItem/' + ${inventoryItem.id} + '/photo'}" alt="Foto televisore"
+								class="card-img-top">
+							<div class="card-body">
+								<div class="d-flex justify-content-between align-items-start mb-2">
+									<h6 class="text-muted mb-0" th:text="${inventoryItem.productCode}">
+									</h6>
+									<span class="badge badge-condition"
+										th:text="${inventoryItem.condition.label}"></span>
 								</div>
+								<h5 class="card-title"
+									th:text="${inventoryItem.television.brand} + ${inventoryItem.television.model}+ ' ' + ${inventoryItem.television.screenInches} + '&quot;'">
+								</h5>
+
+								<div class="d-flex align-items-center mb-2">
+									<span class="h5 text-primary mb-0 me-2"
+										th:text="${inventoryItem.price}+',99 euro'"></span>
+								</div>
+								<a th:href="@{'/addToCart/'+ ${inventoryItem.id}}"> <button
+										class="btn btn-primary w-100">
+										<i class="fas fa-shopping-cart me-2"></i>Aggiungi al Carrello
+									</button></a>
 							</div>
-						</a>
+						</div>
 					</li>
 				</ul>
 				<div class="text-center mt-4">

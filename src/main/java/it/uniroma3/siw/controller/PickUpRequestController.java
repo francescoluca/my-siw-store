@@ -74,7 +74,7 @@ public class PickUpRequestController {
 
 	@GetMapping("/request/{id}")
 	public String getPickUpRequest(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("requests", this.pickUpRequestService.findById(id));
+		model.addAttribute("request", this.pickUpRequestService.findById(id));
 		return "/request.html";
 	}
 

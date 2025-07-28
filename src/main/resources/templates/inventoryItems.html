@@ -89,79 +89,82 @@
 		<div class="container-fluid px-0" th:replace="~{fragments/header :: siteHeader}">
 		</div>
 		<div class="container">
-			<h1>TV</h1>
-			<div class="row mb-4">
-				<div class="col-12">
-					<div class="card shadow-sm">
-						<div class="card-body">
-							<form class="row g-3 align-items-center" method="get" th:action="@{/inventoryItems}">
-								<input type="hidden" name="sortField" th:value="${sortField}" />
-								<input type="hidden" name="sortDir" th:value="${sortDir}" />
-								<input type="hidden" name="page" th:value="${currentPage}" />
-								<input type="hidden" name="size" th:value="${pageSize}" />
-								<input type="hidden" name="minPrice" th:value="${minPrice}" />
-								<input type="hidden" name="maxPrice" th:value="${maxPrice}" />
-								<input type="hidden" name="minInches" th:value="${minInches}" />
-								<input type="hidden" name="maxInches" th:value="${maxInches}" />
-								<div class="col-md-10">
-									<div class="input-group">
-										<span class="input-group-text">
-											<i class="bi bi-search"></i>
-										</span>
-										<input type="text" name="keyword" class="form-control form-control-lg"
-											placeholder="Cerca televisore per marca o modello" th:value="${keyword}" />
+			<section class="py-5">
+
+				<h1>Catalogo televisori</h1>
+				<div class="row mb-4">
+					<div class="col-12">
+						<div class="card shadow-sm">
+							<div class="card-body">
+								<form class="row g-3 align-items-center" method="get" th:action="@{/inventoryItems}">
+									<input type="hidden" name="sortField" th:value="${sortField}" />
+									<input type="hidden" name="sortDir" th:value="${sortDir}" />
+									<input type="hidden" name="page" th:value="${currentPage}" />
+									<input type="hidden" name="size" th:value="${pageSize}" />
+									<input type="hidden" name="minPrice" th:value="${minPrice}" />
+									<input type="hidden" name="maxPrice" th:value="${maxPrice}" />
+									<input type="hidden" name="minInches" th:value="${minInches}" />
+									<input type="hidden" name="maxInches" th:value="${maxInches}" />
+									<div class="col-md-10">
+										<div class="input-group">
+											<span class="input-group-text">
+												<i class="bi bi-search"></i>
+											</span>
+											<input type="text" name="keyword" class="form-control form-control-lg"
+												placeholder="Cerca televisore per marca o modello"
+												th:value="${keyword}" />
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<button type="submit" class="btn btn-primary btn-lg w-100">
-										<i class="bi bi-search me-1"></i>Cerca
-									</button>
-								</div>
-							</form>
+									<div class="col-md-2">
+										<button type="submit" class="btn btn-primary btn-lg w-100">
+											<i class="bi bi-search me-1"></i>Cerca
+										</button>
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="row mb-4">
-				<div class="col-12">
-					<div class="card shadow-sm">
-						<div class="card-body py-3">
-							<div class="row align-items-center">
-								<div class="col-md-6">
-									<h5 class="mb-0">
-										<i class="fas fa-list me-2 text-muted"></i>
-										<span class="fw-normal"><b
-												th:text="${inventoryItemsCount}+' televisori disponibili'"></b></span>
-									</h5>
-								</div>
-								<div class="col-md-6">
-									<form th:action="@{/inventoryItems}" method="get"
-										class="d-flex justify-content-end">
-										<div class="input-group" style="width: 250px;">
-											<label class="input-group-text" for="sort_select">
-												<i class="fas fa-sort me-1"></i>Ordina per
-											</label>
-											<select id="sort_select" name="sortField" class="form-select"
-												th:value="${sortField}" onchange="this.form.submit()"
-												aria-label="Ordina i risultati">
-												<option value="price" th:selected="${sortField=='price'}">
-													Prezzo
-												</option>
+				<div class="row mb-4">
+					<div class="col-12">
+						<div class="card shadow-sm">
+							<div class="card-body py-3">
+								<div class="row align-items-center">
+									<div class="col-md-6">
+										<h5 class="mb-0">
+											<i class="fas fa-list me-2 text-muted"></i>
+											<span class="fw-normal"><b
+													th:text="${inventoryItemsCount}+' televisori disponibili'"></b></span>
+										</h5>
+									</div>
+									<div class="col-md-6">
+										<form th:action="@{/inventoryItems}" method="get"
+											class="d-flex justify-content-end">
+											<div class="input-group" style="width: 250px;">
+												<label class="input-group-text" for="sort_select">
+													<i class="fas fa-sort me-1"></i>Ordina per
+												</label>
+												<select id="sort_select" name="sortField" class="form-select"
+													th:value="${sortField}" onchange="this.form.submit()"
+													aria-label="Ordina i risultati">
+													<option value="price" th:selected="${sortField=='price'}">
+														Prezzo
+													</option>
 
-												<option value="television.screenInches"
-													th:selected="${sortField=='television.screenInches'}">
-													Pollici
-												</option>
-												<option value="television.releaseDate"
-													th:selected="${sortField=='television.releaseDate'}">
-													Anno
-												</option>
-											</select>
-											<input type="hidden" name="keyword" th:value="${keyword}" />
-											<input type="hidden" name="sortDir" th:value="${sortDir}" />
-										</div>
-										<button type="button" class="btn btn-outline-secondary ms-2" th:onclick="'window.location.href=\'' 
+													<option value="television.screenInches"
+														th:selected="${sortField=='television.screenInches'}">
+														Pollici
+													</option>
+													<option value="television.releaseDate"
+														th:selected="${sortField=='television.releaseDate'}">
+														Anno
+													</option>
+												</select>
+												<input type="hidden" name="keyword" th:value="${keyword}" />
+												<input type="hidden" name="sortDir" th:value="${sortDir}" />
+											</div>
+											<button type="button" class="btn btn-outline-secondary ms-2" th:onclick="'window.location.href=\'' 
 										        + @{/inventoryItems(
 										            keyword=${keyword},
 										            minPrice=${minPrice},
@@ -174,168 +177,174 @@
 										            size=${pageSize}
 										        )} 
 										        + '\';'">
-											<i class="bi"
-												th:classappend="${sortDir=='asc'} ? ' bi-caret-up-fill' : ' bi-caret-down-fill'"></i>
-										</button>
+												<i class="bi"
+													th:classappend="${sortDir=='asc'} ? ' bi-caret-up-fill' : ' bi-caret-down-fill'"></i>
+											</button>
 
-									</form>
+										</form>
 
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row g-3">
-				<form class="col-lg-3" method="get" th:action="@{/inventoryItems}">
-					<input type="hidden" name="keyword" th:value="${keyword}" />
-					<input type="hidden" name="sortField" th:value="${sortField}" />
-					<input type="hidden" name="sortDir" th:value="${sortDir}" />
-					<input type="hidden" name="page" th:value="${currentPage}" />
-					<input type="hidden" name="size" th:value="${pageSize}" />
-					<div class="filter-section">
-						<h5 class="mb-3">Filtri</h5>
-						<div class="mb-4">
-							<h6 class="mb-3">Prezzo</h6>
-							<div class="row mb-2">
-								<div class="col-6">
-									<label for="priceMin" class="form-label">Da (euro)</label>
-									<input type="number" name="minPrice" class="form-control" th:value="${minPrice}">
-								</div>
-								<div class="col-6">
-									<label for="priceMax" class="form-label">A (euro)</label>
-									<input type="number" name="maxPrice" class="form-control" th:value="${maxPrice}" />
-								</div>
-							</div>
-						</div>
-						<div class="mb-4">
-							<h6 class="mb-3">Diagonale schermo</h6>
-							<div class="row mb-2">
-								<div class="col-6">
-									<label for="minInches" class="form-label">Da (Pollici)</label>
-									<input type="number" name="minInches" class="form-control"
-										th:value="${minInches}" />
-								</div>
-								<div class="col-6">
-									<label for="maxInches" class="form-label">A (Pollici)</label>
-									<input type="number" name="maxInches" class="form-control"
-										th:value="${maxInches}" />
-								</div>
-							</div>
-						</div>
-						<div class="col-12">
-							<button type="submit" class="btn btn-primary w-100">
-								<i class="bi bi-funnel-fill"></i> Applica filtri
-							</button>
-						</div>
-					</div>
-				</form>
-
-				<div class="col-lg-9 col-md-4">
-					<div th:if="${inventoryItems==null || inventoryItems.isEmpty()}" class="row">
-						<div class="col-12">
-							<div class="no-inventoryItems-message">
-								<h3 class="text-muted">Non ci sono televisori nel sistema</h3>
-								<p class="text-muted">Prova a cercare con termini diversi o consulta il catalogo
-									completo
-								</p>
-							</div>
-						</div>
-					</div>
-					<ul class="list-unstyled">
-						<li th:each="inventoryItem : ${inventoryItems}">
-							<div class="card tv-card p-3">
-								<div class="row g-4 align-items-start">
-									<div class="col-md-4">
-										<div class="tv-image-wrapper">
-											<img th:unless="${inventoryItem.photo}" src="/images/noTelevisionPhoto.jpg"
-												alt="Foto televisore" class="card-img-top">
-											<img th:if="${inventoryItem.photo}"
-												th:src="@{'/inventoryItem/' + ${inventoryItem.id} + '/photo'}"
-												alt="Foto televisore" class="card-img-top">
-										</div>
+				<div class="row g-3">
+					<form class="col-lg-3" method="get" th:action="@{/inventoryItems}">
+						<input type="hidden" name="keyword" th:value="${keyword}" />
+						<input type="hidden" name="sortField" th:value="${sortField}" />
+						<input type="hidden" name="sortDir" th:value="${sortDir}" />
+						<input type="hidden" name="page" th:value="${currentPage}" />
+						<input type="hidden" name="size" th:value="${pageSize}" />
+						<div class="filter-section">
+							<h5 class="mb-3">Filtri</h5>
+							<div class="mb-4">
+								<h6 class="mb-3">Prezzo</h6>
+								<div class="row mb-2">
+									<div class="col-6">
+										<label for="priceMin" class="form-label">Da (euro)</label>
+										<input type="number" name="minPrice" class="form-control"
+											th:value="${minPrice}">
 									</div>
-									<div class="col-md-8">
-										<h5 class="card-title"
-											th:text="${inventoryItem.television.brand +' '+inventoryItem.television.model + ' '+ inventoryItem.television.screenInches+'&quot;'}">
-										</h5>
-										<dl class="row small mb-3">
-											<dt class="col-6">Anno di produzione:</dt>
-											<dd class="col-6" th:text="${inventoryItem.television.releaseDate}"></dd>
-											<dt class="col-6">Diagonale schermo:</dt>
-											<dd class="col-6"
-												th:text="${inventoryItem.television.screenInches*2.54+' cm / ' + inventoryItem.television.screenInches+'&quot;'}">
-											</dd>
-										</dl>
+									<div class="col-6">
+										<label for="priceMax" class="form-label">A (euro)</label>
+										<input type="number" name="maxPrice" class="form-control"
+											th:value="${maxPrice}" />
+									</div>
+								</div>
+							</div>
+							<div class="mb-4">
+								<h6 class="mb-3">Diagonale schermo</h6>
+								<div class="row mb-2">
+									<div class="col-6">
+										<label for="minInches" class="form-label">Da (Pollici)</label>
+										<input type="number" name="minInches" class="form-control"
+											th:value="${minInches}" />
+									</div>
+									<div class="col-6">
+										<label for="maxInches" class="form-label">A (Pollici)</label>
+										<input type="number" name="maxInches" class="form-control"
+											th:value="${maxInches}" />
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<button type="submit" class="btn btn-primary w-100">
+									<i class="bi bi-funnel-fill"></i> Applica filtri
+								</button>
+							</div>
+						</div>
+					</form>
 
-										<div class="price-section mb-3">
-											<div class="price-current h5"
-												th:text="${inventoryItem.price + ',99'+ ' euro'}">
+					<div class="col-lg-9 col-md-4">
+						<div th:if="${inventoryItems==null || inventoryItems.isEmpty()}" class="row">
+							<div class="col-12">
+								<div class="no-inventoryItems-message">
+									<h3 class="text-muted">Non ci sono televisori nel sistema</h3>
+									<p class="text-muted">Prova a cercare con termini diversi o consulta il catalogo
+										completo
+									</p>
+								</div>
+							</div>
+						</div>
+						<ul class="list-unstyled">
+							<li th:each="inventoryItem : ${inventoryItems}">
+								<div class="card tv-card p-3">
+									<div class="row g-4 align-items-start">
+										<div class="col-md-4">
+											<div class="tv-image-wrapper">
+												<img th:unless="${inventoryItem.photo}"
+													src="/images/noTelevisionPhoto.jpg" alt="Foto televisore"
+													class="card-img-top">
+												<img th:if="${inventoryItem.photo}"
+													th:src="@{'/inventoryItem/' + ${inventoryItem.id} + '/photo'}"
+													alt="Foto televisore" class="card-img-top">
 											</div>
-											<small class="text-muted d-block">
-												<strong>20</strong> rate da <strong
-													th:text="${inventoryItem.price/20+' euro'}">18,95€</strong> - TAN
-												0,00%
-												<strong>TAEG
-													0,00%</strong><br>
-												CONSEGNA GRATIS | IVA ed Eco-contributo RAEE incluse
-											</small>
 										</div>
+										<div class="col-md-8">
+											<h5 class="card-title"
+												th:text="${inventoryItem.television.brand +' '+inventoryItem.television.model + ' '+ inventoryItem.television.screenInches+'&quot;'}">
+											</h5>
+											<dl class="row small mb-3">
+												<dt class="col-6">Anno di produzione:</dt>
+												<dd class="col-6" th:text="${inventoryItem.television.releaseDate}">
+												</dd>
+												<dt class="col-6">Diagonale schermo:</dt>
+												<dd class="col-6"
+													th:text="${inventoryItem.television.screenInches*2.54+' cm / ' + inventoryItem.television.screenInches+'&quot;'}">
+												</dd>
+											</dl>
 
-										<div class="delivery-info mb-2">
-											<i class="fas fa-truck text-success me-1"></i>
-											<small class="text-success">Spedizione disponibile</small><br>
-											<small class="text-muted">Consegna stimata 29/07/2025 - 31/07/2025</small>
-										</div>
+											<div class="price-section mb-3">
+												<div class="price-current h5"
+													th:text="${inventoryItem.price + ',99'+ ' euro'}">
+												</div>
+												<small class="text-muted d-block">
+													<strong>20</strong> rate da <strong
+														th:text="${inventoryItem.price/20+' euro'}">18,95€</strong> -
+													TAN
+													0,00%
+													<strong>TAEG
+														0,00%</strong><br>
+													CONSEGNA GRATIS | IVA ed Eco-contributo RAEE incluse
+												</small>
+											</div>
 
-										<div class="pickup-info mb-3">
-											<i class="fas fa-store me-1"></i>
-											<small>Ritiro GRATUITO in negozio</small>
+											<div class="delivery-info mb-2">
+												<i class="fas fa-truck text-success me-1"></i>
+												<small class="text-success">Spedizione disponibile</small><br>
+												<small class="text-muted">Consegna stimata 29/07/2025 -
+													31/07/2025</small>
+											</div>
+
+											<div class="pickup-info mb-3">
+												<i class="fas fa-store me-1"></i>
+												<small>Ritiro GRATUITO in negozio</small>
+											</div>
 										</div>
 									</div>
+									<div class="mt-4">
+										<a th:href="@{'/addToCart/'+ ${inventoryItem.id}}"> <button
+												class="btn btn-primary w-100">
+												<i class="fas fa-shopping-cart me-2"></i>Aggiungi al Carrello
+											</button></a>
+									</div>
 								</div>
-								<div class="mt-4">
-									<a th:href="@{'/addToCart/'+ ${inventoryItem.id}}"> <button
-											class="btn btn-primary w-100">
-											<i class="fas fa-shopping-cart me-2"></i>Aggiungi al Carrello
-										</button></a>
-								</div>
-							</div>
-						</li>
-					</ul>
+							</li>
+						</ul>
+					</div>
 				</div>
-			</div>
-			<nav aria-label="Paginazione risultati" class="mt-4">
-				<ul class="pagination justify-content-center">
-					<div th:if="${currentPage > 0}">
-						<li class="page-item">
+				<nav aria-label="Paginazione risultati" class="mt-4">
+					<ul class="pagination justify-content-center">
+						<div th:if="${currentPage > 0}">
+							<li class="page-item">
+								<a class="page-link"
+									th:href="@{/inventoryItems(keyword=${keyword}, page=${currentPage - 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Precedente</a>
+							</li>
+						</div>
+						<div th:if="${currentPage==0}">
+							<li class="page-item disabled">
+								<span class="page-link">Precedente</span>
+							</li>
+						</div>
+						<li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
 							<a class="page-link"
-								th:href="@{/inventoryItems(keyword=${keyword}, page=${currentPage - 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Precedente</a>
+								th:href="@{/inventoryItems(keyword=${keyword},page=${i}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}"
+								th:text="${i + 1}" th:classappend="${i == currentPage} ? 'active' : ''"></a>
 						</li>
-					</div>
-					<div th:if="${currentPage==0}">
-						<li class="page-item disabled">
-							<span class="page-link">Precedente</span>
-						</li>
-					</div>
-					<li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-						<a class="page-link"
-							th:href="@{/inventoryItems(keyword=${keyword},page=${i}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}"
-							th:text="${i + 1}" th:classappend="${i == currentPage} ? 'active' : ''"></a>
-					</li>
-					<div th:if="${currentPage < totalPages - 1}">
-						<li class="page-item">
-							<a class="page-link"
-								th:href="@{/inventoryItems(keyword=${keyword},page=${currentPage + 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Successivo</a>
-						</li>
-					</div>
-					<div th:if="${currentPage == totalPages -1}">
-						<li class="page-item disabled">
-							<span class="page-link">Successivo</span>
-						</li>
-					</div>
-				</ul>
-			</nav>
+						<div th:if="${currentPage < totalPages - 1}">
+							<li class="page-item">
+								<a class="page-link"
+									th:href="@{/inventoryItems(keyword=${keyword},page=${currentPage + 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Successivo</a>
+							</li>
+						</div>
+						<div th:if="${currentPage == totalPages -1}">
+							<li class="page-item disabled">
+								<span class="page-link">Successivo</span>
+							</li>
+						</div>
+					</ul>
+				</nav>
 		</div>
 		</div>
 		<footer th:replace="~{fragments/footer :: siteFooter}"></footer>

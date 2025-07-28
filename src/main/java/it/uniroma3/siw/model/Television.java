@@ -3,6 +3,7 @@ package it.uniroma3.siw.model;
 import java.util.List;
 
 import it.uniroma3.siw.model.Util.Brand;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -29,6 +30,7 @@ public class Television {
 	@NotNull
 	private Integer releaseDate;
 	@NotNull
+	@Column(name = "screen_inches")
 	private Integer screenInches;
 	@NotNull
 	private String code;

@@ -12,8 +12,8 @@ public interface TelevisionRepository extends JpaRepository<Television, Long> {
 
 	boolean existsByCode(String code);
 
-	@Query(value = "SELECT * FROM television t "
-			+ "WHERE LOWER(t.model) LIKE LOWER(CONCAT('%', :keyword, '%')) ", nativeQuery = true)
+	@Query("SELECT t FROM Television t WHERE LOWER(t.model) LIKE LOWER(CONCAT('%', :keyword, '%')) "
+			+ "OR LOWER(t.brand) LIKE LOWER(CONCAT('%', :keyword, '%'))")
 	Page<Television> searchTelevisionsByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
 }
