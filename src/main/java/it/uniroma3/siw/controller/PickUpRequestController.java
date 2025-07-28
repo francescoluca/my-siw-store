@@ -84,10 +84,54 @@ public class PickUpRequestController {
 		return "admin/managePickUpRequests";
 	}
 
-//	// Metodo per visualizzare la pagina di gestione richieste con statistiche
-//	@GetMapping("/admin/managePickUpRequests")
+	@GetMapping("/admin/formUpdatePickupStatus/{requestId}/{status}")
+	public String updatePickupStatus(@PathVariable("requestId") Long requestId, @PathVariable("status") String status,
+			Model model) {
+		if (status.equals(PicKUpStatus.APPROVED.toString())) {
+			model.addAttribute("request", this.pickUpRequestService.findById(requestId));
+			return "admin/formApproveRequest";
+		}
+		if (status.equals(PicKUpStatus.REFUSED.toString())) {
+			model.addAttribute("request", this.pickUpRequestService.findById(requestId));
+			return "admin/formRefuseRequest";
+		}
+		PickUpRequest pickUpRequest = pickUpRequestService.findById(requestId);
+		pickUpRequest.setStatus(PicKUpStatus.PENDING);
+		pickUpRequest.setAdminNote(null);
+		pickUpRequestService.save(pickUpRequest);
+		model.addAttribute("pickUpRequests", pickUpRequestService.findAll());
+		return "admin/managePickUpRequests";
+	}
 
-//	}
+	@PostMapping("/admin/refusePickUpRequest/{id}")
+	public String refusePickUpRequest(@PathVariable("id") Long id, Model model,
+			@ModelAttribute("pickUpRequest") PickUpRequest updatedPickUpRequest) throws IOException {
+		PickUpRequest pickUpRequest = pickUpRequestService.findById(id);
+		pickUpRequest.setStatus(PicKUpStatus.REFUSED);
+		pickUpRequest.setAdminNote(updatedPickUpRequest.getAdminNote());
+		pickUpRequestService.save(pickUpRequest);
+		model.addAttribute("pickUpRequests", pickUpRequestService.findAll());
+		return "admin/managePickUpRequests";
+	}
+
+	@PostMapping("/admin/updatePickUpRequest/{id}")
+	public String updatePickUpRequest(@PathVariable("id") Long id, Model model,
+			@ModelAttribute("pickUpRequest") PickUpRequest updatedPickUpRequest,
+			@RequestParam("photo") MultipartFile photo) throws IOException {
+		PickUpRequest pickUpRequest = pickUpRequestService.findById(id);
+		pickUpRequest.setAddress(updatedPickUpRequest.getAddress());
+		pickUpRequest.setEmail(updatedPickUpRequest.getEmail());
+		pickUpRequest.setName(updatedPickUpRequest.getName());
+		pickUpRequest.setPhone(updatedPickUpRequest.getPhone());
+		pickUpRequest.setPhoto(updatedPickUpRequest.getPhoto());
+		pickUpRequest.setAdminNote(updatedPickUpRequest.getAdminNote());
+		pickUpRequest.setStatus(updatedPickUpRequest.getStatus());
+		pickUpRequest.setNote(updatedPickUpRequest.getNote());
+		pickUpRequest.setSurname(updatedPickUpRequest.getSurname());
+		pickUpRequest.setUser(updatedPickUpRequest.getUser());
+		pickUpRequestService.save(pickUpRequest, photo);
+		return "admin/managePickUpRequests";
+	}
 
 	@GetMapping("/pickUpRequest/{id}/photo")
 	public ResponseEntity<byte[]> photo(@PathVariable Long id) {

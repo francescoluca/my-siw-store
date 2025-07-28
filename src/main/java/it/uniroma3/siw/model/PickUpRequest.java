@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import io.micrometer.common.lang.NonNull;
 import it.uniroma3.siw.model.Util.PicKUpStatus;
 import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class PickUpRequest {
@@ -29,6 +31,8 @@ public class PickUpRequest {
 	private LocalDate requestDate;
 	@NonNull
 	private PicKUpStatus status;
+	@Column(columnDefinition = "TEXT")
+	@Size(max = 2000)
 	private String note;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
@@ -48,6 +52,9 @@ public class PickUpRequest {
 
 	@ManyToOne
 	private User user;
+	@Column(columnDefinition = "TEXT")
+	@Size(max = 2000)
+	private String adminNote;
 
 	public LocalDate getRequestDate() {
 		return requestDate;
@@ -143,6 +150,14 @@ public class PickUpRequest {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getAdminNote() {
+		return adminNote;
+	}
+
+	public void setAdminNote(String adminNote) {
+		this.adminNote = adminNote;
 	}
 
 }

@@ -99,63 +99,65 @@
 									</div>
 								</div>
 
-								<div class="request-card-body d-flex flex-wrap align-items-start" style="gap: 1rem;">
-									<div class="request-details" style="flex: 1;">
-										<div class="customer-info mb-3">
-											<h4 class="customer-name">
-												<i class="fas fa-user-circle me-2"></i>
-												<span th:text="${request.name + ' ' + request.surname}">Mario
-													Rossi</span>
-											</h4>
-											<div class="customer-details">
-												<div class="detail-item">
-													<i class="fas fa-envelope me-2"></i>
-													<span th:text="${request.email}">mario.rossi@email.com</span>
-												</div>
-												<div class="detail-item">
-													<i class="fas fa-phone me-2"></i>
-													<span th:text="${request.phone}">+39 123 456 7890</span>
-												</div>
-												<div class="detail-item">
-													<i class="fas fa-map-marker-alt me-2"></i>
-													<span th:text="${request.address}">Via Roma 123, Roma</span>
+								<div class="request-card-body">
+									<div class="row">
+										<div class="col-md-8">
+											<div class="customer-info mb-3">
+												<h4 class="customer-name">
+													<i class="fas fa-user-circle me-2"></i>
+													<span th:text="${request.name + ' ' + request.surname}">Mario
+														Rossi</span>
+												</h4>
+												<div class="customer-details">
+													<div class="detail-item">
+														<i class="fas fa-envelope me-2"></i>
+														<span th:text="${request.email}">mario.rossi@email.com</span>
+													</div>
+													<div class="detail-item">
+														<i class="fas fa-phone me-2"></i>
+														<span th:text="${request.phone}">+39 123 456 7890</span>
+													</div>
+													<div class="detail-item">
+														<i class="fas fa-map-marker-alt me-2"></i>
+														<span th:text="${request.address}">Via Roma 123, Roma</span>
+													</div>
 												</div>
 											</div>
-										</div>
 
-										<div th:if="${request.note != null and !request.note.empty}"
-											class="request-notes">
-											<h5 class="notes-title">
-												<i class="fas fa-comment-alt me-2"></i>Note del Cliente:
-											</h5>
-											<p class="notes-content" th:text="${request.note}">Note del cliente</p>
+											<div th:if="${request.note != null and !request.note.empty}"
+												class="request-notes">
+												<h5 class="notes-title">
+													<i class="fas fa-comment-alt me-2"></i>Note del Cliente:
+												</h5>
+												<p class="notes-content" th:text="${request.note}">Note del cliente</p>
+											</div>
 										</div>
-										<div class="request-photo" style="width: 250px; max-width: 100%;">
-											<h5 class="photo-title">
-												<i class="fas fa-image me-2"></i>Foto Allegata:
-											</h5>
-											<div class="ratio ratio-16x9">
-												<img th:src="${request.photo != null} ? @{/pickUpRequest/{id}/photo(id=${request.id})} : @{/images/noTelevisionPhoto.jpg}"
-													alt="Foto televisore"
-													class="img-fluid rounded border object-fit-contain" />
+										<div class="col-md-4">
+											<div class="request-photo mb-3">
+												<h5 class="photo-title">
+													<i class="fas fa-image me-2"></i>Foto Allegata:
+												</h5>
+												<div class="ratio ratio-16x9">
+													<img th:src="${request.photo != null} ? @{/pickUpRequest/{id}/photo(id=${request.id})} : @{/images/noTelevisionPhoto.jpg}"
+														alt="Foto televisore"
+														class="img-fluid rounded border object-fit-contain" />
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-
 
 								<div class="request-card-footer">
 									<div class="status-section">
 										<label class="status-label">
 											<i class="fas fa-tasks me-2"></i>Gestione Stato Richiesta:
 										</label>
-										<form th:action="@{/admin/updatePickupStatus}" method="post"
-											class="status-form">
-											<input type="hidden" name="requestId" th:value="${request.id}">
+										<form id="statusForm" method="get" class="status-form">
+											<input type="hidden" name="requestId" th:value="${request.id}"
+												id="requestId">
 											<div class="status-controls">
 												<select name="status" class="form-select status-select"
-													th:attr="data-current=${request.status}"
-													onchange="updateStatus(this)">
+													th:attr="data-current=${request.status}" id="statusSelect">
 													<option value="PENDING"
 														th:selected="${request.status.toString() == 'PENDING'}">
 														&#128993; In Attesa di Valutazione
@@ -169,15 +171,16 @@
 														&#10060; Rifiutato
 													</option>
 												</select>
-												<button type="submit" class="btn btn-sm btn-primary update-btn">
+												<button type="button" class="btn btn-sm btn-primary update-btn"
+													onclick="submitStatusForm()">
 													<i class="fas fa-save me-1"></i>Aggiorna Stato
 												</button>
 											</div>
 											<small class="text-muted mt-2 d-block">
 												Stato Attuale:
 												<span class="current-status"
-													th:classappend="${request.status.toString() == 'APPROVATO'} ? 'text-success' : (${request.status.toString() == 'RIFIUTATO'} ? 'text-danger' : (${request.status.toString() == 'PENDING'} ? 'text-warning' : 'text-info'))"
-													th:text="${request.status.toString() == 'APPROVATO'} ? 'Approvato' : (${request.status.toString() == 'RIFIUTATO'} ? 'Rifiutato' : (${request.status.toString() == 'PENDING'} ? 'In Attesa' : 'Bozza'))">
+													th:classappend="${request.status.toString() == 'APPROVED'} ? 'text-success' : (${request.status.toString() == 'REFUSED'} ? 'text-danger' : (${request.status.toString() == 'PENDING'} ? 'text-warning' : 'text-info'))"
+													th:text="${request.status.toString() == 'APPROVED'} ? 'Approvato' : (${request.status.toString() == 'REFUSED'} ? 'Rifiutato' : (${request.status.toString() == 'PENDING'} ? 'In Attesa' : 'Bozza'))">
 													In Attesa
 												</span>
 											</small>
@@ -187,8 +190,6 @@
 
 							</div>
 						</div>
-
-						<!-- Empty State -->
 						<div th:if="${pickUpRequests == null or pickUpRequests.isEmpty()}" class="empty-state">
 							<div class="empty-icon">
 								<i class="fas fa-clipboard"></i>
@@ -209,34 +210,12 @@
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 		<script>
-			// Funzione per gestire l'aggiornamento dello status
-			function updateStatus(selectElement) {
-				const form = selectElement.closest('form');
-				const updateBtn = form.querySelector('.update-btn');
-				const originalText = updateBtn.innerHTML;
-
-				// Feedback visivo durante il salvataggio
-				selectElement.style.opacity = '0.6';
-				updateBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Salvando...';
-				updateBtn.disabled = true;
-
-				// Conferma prima dell'aggiornamento per azioni critiche
-				const newStatus = selectElement.value;
-				if (newStatus === 'RIFIUTATO') {
-					if (!confirm('Sei sicuro di voler RIFIUTARE questa richiesta?')) {
-						// Ripristina il valore precedente
-						selectElement.value = selectElement.getAttribute('data-current');
-						selectElement.style.opacity = '1';
-						updateBtn.innerHTML = originalText;
-						updateBtn.disabled = false;
-						return;
-					}
+			function submitStatusForm() {
+					const requestId = document.getElementById("requestId").value;
+					const status = document.getElementById("statusSelect").value;
+					const url = `/admin/formUpdatePickupStatus/${requestId}/${status}`;
+					window.location.href = url;
 				}
-
-				// Invia il form
-				form.submit();
-			}
-
 			// Ripristina lo stato visivo se c'è un errore
 			document.addEventListener('DOMContentLoaded', function () {
 				const alerts = document.querySelectorAll('.alert');
