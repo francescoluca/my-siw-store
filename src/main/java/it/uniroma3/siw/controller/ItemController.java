@@ -90,9 +90,39 @@ public class ItemController {
 	}
 
 	@GetMapping("/admin/manageInventoryItems")
-	public String manageInventoryItems(Model model) {
-		model.addAttribute("inventoryItems", this.inventoryItemService.findAll());
-		model.addAttribute("televisions", this.televisionService.findAll());
+	public String manageInventoryItems(@RequestParam(required = false, defaultValue = "") String keyword,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size,
+			@RequestParam(value = "sortField", defaultValue = "price") String sortField,
+			@RequestParam(value = "sortDir", defaultValue = "asc") String sortDir,
+			@RequestParam(required = false, defaultValue = "0") BigDecimal minPrice,
+			@RequestParam(required = false, defaultValue = "5000") BigDecimal maxPrice,
+			@RequestParam(required = false, defaultValue = "0") Integer minInches,
+			@RequestParam(required = false, defaultValue = "100") Integer maxInches, Model model,
+			@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails) {
+
+		Sort.Direction direction = sortDir.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+		Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortField));
+		Page<InventoryItem> inventoryItemPage;
+
+		inventoryItemPage = inventoryItemService.searchWithSort(keyword, sortField, minPrice, maxPrice, minInches,
+				maxInches, pageable);
+
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("inventoryItemsCount", inventoryItemPage.getTotalElements());
+		model.addAttribute("inventoryItems", inventoryItemPage.getContent());
+		model.addAttribute("inventoryItemPage", inventoryItemPage);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages",
+				inventoryItemPage.getTotalPages() == 0 ? 1 : inventoryItemPage.getTotalPages());
+		model.addAttribute("pageSize", size);
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+		model.addAttribute("minPrice", minPrice);
+		model.addAttribute("maxPrice", maxPrice);
+		model.addAttribute("minInches", minInches);
+		model.addAttribute("maxInches", maxInches);
 		return "/admin/manageInventoryItems";
 	}
 
